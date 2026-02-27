@@ -32,7 +32,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <span className="font-heading text-2xl font-bold tracking-tight text-foreground">
-            Aether<span className="text-gradient-gold">Estate</span>
+            L2S <span className="text-gradient-gold">Estate</span>
           </span>
         </Link>
 

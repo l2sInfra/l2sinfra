@@ -195,7 +195,7 @@ function SettingsPanel() {
           <label className="text-sm font-medium text-foreground block mb-2">Contact Email</label>
           <input
             type="email"
-            defaultValue="hello@aetherestate.in"
+            defaultValue="hello@l2sestate.in"
             className="w-full bg-secondary text-foreground rounded-lg px-4 py-3 text-sm border border-border focus:ring-2 focus:ring-primary outline-none"
           />
         </div>
