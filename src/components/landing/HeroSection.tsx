@@ -69,7 +69,7 @@ export function HeroSection() {
                 <MapPin size={18} className="text-gold-light shrink-0" />
                 <input
                   type="text"
-                  placeholder="Location — Mumbai, Delhi, Bangalore..."
+                  placeholder="Location — Gurgaon, Delhi, Bangalore..."
                   className="bg-transparent text-accent-foreground placeholder:text-accent-foreground/40 text-sm w-full outline-none"
                 />
               </div>

@@ -7,7 +7,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
             <span className="font-heading text-3xl font-bold tracking-tight">
-              Aether<span className="text-gradient-gold">Estate</span>
+              L2S <span className="text-gradient-gold">Estate</span>
             </span>
             <p className="text-accent-foreground/50 mt-4 max-w-md leading-relaxed">
               India's premier real estate advisory, curating extraordinary 
@@ -34,7 +34,7 @@ export function Footer() {
             <ul className="space-y-4 text-sm text-accent-foreground/50">
               <li className="flex items-start gap-3">
                 <MapPin size={16} className="text-primary mt-0.5 shrink-0" />
-                One BKC, Bandra Kurla Complex, Mumbai 400051
+                DLF Cyber City, Sector 24, Gurgaon 122002
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={16} className="text-primary shrink-0" />
@@ -42,14 +42,14 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={16} className="text-primary shrink-0" />
-                hello@aetherestate.in
+                hello@l2sestate.in
               </li>
             </ul>
           </div>
         </div>
         <div className="border-t border-accent-foreground/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-accent-foreground/30 text-sm">
-            © 2026 AetherEstate. All rights reserved.
+            © 2026 L2S Estate. All rights reserved.
           </p>
           <div className="flex gap-6 text-accent-foreground/30 text-sm">
             <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
