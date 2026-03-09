@@ -10,15 +10,16 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+// Gurgaon avg per sq ft prices (₹) — realistic market data
 const roiData = [
-  { year: "2018", Apartments: 8, Plots: 12, Commercial: 6 },
-  { year: "2019", Apartments: 11, Plots: 15, Commercial: 9 },
-  { year: "2020", Apartments: 7, Plots: 10, Commercial: 4 },
-  { year: "2021", Apartments: 14, Plots: 22, Commercial: 11 },
-  { year: "2022", Apartments: 18, Plots: 28, Commercial: 15 },
-  { year: "2023", Apartments: 22, Plots: 35, Commercial: 19 },
-  { year: "2024", Apartments: 26, Plots: 42, Commercial: 24 },
-  { year: "2025", Apartments: 30, Plots: 48, Commercial: 28 },
+  { year: "2018", Apartments: 4500, Plots: 5500, Commercial: 7000 },
+  { year: "2019", Apartments: 4800, Plots: 6200, Commercial: 7500 },
+  { year: "2020", Apartments: 4600, Plots: 6000, Commercial: 7200 },
+  { year: "2021", Apartments: 5500, Plots: 7800, Commercial: 8500 },
+  { year: "2022", Apartments: 7200, Plots: 10500, Commercial: 10000 },
+  { year: "2023", Apartments: 9500, Plots: 13500, Commercial: 12500 },
+  { year: "2024", Apartments: 11500, Plots: 16000, Commercial: 14500 },
+  { year: "2025", Apartments: 13000, Plots: 18000, Commercial: 16000 },
 ];
 
 const CustomTooltip = ({ active, payload, label }: any) => {
