@@ -42,7 +42,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={16} className="text-primary shrink-0" />
-                hello@l2sestate.in
+                connect@l2sinfra.com
               </li>
             </ul>
           </div>
