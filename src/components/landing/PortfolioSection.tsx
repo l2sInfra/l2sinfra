@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import luxuryImg from "@/assets/luxury-residential.jpg";
 import commercialImg from "@/assets/commercial.jpg";
-import emergingImg from "@/assets/emerging-assets.jpg";
+import landsImg from "@/assets/lands-farmhouses.jpg";
 
 const categories = [
   {
