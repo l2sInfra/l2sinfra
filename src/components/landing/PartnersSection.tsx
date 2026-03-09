@@ -4,9 +4,11 @@ const partners = [
   { name: "DLF", abbr: "DLF" },
   { name: "Lodha", abbr: "LDH" },
   { name: "Godrej Properties", abbr: "GOD" },
-  { name: "Prestige Group", abbr: "PRE" },
   { name: "Sobha Limited", abbr: "SOB" },
-  { name: "Brigade Group", abbr: "BRG" },
+  { name: "Birla Estates", abbr: "BRL" },
+  { name: "Adani Realty", abbr: "ADN" },
+  { name: "Trump Towers", abbr: "TRM" },
+  { name: "Emaar India", abbr: "EMR" },
 ];
 
 export function PartnersSection() {
@@ -32,7 +34,7 @@ export function PartnersSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
           {partners.map((partner, i) => (
             <motion.div
               key={partner.name}
