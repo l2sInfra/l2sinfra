@@ -8,7 +8,7 @@ import {
 
 const faqs = [
   {
-    q: "What makes L2S Estate different from other real estate agencies?",
+    q: "What makes L2S Infra different from other real estate agencies?",
     a: "We focus exclusively on premium and ultra-luxury segments with direct Tier-1 developer partnerships. Our white-glove service covers everything from property discovery to post-purchase management, ensuring a frictionless experience.",
   },
   {

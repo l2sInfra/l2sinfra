@@ -7,7 +7,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
             <span className="font-heading text-3xl font-bold tracking-tight">
-              L2S <span className="text-gradient-gold">Estate</span>
+              L2S <span className="text-gradient-gold">Infra</span>
             </span>
             <p className="text-accent-foreground/50 mt-4 max-w-md leading-relaxed">
               India's premier real estate advisory, curating extraordinary 
@@ -49,7 +49,7 @@ export function Footer() {
         </div>
         <div className="border-t border-accent-foreground/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-accent-foreground/30 text-sm">
-            © 2026 L2S Estate. All rights reserved.
+            © 2026 L2S Infra. All rights reserved.
           </p>
           <div className="flex gap-6 text-accent-foreground/30 text-sm">
             <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>

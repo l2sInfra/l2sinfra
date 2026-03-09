@@ -26,13 +26,13 @@ export function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "glass py-3" : "bg-transparent py-6"
+        scrolled ? "glass py-3" : "bg-black/40 backdrop-blur-sm py-6"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <span className="font-heading text-2xl font-bold tracking-tight text-foreground">
-            L2S <span className="text-gradient-gold">Estate</span>
+          <span className="font-heading text-2xl font-bold tracking-tight text-white drop-shadow-lg">
+            L2S <span className="text-gradient-gold">Infra</span>
           </span>
         </Link>
 
@@ -42,7 +42,7 @@ export function Navbar() {
             <a
               key={item.label}
               href={item.href}
-              className="text-sm font-medium tracking-wide text-muted-foreground hover:text-foreground transition-colors duration-300"
+              className="text-sm font-medium tracking-wide text-white/90 hover:text-white transition-colors duration-300 drop-shadow-sm"
             >
               {item.label}
             </a>

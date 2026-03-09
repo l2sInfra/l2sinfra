@@ -10,15 +10,16 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+// Gurgaon avg per sq ft prices (₹) — realistic market data
 const roiData = [
-  { year: "2018", Apartments: 8, Plots: 12, Commercial: 6 },
-  { year: "2019", Apartments: 11, Plots: 15, Commercial: 9 },
-  { year: "2020", Apartments: 7, Plots: 10, Commercial: 4 },
-  { year: "2021", Apartments: 14, Plots: 22, Commercial: 11 },
-  { year: "2022", Apartments: 18, Plots: 28, Commercial: 15 },
-  { year: "2023", Apartments: 22, Plots: 35, Commercial: 19 },
-  { year: "2024", Apartments: 26, Plots: 42, Commercial: 24 },
-  { year: "2025", Apartments: 30, Plots: 48, Commercial: 28 },
+  { year: "2018", Apartments: 4500, Plots: 5500, Commercial: 7000 },
+  { year: "2019", Apartments: 4800, Plots: 6200, Commercial: 7500 },
+  { year: "2020", Apartments: 4600, Plots: 6000, Commercial: 7200 },
+  { year: "2021", Apartments: 5500, Plots: 7800, Commercial: 8500 },
+  { year: "2022", Apartments: 7200, Plots: 10500, Commercial: 10000 },
+  { year: "2023", Apartments: 9500, Plots: 13500, Commercial: 12500 },
+  { year: "2024", Apartments: 11500, Plots: 16000, Commercial: 14500 },
+  { year: "2025", Apartments: 13000, Plots: 18000, Commercial: 16000 },
 ];
 
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -28,7 +29,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         <p className="font-heading font-semibold text-foreground mb-2">{label}</p>
         {payload.map((entry: any) => (
           <p key={entry.name} className="text-sm" style={{ color: entry.color }}>
-            {entry.name}: <span className="font-semibold">{entry.value}% ROI</span>
+            {entry.name}: <span className="font-semibold">₹{entry.value.toLocaleString()}/sq ft</span>
           </p>
         ))}
       </div>
@@ -52,11 +53,11 @@ export function ROIChartSection() {
             Market Intelligence
           </p>
           <h2 className="font-heading text-4xl md:text-6xl font-bold text-foreground">
-            Gurgaon <span className="text-gradient-gold">ROI Trends</span>
+            Gurgaon <span className="text-gradient-gold">Price Trends</span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto leading-relaxed">
-            Cumulative return on investment across property segments in Gurgaon — 
-            India's fastest-growing real estate corridor.
+            Average per sq ft prices across property segments in Gurgaon — 
+            prices have surged 2-3x since 2018 in key corridors.
           </p>
         </motion.div>
 
@@ -78,7 +79,7 @@ export function ROIChartSection() {
               <YAxis
                 stroke="hsl(var(--muted-foreground))"
                 tick={{ fontSize: 13 }}
-                tickFormatter={(v) => `${v}%`}
+                tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`}
               />
               <Tooltip content={<CustomTooltip />} />
               <Legend
@@ -115,9 +116,9 @@ export function ROIChartSection() {
         {/* Summary cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
           {[
-            { label: "Apartments", roi: "30%", period: "7-Year ROI", color: "text-primary" },
-            { label: "Plots", roi: "48%", period: "7-Year ROI", color: "text-[hsl(45,90%,45%)]" },
-            { label: "Commercial", roi: "28%", period: "7-Year ROI", color: "text-[hsl(200,70%,50%)]" },
+            { label: "Apartments", roi: "2.9x", period: "₹4,500 → ₹13,000/sqft", color: "text-primary" },
+            { label: "Plots", roi: "3.3x", period: "₹5,500 → ₹18,000/sqft", color: "text-[hsl(45,90%,45%)]" },
+            { label: "Commercial", roi: "2.3x", period: "₹7,000 → ₹16,000/sqft", color: "text-[hsl(200,70%,50%)]" },
           ].map((item) => (
             <motion.div
               key={item.label}
