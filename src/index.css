@@ -6,52 +6,52 @@
 
 @layer base {
   :root {
-    --background: 40 20% 98%;
-    --foreground: 220 25% 12%;
+    --background: 0 0% 100%;
+    --foreground: 213 30% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 25% 12%;
+    --card-foreground: 213 30% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 12%;
+    --popover-foreground: 213 30% 15%;
 
-    --primary: 43 76% 38%;
+    --primary: 39 46% 57%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 20% 95%;
-    --secondary-foreground: 220 25% 12%;
+    --secondary: 213 30% 15%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 40 15% 94%;
-    --muted-foreground: 220 10% 46%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 213 15% 46%;
 
-    --accent: 220 30% 15%;
-    --accent-foreground: 40 20% 98%;
+    --accent: 213 30% 15%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 40 15% 90%;
-    --input: 40 15% 90%;
-    --ring: 43 76% 38%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 39 46% 57%;
 
     --radius: 0.5rem;
 
-    --gold: 43 76% 38%;
-    --gold-light: 43 70% 55%;
-    --gold-dark: 43 80% 28%;
-    --charcoal: 220 25% 12%;
-    --charcoal-light: 220 15% 25%;
-    --warm-white: 40 20% 98%;
-    --cream: 40 30% 95%;
+    --gold: 39 46% 57%;
+    --gold-light: 39 55% 68%;
+    --gold-dark: 39 50% 42%;
+    --bronze: 32 24% 44%;
+    --navy: 213 30% 15%;
+    --navy-light: 213 20% 25%;
+    --cream: 40 30% 97%;
 
-    --sidebar-background: 220 25% 12%;
-    --sidebar-foreground: 40 20% 98%;
-    --sidebar-primary: 43 76% 38%;
+    --sidebar-background: 213 30% 15%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 39 46% 57%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 20% 18%;
-    --sidebar-accent-foreground: 40 20% 98%;
-    --sidebar-border: 220 20% 20%;
-    --sidebar-ring: 43 76% 38%;
+    --sidebar-accent: 213 25% 20%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 213 20% 22%;
+    --sidebar-ring: 39 46% 57%;
 
     --font-heading: 'Playfair Display', Georgia, serif;
     --font-body: 'Inter', system-ui, sans-serif;
@@ -75,7 +75,7 @@
 
 @layer components {
   .glass {
-    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-xl;
+    @apply bg-white/80 backdrop-blur-xl border border-white/30 shadow-xl;
   }
 
   .glass-dark {
@@ -98,6 +98,11 @@
   @keyframes ticker {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
+  }
+
+  @keyframes count-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 
