@@ -116,9 +116,9 @@ export function ROIChartSection() {
         {/* Summary cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
           {[
-            { label: "Apartments", roi: "30%", period: "7-Year ROI", color: "text-primary" },
-            { label: "Plots", roi: "48%", period: "7-Year ROI", color: "text-[hsl(45,90%,45%)]" },
-            { label: "Commercial", roi: "28%", period: "7-Year ROI", color: "text-[hsl(200,70%,50%)]" },
+            { label: "Apartments", roi: "2.9x", period: "₹4,500 → ₹13,000/sqft", color: "text-primary" },
+            { label: "Plots", roi: "3.3x", period: "₹5,500 → ₹18,000/sqft", color: "text-[hsl(45,90%,45%)]" },
+            { label: "Commercial", roi: "2.3x", period: "₹7,000 → ₹16,000/sqft", color: "text-[hsl(200,70%,50%)]" },
           ].map((item) => (
             <motion.div
               key={item.label}
