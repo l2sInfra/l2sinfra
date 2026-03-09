@@ -53,11 +53,11 @@ export function ROIChartSection() {
             Market Intelligence
           </p>
           <h2 className="font-heading text-4xl md:text-6xl font-bold text-foreground">
-            Gurgaon <span className="text-gradient-gold">ROI Trends</span>
+            Gurgaon <span className="text-gradient-gold">Price Trends</span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto leading-relaxed">
-            Cumulative return on investment across property segments in Gurgaon — 
-            India's fastest-growing real estate corridor.
+            Average per sq ft prices across property segments in Gurgaon — 
+            prices have surged 2-3x since 2018 in key corridors.
           </p>
         </motion.div>
 
