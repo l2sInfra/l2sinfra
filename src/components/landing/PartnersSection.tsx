@@ -4,9 +4,11 @@ const partners = [
   { name: "DLF", abbr: "DLF" },
   { name: "Lodha", abbr: "LDH" },
   { name: "Godrej Properties", abbr: "GOD" },
-  { name: "Prestige Group", abbr: "PRE" },
   { name: "Sobha Limited", abbr: "SOB" },
-  { name: "Brigade Group", abbr: "BRG" },
+  { name: "Birla Estates", abbr: "BRL" },
+  { name: "Adani Realty", abbr: "ADN" },
+  { name: "Trump Towers", abbr: "TRM" },
+  { name: "Emaar India", abbr: "EMR" },
 ];
 
 export function PartnersSection() {
