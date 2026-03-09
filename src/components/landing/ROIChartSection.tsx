@@ -79,7 +79,7 @@ export function ROIChartSection() {
               <YAxis
                 stroke="hsl(var(--muted-foreground))"
                 tick={{ fontSize: 13 }}
-                tickFormatter={(v) => `${v}%`}
+                tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`}
               />
               <Tooltip content={<CustomTooltip />} />
               <Legend
