@@ -8,6 +8,7 @@ const navItems = [
   { label: "Services", href: "#services" },
   { label: "Network", href: "#network" },
   { label: "Insights", href: "#insights" },
+  { label: "Blog", href: "#blog" },
 ];
 
 export function Navbar() {
