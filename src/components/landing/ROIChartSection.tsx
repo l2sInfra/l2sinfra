@@ -29,7 +29,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         <p className="font-heading font-semibold text-foreground mb-2">{label}</p>
         {payload.map((entry: any) => (
           <p key={entry.name} className="text-sm" style={{ color: entry.color }}>
-            {entry.name}: <span className="font-semibold">{entry.value}% ROI</span>
+            {entry.name}: <span className="font-semibold">₹{entry.value.toLocaleString()}/sq ft</span>
           </p>
         ))}
       </div>
