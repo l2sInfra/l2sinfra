@@ -1,11 +1,17 @@
 import { Navbar } from "@/components/landing/Navbar";
 import { HeroSection } from "@/components/landing/HeroSection";
-import { PortfolioSection } from "@/components/landing/PortfolioSection";
-import { ROIChartSection } from "@/components/landing/ROIChartSection";
+import { IntroSection } from "@/components/landing/IntroSection";
 import { ServicesSection } from "@/components/landing/ServicesSection";
-import { PartnersSection } from "@/components/landing/PartnersSection";
+import { MarketsSection } from "@/components/landing/MarketsSection";
+import { FeaturedPropertiesSection } from "@/components/landing/FeaturedPropertiesSection";
+import { WhyChooseSection } from "@/components/landing/WhyChooseSection";
+import { TestimonialsSection } from "@/components/landing/TestimonialsSection";
+import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
+import { InsightsSection } from "@/components/landing/InsightsSection";
 import { FAQSection } from "@/components/landing/FAQSection";
+import { ContactSection } from "@/components/landing/ContactSection";
 import { Footer } from "@/components/landing/Footer";
+import { WhatsAppButton } from "@/components/landing/WhatsAppButton";
 
 const Index = () => {
   return (
@@ -13,13 +19,19 @@ const Index = () => {
       <Navbar />
       <main>
         <HeroSection />
-        <PortfolioSection />
-        <ROIChartSection />
+        <IntroSection />
         <ServicesSection />
-        <PartnersSection />
+        <MarketsSection />
+        <FeaturedPropertiesSection />
+        <WhyChooseSection />
+        <TestimonialsSection />
+        <HowItWorksSection />
+        <InsightsSection />
         <FAQSection />
+        <ContactSection />
       </main>
       <Footer />
+      <WhatsAppButton />
     </>
   );
 };

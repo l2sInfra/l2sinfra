@@ -4,11 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
-  { label: "Portfolio", href: "#portfolio" },
   { label: "Services", href: "#services" },
-  { label: "Network", href: "#network" },
+  { label: "Properties", href: "#properties" },
+  { label: "Markets", href: "#markets" },
   { label: "Insights", href: "#insights" },
-  { label: "Blog", href: "#blog" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export function Navbar() {
@@ -27,52 +27,56 @@ export function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "glass py-3" : "bg-black/40 backdrop-blur-sm py-6"
+        scrolled
+          ? "bg-background/95 backdrop-blur-xl shadow-md py-3"
+          : "bg-secondary/80 backdrop-blur-sm py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <span className="font-heading text-2xl font-bold tracking-tight text-white drop-shadow-lg">
+          <span className={`font-heading text-2xl font-bold tracking-tight ${scrolled ? "text-foreground" : "text-secondary-foreground"}`}>
             L2S <span className="text-gradient-gold">Infra</span>
           </span>
         </Link>
 
-        {/* Desktop */}
         <div className="hidden md:flex items-center gap-10">
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              className="text-sm font-medium tracking-wide text-white/90 hover:text-white transition-colors duration-300 drop-shadow-sm"
+              className={`text-sm font-medium tracking-wide transition-colors duration-300 ${
+                scrolled
+                  ? "text-foreground/70 hover:text-primary"
+                  : "text-secondary-foreground/80 hover:text-secondary-foreground"
+              }`}
             >
               {item.label}
             </a>
           ))}
           <a
             href="#contact"
-            className="bg-primary text-primary-foreground px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-gold-dark transition-colors duration-300"
+            className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors duration-300"
           >
             Get in Touch
           </a>
         </div>
 
-        {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-foreground"
+          className={`md:hidden ${scrolled ? "text-foreground" : "text-secondary-foreground"}`}
+          aria-label="Toggle menu"
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass mt-2 mx-4 rounded-2xl overflow-hidden"
+            className="md:hidden bg-background border-t border-border mt-2 overflow-hidden"
           >
             <div className="p-6 flex flex-col gap-4">
               {navItems.map((item) => (
@@ -87,7 +91,8 @@ export function Navbar() {
               ))}
               <a
                 href="#contact"
-                className="bg-primary text-primary-foreground px-6 py-3 rounded-full text-sm font-semibold text-center"
+                onClick={() => setMobileOpen(false)}
+                className="bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold text-center"
               >
                 Get in Touch
               </a>
