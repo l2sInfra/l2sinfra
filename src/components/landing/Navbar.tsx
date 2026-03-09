@@ -42,7 +42,7 @@ export function Navbar() {
             <a
               key={item.label}
               href={item.href}
-              className="text-sm font-medium tracking-wide text-muted-foreground hover:text-foreground transition-colors duration-300"
+              className="text-sm font-medium tracking-wide text-white/90 hover:text-white transition-colors duration-300 drop-shadow-sm"
             >
               {item.label}
             </a>

@@ -49,7 +49,7 @@ export function Footer() {
         </div>
         <div className="border-t border-accent-foreground/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-accent-foreground/30 text-sm">
-            © 2026 L2S Estate. All rights reserved.
+            © 2026 L2S Infra. All rights reserved.
           </p>
           <div className="flex gap-6 text-accent-foreground/30 text-sm">
             <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>

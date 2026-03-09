@@ -20,10 +20,10 @@ const categories = [
     span: "md:col-span-1",
   },
   {
-    title: "Emerging Assets",
-    description: "Pre-launch opportunities and high-growth corridor investments with exceptional ROI potential.",
-    image: emergingImg,
-    stats: "30%+ Appreciation",
+    title: "Lands & Farm Houses",
+    description: "Premium plots and luxury farm houses in Gurgaon's most sought-after corridors with exceptional appreciation.",
+    image: landsImg,
+    stats: "2-3x Appreciation",
     span: "md:col-span-1",
   },
 ];
