@@ -179,12 +179,12 @@ export function ContactSection() {
                 <div>
                   <p className="font-semibold text-foreground">WhatsApp</p>
                   <a
-                    href="https://wa.me/919205505600"
+                    href="https://wa.me/919773740037"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-muted-foreground text-sm hover:text-primary transition-colors"
                   >
-                    +91-9205505600
+                    +91-9773740037
                   </a>
                 </div>
               </div>
