@@ -231,7 +231,7 @@ function PropertyForm({ property, onChange, onSave, onCancel, isNew }: {
   isNew: boolean;
 }) {
   const f = (field: keyof Property, value: unknown) => onChange({ ...property, [field]: value });
-  const inp = "w-full bg-secondary border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
 
   return (
     <div>
@@ -462,7 +462,7 @@ function BlogForm({ post, onChange, onSave, onCancel, isNew }: {
   isNew: boolean;
 }) {
   const f = (field: keyof BlogPost, value: unknown) => onChange({ ...post, [field]: value });
-  const inp = "w-full bg-secondary border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
 
   return (
     <div>
@@ -669,7 +669,7 @@ function TestimonialsPanel() {
     load();
   };
 
-  const inp = "w-full bg-secondary border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
   const f = (field: keyof Testimonial, value: unknown) => setEditing(prev => ({ ...prev, [field]: value }));
 
   return (
@@ -751,7 +751,7 @@ function SettingsPanel() {
     toast.success("Settings saved!");
   };
 
-  const inp = "w-full bg-secondary border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
 
   if (loading) return <div className="text-center py-12 text-muted-foreground">Loading...</div>;
 

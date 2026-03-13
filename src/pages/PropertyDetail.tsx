@@ -12,6 +12,23 @@ const typeLabel: Record<PropertyType, string> = {
   farmhouse_land: "Farmhouse & Land",
 };
 
+function getYouTubeEmbedUrl(url: string): string {
+  try {
+    // Handle youtu.be/VIDEO_ID
+    const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+    if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+
+    // Handle youtube.com/watch?v=VIDEO_ID
+    const longMatch = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+    if (longMatch) return `https://www.youtube.com/embed/${longMatch[1]}`;
+
+    // Already an embed URL or other format — use as-is
+    return url;
+  } catch {
+    return url;
+  }
+}
+
 export default function PropertyDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [property, setProperty] = useState<Property | null>(null);
@@ -140,7 +157,7 @@ export default function PropertyDetail() {
                   <div className="bg-card border border-border rounded-xl p-6">
                     <h2 className="font-heading text-xl font-bold text-foreground mb-4">Property Video</h2>
                     <div className="aspect-video rounded-lg overflow-hidden">
-                      <iframe src={property.video_url.replace("watch?v=", "embed/")} className="w-full h-full" allowFullScreen title={`${property.title} video`} />
+                      <iframe src={getYouTubeEmbedUrl(property.video_url)} className="w-full h-full" allowFullScreen title={`${property.title} video`} />
                     </div>
                   </div>
                 )}
