@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
-import emailjs, { init } from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 
 const budgetRanges = ["₹2 – 5 Cr", "₹5 – 10 Cr", "₹10 – 25 Cr", "₹25 – 50 Cr", "₹50 Cr+"];
 const propertyInterests = ["Luxury Residential", "Premium Commercial", "Lands & Plots", "Farm Houses", "Investment Portfolio"];
@@ -63,7 +63,6 @@ export function ContactSection() {
         const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
         if (serviceId && templateId && publicKey) {
-          init(publicKey);
           await emailjs.send(serviceId, templateId, {
             from_name: form.full_name,
             from_email: form.email,
@@ -72,7 +71,7 @@ export function ContactSection() {
             budget_range: form.budget_range,
             preferred_location: form.preferred_location || "Not specified",
             message: form.message || "No message provided",
-          });
+          }, { publicKey });
         }
       } catch (emailErr) {
         console.error("EmailJS error:", emailErr);
