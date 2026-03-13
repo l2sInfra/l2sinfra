@@ -60,7 +60,7 @@ export function ContactSection() {
       try {
         const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
         const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-        const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+        const publicKey = import.meta.env.VITE_EMAILJS_PK;
 
         console.log("EmailJS vars:", { serviceId, templateId, publicKey: publicKey ? "present" : "MISSING" });
         if (serviceId && templateId && publicKey) {
