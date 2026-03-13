@@ -58,13 +58,10 @@ export function ContactSection() {
 
       // 2. Send email notification via EmailJS
       try {
-        const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-        const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-        const publicKey = import.meta.env.VITE_EMAILJS_PK;
-
-        console.log("EmailJS vars:", { serviceId, templateId, publicKey: publicKey ? "present" : "MISSING" });
-        if (serviceId && templateId && publicKey) {
-          await emailjs.send(serviceId, templateId, {
+        await emailjs.send(
+          "service_h8f8oxm",
+          "zazfsys",
+          {
             from_name: form.full_name,
             from_email: form.email,
             phone: form.phone,
@@ -72,8 +69,9 @@ export function ContactSection() {
             budget_range: form.budget_range,
             preferred_location: form.preferred_location || "Not specified",
             message: form.message || "No message provided",
-          }, { publicKey });
-        }
+          },
+          "X-yec0ZI0MXMr8QAn"
+        );
       } catch (emailErr) {
         console.error("EmailJS error:", emailErr);
       }
