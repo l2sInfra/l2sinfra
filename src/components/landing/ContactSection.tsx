@@ -38,53 +38,47 @@ export function ContactSection() {
     if (!form.property_interest || !form.budget_range) { toast.error("Please select property interest and budget range."); return; }
     setLoading(true);
 
-    try {
-      // 1. Save to Supabase (admin panel + CRM)
-      const { error } = await supabase.from("leads").insert({
-        full_name: form.full_name,
-        email: form.email,
+    // 1. Save to Supabase
+    const { error: supabaseError } = await supabase.from("leads").insert({
+      full_name: form.full_name,
+      email: form.email,
+      phone: form.phone,
+      property_interest: form.property_interest,
+      budget_range: form.budget_range,
+      preferred_location: form.preferred_location || null,
+      message: form.message || null,
+      status: "new",
+      source: "website",
+    });
+
+    if (supabaseError) {
+      console.error("Supabase error:", supabaseError);
+    }
+
+    // 2. Send email via EmailJS (independent of Supabase)
+    emailjs.send(
+      "service_h8f8oxm",
+      "zazfsys",
+      {
+        from_name: form.full_name,
+        from_email: form.email,
         phone: form.phone,
         property_interest: form.property_interest,
         budget_range: form.budget_range,
-        preferred_location: form.preferred_location || null,
-        message: form.message || null,
-        status: "new",
-        source: "website",
-      });
+        preferred_location: form.preferred_location || "Not specified",
+        message: form.message || "No message provided",
+      },
+      "X-yec0ZI0MXMr8QAn"
+    ).then(() => {
+      console.log("EmailJS: sent successfully");
+    }).catch((err) => {
+      console.error("EmailJS error:", err);
+    });
 
-      if (error) {
-        console.error("Supabase error:", error);
-      }
-
-      // 2. Send email notification via EmailJS
-      try {
-        await emailjs.send(
-          "service_h8f8oxm",
-          "zazfsys",
-          {
-            from_name: form.full_name,
-            from_email: form.email,
-            phone: form.phone,
-            property_interest: form.property_interest,
-            budget_range: form.budget_range,
-            preferred_location: form.preferred_location || "Not specified",
-            message: form.message || "No message provided",
-          },
-          "X-yec0ZI0MXMr8QAn"
-        );
-      } catch (emailErr) {
-        console.error("EmailJS error:", emailErr);
-      }
-
-      toast.success("Thank you! Our advisory team will contact you within 24 hours.");
-      setForm(empty);
-      setAgreed(false);
-    } catch (err) {
-      console.error(err);
-      toast.error("Something went wrong. Please call us directly at +91-9773740037.");
-    } finally {
-      setLoading(false);
-    }
+    toast.success("Thank you! Our advisory team will contact you within 24 hours.");
+    setForm(empty);
+    setAgreed(false);
+    setLoading(false);
   };
 
   const inp = "w-full border border-border rounded-lg px-4 py-3 text-sm bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50";
