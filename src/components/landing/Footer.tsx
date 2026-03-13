@@ -1,6 +1,14 @@
 import { MapPin, Phone, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const quickLinks = ["Services", "Properties", "Markets", "Insights", "Contact"];
+const quickLinks = [
+  { label: "Services", href: "/#services" },
+  { label: "Properties", href: "/properties" },
+  { label: "Markets", href: "/#markets" },
+  { label: "Insights", href: "/insights" },
+  { label: "Contact", href: "/#contact" },
+];
+
 const serviceLinks = [
   "Luxury Residential",
   "Commercial Real Estate",
@@ -28,13 +36,13 @@ export function Footer() {
             <h4 className="font-heading text-lg font-semibold mb-6">Quick Links</h4>
             <ul className="space-y-3">
               {quickLinks.map((item) => (
-                <li key={item}>
-                  <a
-                    href={`#${item.toLowerCase()}`}
+                <li key={item.label}>
+                  <Link
+                    to={item.href}
                     className="text-secondary-foreground/50 hover:text-primary transition-colors text-sm"
                   >
-                    {item}
-                  </a>
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -44,12 +52,12 @@ export function Footer() {
             <ul className="space-y-3">
               {serviceLinks.map((item) => (
                 <li key={item}>
-                  <a
-                    href="#services"
+                  <Link
+                    to="/#services"
                     className="text-secondary-foreground/50 hover:text-primary transition-colors text-sm"
                   >
                     {item}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -74,12 +82,12 @@ export function Footer() {
         </div>
         <div className="border-t border-secondary-foreground/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-secondary-foreground/30 text-sm">
-            © 2026 L2S Infra. All rights reserved. | RERA Registered
+            © {new Date().getFullYear()} L2S Infra. All rights reserved.
           </p>
           <div className="flex gap-6 text-secondary-foreground/30 text-sm">
-            <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-primary transition-colors">Disclaimer</a>
+            <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <Link to="/disclaimer" className="hover:text-primary transition-colors">Disclaimer</Link>
           </div>
         </div>
       </div>
