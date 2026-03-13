@@ -68,7 +68,7 @@ export function ContactSection() {
         preferred_location: form.preferred_location || "Not specified",
         message: form.message || "No message provided",
       },
-      "X-yec0ZI0MXMr8QAn"
+      "skaELBKhB8IscPxox"
     ).then(() => {
       console.log("EmailJS: sent successfully");
     }).catch((err) => {
