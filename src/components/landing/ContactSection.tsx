@@ -62,6 +62,7 @@ export function ContactSection() {
         const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
         const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
+        console.log("EmailJS vars:", { serviceId, templateId, publicKey: publicKey ? "present" : "MISSING" });
         if (serviceId && templateId && publicKey) {
           await emailjs.send(serviceId, templateId, {
             from_name: form.full_name,
