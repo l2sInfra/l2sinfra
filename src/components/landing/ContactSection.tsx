@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
-import emailjs from "@emailjs/browser";
+import emailjs, { init } from "@emailjs/browser";
 
 const budgetRanges = ["₹2 – 5 Cr", "₹5 – 10 Cr", "₹10 – 25 Cr", "₹25 – 50 Cr", "₹50 Cr+"];
 const propertyInterests = ["Luxury Residential", "Premium Commercial", "Lands & Plots", "Farm Houses", "Investment Portfolio"];
@@ -56,22 +56,26 @@ export function ContactSection() {
         console.error("Supabase error:", error);
       }
 
-      // 2. Send email notification via EmailJS (if configured)
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      // 2. Send email notification via EmailJS
+      try {
+        const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+        const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+        const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-      if (serviceId && templateId && publicKey && !serviceId.startsWith("your_")) {
-        await emailjs.send(serviceId, templateId, {
-          from_name: form.full_name,
-          from_email: form.email,
-          phone: form.phone,
-          property_interest: form.property_interest,
-          budget_range: form.budget_range,
-          preferred_location: form.preferred_location,
-          message: form.message,
-          to_email: "connect@l2sinfra.com",
-        }, publicKey).catch((err) => console.error("EmailJS error:", err));
+        if (serviceId && templateId && publicKey) {
+          init(publicKey);
+          await emailjs.send(serviceId, templateId, {
+            from_name: form.full_name,
+            from_email: form.email,
+            phone: form.phone,
+            property_interest: form.property_interest,
+            budget_range: form.budget_range,
+            preferred_location: form.preferred_location || "Not specified",
+            message: form.message || "No message provided",
+          });
+        }
+      } catch (emailErr) {
+        console.error("EmailJS error:", emailErr);
       }
 
       toast.success("Thank you! Our advisory team will contact you within 24 hours.");
