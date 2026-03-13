@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
-Sitemap: https://l2sinfra.in/sitemap.xml
+Sitemap: https://l2sinfra.com/sitemap.xml

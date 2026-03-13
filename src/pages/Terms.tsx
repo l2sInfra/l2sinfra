@@ -13,7 +13,7 @@ export default function Terms() {
           <p className="text-muted-foreground text-sm mb-8">Last updated: March 2026</p>
           <div className="prose prose-sm prose-invert max-w-none prose-headings:font-heading prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground">
             <h2>1. Acceptance of Terms</h2>
-            <p>By accessing and using the L2S Infra website (l2sinfra.in), you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our website.</p>
+            <p>By accessing and using the L2S Infra website (l2sinfra.com), you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our website.</p>
             <h2>2. Services</h2>
             <p>L2S Infra provides real estate advisory services for luxury residential, commercial, and land properties across India. Information on this website is for general guidance only and does not constitute a binding offer or agreement.</p>
             <h2>3. Property Information</h2>
