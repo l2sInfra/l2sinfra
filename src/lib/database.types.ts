@@ -82,29 +82,38 @@ export interface Database {
     Tables: {
       properties: {
         Row: Property;
-        Insert: Omit<Property, "id" | "created_at" | "updated_at">;
-        Update: Partial<Omit<Property, "id" | "created_at">>;
+        Insert: Partial<Property> & Omit<Property, "id" | "created_at" | "updated_at">;
+        Update: Partial<Property>;
+        Relationships: [];
       };
       blog_posts: {
         Row: BlogPost;
-        Insert: Omit<BlogPost, "id" | "created_at" | "updated_at">;
-        Update: Partial<Omit<BlogPost, "id" | "created_at">>;
+        Insert: Partial<BlogPost> & Omit<BlogPost, "id" | "created_at" | "updated_at">;
+        Update: Partial<BlogPost>;
+        Relationships: [];
       };
       leads: {
         Row: Lead;
-        Insert: Omit<Lead, "id" | "created_at">;
-        Update: Partial<Omit<Lead, "id" | "created_at">>;
+        Insert: Partial<Lead> & Omit<Lead, "id" | "created_at">;
+        Update: Partial<Lead>;
+        Relationships: [];
       };
       testimonials: {
         Row: Testimonial;
-        Insert: Omit<Testimonial, "id" | "created_at">;
-        Update: Partial<Omit<Testimonial, "id" | "created_at">>;
+        Insert: Partial<Testimonial> & Omit<Testimonial, "id" | "created_at">;
+        Update: Partial<Testimonial>;
+        Relationships: [];
       };
       site_settings: {
         Row: SiteSetting;
-        Insert: Omit<SiteSetting, "id" | "updated_at">;
-        Update: Partial<Omit<SiteSetting, "id">>;
+        Insert: Partial<SiteSetting> & Omit<SiteSetting, "id" | "updated_at">;
+        Update: Partial<SiteSetting>;
+        Relationships: [];
       };
     };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 }
