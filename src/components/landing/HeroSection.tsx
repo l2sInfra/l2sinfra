@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -29,19 +29,32 @@ const stats = [
 ];
 
 export function HeroSection() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0">
+    <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <img
           src={heroBg}
           alt="Luxury Indian cityscape with premium high-rise properties at golden hour"
-          className="w-full h-full object-cover"
+          className="w-full h-[120%] object-cover"
           loading="eager"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-secondary/70 via-secondary/40 to-secondary/80" />
-      </div>
+      </motion.div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20 w-full">
+      <motion.div
+        className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20 w-full"
+        style={{ y: contentY, opacity: contentOpacity }}
+      >
         <div className="max-w-3xl">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -110,7 +123,7 @@ export function HeroSection() {
             </a>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
