@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { useRef } from "react";
 import luxuryImg from "@/assets/luxury-residential.jpg";
 import commercialImg from "@/assets/commercial.jpg";
 import landsImg from "@/assets/lands-farmhouses.jpg";
@@ -28,6 +29,50 @@ const categories = [
   },
 ];
 
+function ParallaxCard({ cat, index }: { cat: typeof categories[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const imgY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.7, delay: index * 0.15 }}
+      className={`group relative rounded-2xl overflow-hidden cursor-pointer hover-lift ${cat.span}`}
+    >
+      <motion.img
+        src={cat.image}
+        alt={cat.title}
+        className="absolute inset-0 w-[110%] h-[120%] object-cover transition-transform duration-700 group-hover:scale-105"
+        style={{ y: imgY }}
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 p-8">
+        <span className="text-primary text-xs font-bold tracking-widest uppercase">
+          {cat.stats}
+        </span>
+        <h3 className="font-heading text-2xl md:text-3xl font-bold text-accent-foreground mt-2 mb-2">
+          {cat.title}
+        </h3>
+        <p className="text-accent-foreground/60 text-sm leading-relaxed max-w-md">
+          {cat.description}
+        </p>
+        <div className="mt-4 flex items-center gap-2 text-primary text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          Explore <ArrowUpRight size={16} />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export function PortfolioSection() {
   return (
     <section id="portfolio" className="section-padding bg-background">
@@ -52,36 +97,7 @@ export function PortfolioSection() {
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[280px]">
           {categories.map((cat, i) => (
-            <motion.div
-              key={cat.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.7, delay: i * 0.15 }}
-              className={`group relative rounded-2xl overflow-hidden cursor-pointer hover-lift ${cat.span}`}
-            >
-              <img
-                src={cat.image}
-                alt={cat.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <span className="text-primary text-xs font-bold tracking-widest uppercase">
-                  {cat.stats}
-                </span>
-                <h3 className="font-heading text-2xl md:text-3xl font-bold text-accent-foreground mt-2 mb-2">
-                  {cat.title}
-                </h3>
-                <p className="text-accent-foreground/60 text-sm leading-relaxed max-w-md">
-                  {cat.description}
-                </p>
-                <div className="mt-4 flex items-center gap-2 text-primary text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Explore <ArrowUpRight size={16} />
-                </div>
-              </div>
-            </motion.div>
+            <ParallaxCard key={cat.title} cat={cat} index={i} />
           ))}
         </div>
       </div>
