@@ -1,5 +1,6 @@
 import { MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
+import { CONTACT_EMAIL, PHONE_DISPLAY, PHONE_E164 } from "@/lib/site-contact";
 
 const quickLinks = [
   { label: "Services", href: "/#services" },
@@ -71,11 +72,11 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={16} className="text-primary shrink-0" />
-                <a href="tel:+919773740037" className="hover:text-primary transition-colors">+91-9773740037</a>
+                <a href={`tel:${PHONE_E164}`} className="hover:text-primary transition-colors">{PHONE_DISPLAY}</a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={16} className="text-primary shrink-0" />
-                <a href="mailto:connect@l2sinfra.com" className="hover:text-primary transition-colors">connect@l2sinfra.com</a>
+                <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-primary transition-colors">{CONTACT_EMAIL}</a>
               </li>
             </ul>
           </div>

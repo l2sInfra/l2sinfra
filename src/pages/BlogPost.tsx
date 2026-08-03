@@ -5,6 +5,7 @@ import type { BlogPost as BlogPostType } from "@/lib/database.types";
 import { Calendar, User, ArrowLeft, Tag } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
+import { applySEO } from "@/lib/seo";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -25,10 +26,13 @@ export default function BlogPost() {
           setNotFound(true);
         } else {
           setPost(data);
-          document.title = `${data.meta_title || data.title} | L2S Infra`;
-          // Update meta description
-          const metaDesc = document.querySelector('meta[name="description"]');
-          if (metaDesc) metaDesc.setAttribute("content", data.meta_description || data.excerpt);
+          applySEO({
+            title: `${data.meta_title || data.title} | L2S Infra`,
+            description: data.meta_description || data.excerpt,
+            path: `/insights/${data.slug}`,
+            image: data.image_url,
+            type: "article",
+          });
         }
         setLoading(false);
       });

@@ -147,9 +147,9 @@ create policy "Admin full access site_settings" on site_settings
 
 -- Seed: Default site settings
 insert into site_settings (key, value) values
-  ('whatsapp_number', '919773740037'),
+  ('whatsapp_number', '919818242500'),
   ('contact_email', 'connect@l2sinfra.com'),
-  ('contact_phone', '+91-9773740037'),
+  ('contact_phone', '+91-9818242500'),
   ('office_address', 'Bani City Centre, Sector 63, Gurgaon, Haryana'),
   ('business_hours', 'Mon – Sat: 10:00 AM – 7:00 PM | Sunday: By Appointment'),
   ('ticker_text', '₹500Cr+ Transacted · 15+ Years Experience · 200+ Premium Properties · 98% Client Satisfaction');

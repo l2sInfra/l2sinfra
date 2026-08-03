@@ -5,6 +5,8 @@ import type { Property, PropertyType } from "@/lib/database.types";
 import { MapPin, BedDouble, Maximize, ArrowLeft, Phone, MessageCircle, CheckCircle, Building2 } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
+import { PHONE_DISPLAY, PHONE_E164, whatsappLink } from "@/lib/site-contact";
+import { applySEO } from "@/lib/seo";
 
 const typeLabel: Record<PropertyType, string> = {
   residential: "Residential",
@@ -47,9 +49,14 @@ export default function PropertyDetail() {
           setNotFound(true);
         } else {
           setProperty(data);
-          document.title = `${data.meta_title || data.title} | L2S Infra`;
-          const metaDesc = document.querySelector('meta[name="description"]');
-          if (metaDesc) metaDesc.setAttribute("content", data.meta_description || `${data.title} in ${data.location}. ${data.price}. ${data.area}. Contact L2S Infra for a private consultation.`);
+          applySEO({
+            title: `${data.meta_title || data.title} | L2S Infra`,
+            description:
+              data.meta_description ||
+              `${data.title} in ${data.location}. ${data.price}. ${data.area}. Contact L2S Infra for a private consultation.`,
+            path: `/properties/${data.slug}`,
+            image: data.image_url,
+          });
         }
         setLoading(false);
       });
@@ -170,7 +177,7 @@ export default function PropertyDetail() {
                   <p className="text-muted-foreground text-sm mb-6">Speak with our advisory team for pricing, availability, and a private viewing.</p>
 
                   <a
-                    href={`https://wa.me/919773740037?text=Hi, I'm interested in ${encodeURIComponent(property.title)} at ${encodeURIComponent(property.location)}. Please share more details.`}
+                    href={whatsappLink(`Hi, I'm interested in ${property.title} at ${property.location}. Please share more details.`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-lg text-sm font-semibold hover:bg-[#1ebe5d] transition-colors mb-3"
@@ -179,10 +186,10 @@ export default function PropertyDetail() {
                   </a>
 
                   <a
-                    href="tel:+919773740037"
+                    href={`tel:${PHONE_E164}`}
                     className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors mb-3"
                   >
-                    <Phone size={16} /> Call +91-9773740037
+                    <Phone size={16} /> Call {PHONE_DISPLAY}
                   </a>
 
                   <Link

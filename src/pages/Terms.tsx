@@ -1,9 +1,16 @@
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { useEffect } from "react";
+import { applySEO } from "@/lib/seo";
 
 export default function Terms() {
-  useEffect(() => { document.title = "Terms of Service | L2S Infra"; }, []);
+  useEffect(() => {
+    applySEO({
+      title: "Terms of Service | L2S Infra",
+      description: "The terms governing use of the L2S Infra website and advisory services.",
+      path: "/terms-of-service",
+    });
+  }, []);
   return (
     <>
       <Navbar />

@@ -13,8 +13,19 @@ import { FAQSection } from "@/components/landing/FAQSection";
 import { ContactSection } from "@/components/landing/ContactSection";
 import { Footer } from "@/components/landing/Footer";
 import { WhatsAppButton } from "@/components/landing/WhatsAppButton";
+import { useEffect } from "react";
+import { applySEO } from "@/lib/seo";
 
 const Index = () => {
+  useEffect(() => {
+    applySEO({
+      title: "L2S Infra - Luxury Real Estate Advisory in India | Premium Properties Gurgaon, Mumbai, Delhi",
+      description:
+        "India's premier luxury real estate advisory. L2S Infra curates premium residential, commercial, and farmhouse properties in Gurgaon, Mumbai, Delhi NCR, Bangalore for HNI investors and NRIs.",
+      path: "/",
+    });
+  }, []);
+
   return (
     <>
       <Navbar />

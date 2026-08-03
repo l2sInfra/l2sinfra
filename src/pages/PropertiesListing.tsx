@@ -5,6 +5,7 @@ import type { Property, PropertyType } from "@/lib/database.types";
 import { MapPin, BedDouble, Maximize, ArrowRight, Search } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
+import { applySEO } from "@/lib/seo";
 
 const typeLabel: Record<PropertyType, string> = {
   residential: "Residential",
@@ -22,7 +23,12 @@ export default function PropertiesListing() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    document.title = "Premium Property Listings | L2S Infra - Luxury Real Estate India";
+    applySEO({
+      title: "Premium Property Listings | L2S Infra - Luxury Real Estate India",
+      description:
+        "Browse curated luxury residential, commercial and farmhouse properties across Gurgaon, Mumbai, Delhi NCR, Bangalore, Pune, Hyderabad and Goa, advised by L2S Infra.",
+      path: "/properties",
+    });
     supabase
       .from("properties")
       .select("*")

@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { applySEO } from "@/lib/seo";
 
 export default function AdminLogin() {
   const { signIn, resetPassword } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    applySEO({ title: "Sign in | L2S Infra", path: "/admin/login", noindex: true });
+  }, []);
   const [mode, setMode] = useState<"login" | "forgot">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

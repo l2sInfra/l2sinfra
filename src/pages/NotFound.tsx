@@ -1,11 +1,19 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { applySEO } from "@/lib/seo";
 
 const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
+    // The SPA rewrite serves index.html (HTTP 200) for unknown URLs, so noindex
+    // is what keeps these out of the index — see docs/SEO-NOTES.md.
+    applySEO({
+      title: "Page not found | L2S Infra",
+      description: "The page you were looking for isn't here.",
+      path: location.pathname,
+      noindex: true,
+    });
   }, [location.pathname]);
 
   return (

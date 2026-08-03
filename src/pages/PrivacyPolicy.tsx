@@ -1,9 +1,17 @@
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { useEffect } from "react";
+import { CONTACT_EMAIL, PHONE_DISPLAY } from "@/lib/site-contact";
+import { applySEO } from "@/lib/seo";
 
 export default function PrivacyPolicy() {
-  useEffect(() => { document.title = "Privacy Policy | L2S Infra"; }, []);
+  useEffect(() => {
+    applySEO({
+      title: "Privacy Policy | L2S Infra",
+      description: "How L2S Infra collects, uses, stores and deletes the personal information you share with us.",
+      path: "/privacy-policy",
+    });
+  }, []);
   return (
     <>
       <Navbar />
@@ -29,9 +37,9 @@ export default function PrivacyPolicy() {
             <h2>5. Cookies</h2>
             <p>Our website may use cookies to enhance your experience. You can choose to disable cookies through your browser settings, though this may affect certain features of our website.</p>
             <h2>6. Your Rights</h2>
-            <p>You have the right to access, correct, or delete your personal information held by us. To exercise these rights, please contact us at connect@l2sinfra.com.</p>
+            <p>You have the right to access, correct, or delete your personal information held by us. To exercise these rights, please contact us at {CONTACT_EMAIL}.</p>
             <h2>7. Contact</h2>
-            <p>For privacy-related queries, contact us at connect@l2sinfra.com or +91-9773740037.</p>
+            <p>For privacy-related queries, contact us at {CONTACT_EMAIL} or {PHONE_DISPLAY}.</p>
           </div>
         </div>
       </main>

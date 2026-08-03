@@ -3,6 +3,7 @@ import { useState } from "react";
 import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
+import { CONTACT_EMAIL, PHONE_DISPLAY, PHONE_E164, whatsappLink } from "@/lib/site-contact";
 
 const budgetRanges = ["₹2 – 5 Cr", "₹5 – 10 Cr", "₹10 – 25 Cr", "₹25 – 50 Cr", "₹50 Cr+"];
 const propertyInterests = ["Luxury Residential", "Premium Commercial", "Lands & Plots", "Farm Houses", "Investment Portfolio"];
@@ -164,15 +165,15 @@ export function ContactSection() {
                 <Phone size={20} className="text-primary mt-1 shrink-0" />
                 <div>
                   <p className="font-semibold text-foreground">Phone</p>
-                  <a href="tel:+919773740037" className="text-muted-foreground text-sm hover:text-primary transition-colors">+91-9773740037</a>
+                  <a href={`tel:${PHONE_E164}`} className="text-muted-foreground text-sm hover:text-primary transition-colors">{PHONE_DISPLAY}</a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <MessageCircle size={20} className="text-primary mt-1 shrink-0" />
                 <div>
                   <p className="font-semibold text-foreground">WhatsApp</p>
-                  <a href="https://wa.me/919773740037" target="_blank" rel="noopener noreferrer" className="text-muted-foreground text-sm hover:text-primary transition-colors">
-                    +91-9773740037
+                  <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                    {PHONE_DISPLAY}
                   </a>
                 </div>
               </div>
@@ -180,7 +181,7 @@ export function ContactSection() {
                 <Mail size={20} className="text-primary mt-1 shrink-0" />
                 <div>
                   <p className="font-semibold text-foreground">Email</p>
-                  <a href="mailto:connect@l2sinfra.com" className="text-muted-foreground text-sm hover:text-primary transition-colors">connect@l2sinfra.com</a>
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-muted-foreground text-sm hover:text-primary transition-colors">{CONTACT_EMAIL}</a>
                 </div>
               </div>
               <div className="flex items-start gap-4">

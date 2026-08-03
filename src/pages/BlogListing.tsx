@@ -5,13 +5,19 @@ import type { BlogPost } from "@/lib/database.types";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
+import { applySEO } from "@/lib/seo";
 
 export default function BlogListing() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Market Insights & Real Estate Research | L2S Infra";
+    applySEO({
+      title: "Market Insights & Real Estate Research | L2S Infra",
+      description:
+        "Research-led commentary on India's luxury property markets — Gurgaon, Delhi NCR, Mumbai and Bangalore — plus NRI investment guidance from the L2S Infra advisory team.",
+      path: "/insights",
+    });
     supabase.from("blog_posts").select("*").eq("is_published", true).order("published_at", { ascending: false }).then(({ data }) => {
       setPosts(data ?? []);
       setLoading(false);

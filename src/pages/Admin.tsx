@@ -10,6 +10,7 @@ import { useAuth } from "@/lib/auth";
 import { RichTextEditor } from "@/components/RichTextEditor";
 import type { Property, BlogPost, Lead, Testimonial } from "@/lib/database.types";
 import { toast } from "sonner";
+import { applySEO } from "@/lib/seo";
 
 const sidebarItems = [
   { label: "Dashboard", icon: LayoutDashboard, key: "dashboard" },
@@ -25,6 +26,11 @@ export default function Admin() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
+
+  // robots.txt Disallow doesn't stop indexing of a URL someone links to — this does.
+  useEffect(() => {
+    applySEO({ title: "Admin | L2S Infra", path: "/admin", noindex: true });
+  }, []);
 
   const handleSignOut = async () => {
     await signOut();
@@ -760,8 +766,8 @@ function SettingsPanel() {
       <h1 className="font-heading text-3xl font-bold text-foreground mb-8">Site Settings</h1>
       <div className="bg-card border border-border rounded-xl p-6 space-y-5">
         {[
-          { key: "whatsapp_number", label: "WhatsApp Number (with country code, no +)", placeholder: "919773740037" },
-          { key: "contact_phone", label: "Display Phone Number", placeholder: "+91-9773740037" },
+          { key: "whatsapp_number", label: "WhatsApp Number (with country code, no +)", placeholder: "919818242500" },
+          { key: "contact_phone", label: "Display Phone Number", placeholder: "+91-9818242500" },
           { key: "contact_email", label: "Contact Email", placeholder: "connect@l2sinfra.com" },
           { key: "office_address", label: "Office Address", placeholder: "Bani City Centre, Sector 63, Gurgaon" },
           { key: "business_hours", label: "Business Hours", placeholder: "Mon – Sat: 10:00 AM – 7:00 PM" },
