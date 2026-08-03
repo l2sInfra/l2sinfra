@@ -38,6 +38,7 @@ CREAM = (250, 248, 244)   # --cream: hsl(40 30% 97%)
 
 SERIF_BOLD = "/System/Library/Fonts/Supplemental/Georgia Bold.ttf"
 SANS = "/System/Library/Fonts/Supplemental/Arial.ttf"
+SANS_BOLD = "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
 
 
 def font(path: str, size: int) -> ImageFont.FreeTypeFont:
@@ -45,6 +46,20 @@ def font(path: str, size: int) -> ImageFont.FreeTypeFont:
         return ImageFont.truetype(path, size)
     except OSError:
         return ImageFont.load_default()
+
+
+def fit_font(draw: ImageDraw.ImageDraw, path: str, text: str, max_w: int, start: int):
+    """Largest font size at or below `start` whose text fits within max_w.
+
+    Picking a fixed ratio of the tile is what let the 16px mark overflow its
+    own tile; measuring instead means it cannot.
+    """
+    for size in range(start, 3, -1):
+        f = font(path, size)
+        left, _, right, _ = draw.textbbox((0, 0), text, font=f)
+        if right - left <= max_w:
+            return f
+    return font(path, 4)
 
 
 def centred(draw: ImageDraw.ImageDraw, box, text: str, f, fill):
@@ -68,11 +83,10 @@ def make_tile(size: int, logo: Image.Image | None) -> Image.Image:
         art = logo.copy()
         art.thumbnail((inner, inner), Image.LANCZOS)
         img.paste(art, ((size - art.width) // 2, (size - art.height) // 2), art)
-    else:
-        # "L2S" wordmark, optically centred with a slight upward bias
+    elif size >= 128:
+        # Full mark: serif "L2S" over a gold rule, echoing the site's wordmark.
         f = font(SERIF_BOLD, int(size * 0.42))
         centred(draw, (0, int(-size * 0.02), size, size), "L2S", f, GOLD)
-        # gold underscore, echoing the site's gold rules
         bar_w, bar_h = int(size * 0.34), max(2, int(size * 0.045))
         bar_y = int(size * 0.72)
         draw.rounded_rectangle(
@@ -80,6 +94,17 @@ def make_tile(size: int, logo: Image.Image | None) -> Image.Image:
             radius=bar_h // 2,
             fill=GOLD,
         )
+    elif size >= 32:
+        # No rule — at this size it reads as noise rather than as a rule.
+        f = fit_font(draw, SERIF_BOLD, "L2S", int(size * 0.80), int(size * 0.50))
+        centred(draw, (0, 0, size, size), "L2S", f, GOLD)
+    else:
+        # Three glyphs cannot be read in 16px — about four pixels each, and
+        # "2S" collapses into one shape whatever the weight. Drop to the initial
+        # so the smallest frame is legible; 32px and up still carry the full
+        # "L2S", and that is what retina tabs actually request.
+        f = fit_font(draw, SERIF_BOLD, "L", size - 3, int(size * 0.82))
+        centred(draw, (0, 0, size, size), "L", f, GOLD)
     return img
 
 
@@ -116,7 +141,7 @@ def make_og(logo: Image.Image | None) -> Image.Image:
     draw.rounded_rectangle([(W - 90) // 2, rule_y, (W + 90) // 2, rule_y + 4], radius=2, fill=GOLD)
 
     centred(draw, (0, rule_y + 40, W, rule_y + 90),
-            "Luxury Real Estate Advisory", f_tag, (222, 226, 232))
+            "Luxury Real Estate Agency", f_tag, (222, 226, 232))
     centred(draw, (0, rule_y + 96, W, rule_y + 140),
             "Gurgaon  ·  Delhi NCR", f_meta, GOLD_LIGHT)
     return img
@@ -132,16 +157,21 @@ def main() -> None:
 
     PUBLIC.mkdir(exist_ok=True)
 
+    # Render each size independently rather than downscaling one master —
+    # otherwise the small-size branches in make_tile never run and 16px comes
+    # out as an unreadable smudge of serif.
     master = make_tile(512, source)
     master.save(PUBLIC / "logo.png")
-    master.resize((192, 192), Image.LANCZOS).save(PUBLIC / "android-chrome-192x192.png")
     master.save(PUBLIC / "android-chrome-512x512.png")
-    master.resize((180, 180), Image.LANCZOS).save(PUBLIC / "apple-touch-icon.png")
-    master.resize((32, 32), Image.LANCZOS).save(PUBLIC / "favicon-32x32.png")
-    master.resize((16, 16), Image.LANCZOS).save(PUBLIC / "favicon-16x16.png")
+    make_tile(192, source).save(PUBLIC / "android-chrome-192x192.png")
+    make_tile(180, source).save(PUBLIC / "apple-touch-icon.png")
+    make_tile(32, source).save(PUBLIC / "favicon-32x32.png")
+    make_tile(16, source).save(PUBLIC / "favicon-16x16.png")
 
-    # Multi-resolution .ico so the browser tab and Windows both get a crisp mark
-    master.save(PUBLIC / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
+    # Multi-resolution .ico, each frame drawn at its own size for the same reason
+    ico = make_tile(48, source)
+    ico.save(PUBLIC / "favicon.ico", sizes=[(48, 48), (32, 32), (16, 16)],
+             append_images=[make_tile(32, source), make_tile(16, source)])
 
     make_og(source).save(PUBLIC / "og-image.jpg", quality=88, optimize=True)
 
