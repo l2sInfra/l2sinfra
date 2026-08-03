@@ -56,7 +56,7 @@ export function ServicesSection() {
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
             What we actually{" "}
-            <span className="text-gradient-gold">Solutions</span>
+            <span className="text-gradient-gold">do</span>
           </h2>
         </motion.div>
 

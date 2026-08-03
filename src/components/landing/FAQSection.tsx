@@ -48,7 +48,7 @@ const faqSchema = {
 
 export function FAQSection() {
   return (
-    <section id="insights" className="section-padding bg-background">
+    <section id="faq" className="section-padding bg-background">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

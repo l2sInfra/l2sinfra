@@ -45,7 +45,7 @@ export function HowItWorksSection() {
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
             How the work{" "}
-            <span className="text-gradient-gold">Luxury Living</span>
+            <span className="text-gradient-gold">actually goes</span>
           </h2>
         </motion.div>
 

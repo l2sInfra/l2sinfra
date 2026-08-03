@@ -10,13 +10,14 @@ const quickLinks = [
   { label: "Contact", href: "/#contact" },
 ];
 
+// Must match the cards in ServicesSection — they sit on the same page.
 const serviceLinks = [
-  "Luxury Residential",
-  "Commercial Real Estate",
-  "Investment Consulting",
+  "Buying a Home",
+  "Selling & Resale",
+  "Commercial & Office",
   "NRI Services",
-  "Portfolio Management",
-  "Due Diligence",
+  "Investment & Portfolio",
+  "Due Diligence & Paperwork",
 ];
 
 export function Footer() {
