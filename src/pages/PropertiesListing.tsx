@@ -6,6 +6,8 @@ import { MapPin, BedDouble, Maximize, ArrowRight, Search } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { applySEO } from "@/lib/seo";
+import { useQueryState } from "@/lib/use-query-state";
+import { SectionError } from "@/components/SectionState";
 import { ROUTE_META } from "@/lib/route-meta";
 
 const typeLabel: Record<PropertyType, string> = {
@@ -17,25 +19,22 @@ const typeLabel: Record<PropertyType, string> = {
 const cities = ["All Cities", "Gurgaon", "Delhi"];
 
 export default function PropertiesListing() {
-  const [properties, setProperties] = useState<Property[]>([]);
-  const [loading, setLoading] = useState(true);
   const [typeFilter, setTypeFilter] = useState<string>("all");
   const [cityFilter, setCityFilter] = useState("All Cities");
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     applySEO(ROUTE_META["/properties"]);
+  }, []);
+
+  const { rows: properties, state, retry } = useQueryState<Property>(() =>
     supabase
       .from("properties")
       .select("*")
       .eq("status", "available")
       .order("is_featured", { ascending: false })
-      .order("created_at", { ascending: false })
-      .then(({ data }) => {
-        setProperties(data ?? []);
-        setLoading(false);
-      });
-  }, []);
+      .order("created_at", { ascending: false }),
+  );
 
   const filtered = properties.filter((p) => {
     const matchType = typeFilter === "all" || p.property_type === typeFilter;
@@ -85,12 +84,16 @@ export default function PropertiesListing() {
           </div>
 
           {/* Results count */}
-          {!loading && (
-            <p className="text-muted-foreground text-sm mb-6">{filtered.length} {filtered.length === 1 ? "property" : "properties"} found</p>
+          {(state === "ready" || state === "empty") && (
+            <p role="status" aria-live="polite" className="text-muted-foreground text-sm mb-6">
+              {filtered.length} {filtered.length === 1 ? "property" : "properties"} found
+            </p>
           )}
 
           {/* Grid */}
-          {loading ? (
+          {state === "error" ? (
+            <SectionError onRetry={retry} what="our listings" />
+          ) : state === "loading" ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="bg-card border border-border rounded-2xl overflow-hidden animate-pulse">

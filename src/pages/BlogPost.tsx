@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import type { BlogPost as BlogPostType } from "@/lib/database.types";
@@ -7,40 +7,39 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { applySEO } from "@/lib/seo";
 import { postMeta } from "@/lib/route-meta";
+import { useRecordState } from "@/lib/use-record-state";
+import { SectionError } from "@/components/SectionState";
 import { sanitizeHtml } from "@/lib/sanitize";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogPostType | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+  const { record: post, state, retry } = useRecordState<BlogPostType>(
+    () =>
+      supabase
+        .from("blog_posts")
+        .select("*")
+        .eq("slug", slug!)
+        .eq("is_published", true)
+        .single(),
+    [slug],
+  );
 
   useEffect(() => {
-    if (!slug) return;
-    supabase
-      .from("blog_posts")
-      .select("*")
-      .eq("slug", slug)
-      .eq("is_published", true)
-      .single()
-      .then(({ data, error }) => {
-        if (error || !data) {
-          setNotFound(true);
-        } else {
-          setPost(data);
-          applySEO(postMeta(data));
-        }
-        setLoading(false);
-      });
-  }, [slug]);
+    if (post) applySEO(postMeta(post));
+  }, [post]);
 
-  if (notFound) return <Navigate to="/insights" replace />;
+  // Only an absent or unpublished post redirects; a failed query shows an error.
+  if (state === "missing") return <Navigate to="/insights" replace />;
 
   return (
     <>
       <Navbar />
       <main id="main" className="min-h-screen bg-background pt-24">
-        {loading ? (
+        {state === "error" ? (
+          <div className="max-w-2xl mx-auto section-padding">
+            <SectionError onRetry={retry} what="this article" />
+          </div>
+        ) : state === "loading" ? (
           <div className="max-w-3xl mx-auto section-padding animate-pulse space-y-6">
             <div className="h-8 bg-muted rounded w-3/4" />
             <div className="h-64 bg-muted rounded-2xl" />

@@ -20,6 +20,19 @@ if (isBrowser && (!supabaseUrl || !supabaseAnonKey)) {
   );
 }
 
+/**
+ * NOT typed with <Database> — and that is a known gap, not an oversight.
+ *
+ * src/lib/database.types.ts is hand-written and is not compatible with
+ * supabase-js 2.99: applying the generic makes every Insert resolve to `never`
+ * and produces 16 compile errors across the forms and the admin console. The
+ * fix is to generate the file properly —
+ *
+ *     supabase gen types typescript --project-id <ref> > src/lib/database.types.ts
+ *
+ * — which needs project credentials. Until then queries return `any`, so a
+ * typo'd column or table name will not be caught at compile time.
+ */
 export const supabase = createClient(
   supabaseUrl ?? "https://prerender.invalid",
   supabaseAnonKey ?? "prerender-placeholder",

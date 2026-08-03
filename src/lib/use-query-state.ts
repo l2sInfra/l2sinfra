@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { PostgrestError } from "@supabase/supabase-js";
+import type { PostgrestResponse } from "@supabase/supabase-js";
 
 /**
  * Four states, not two.
@@ -21,7 +21,13 @@ interface Result<T> {
   retry: () => void;
 }
 
-type Fetcher<T> = () => PromiseLike<{ data: T[] | null; error: PostgrestError | null }>;
+/**
+ * PostgrestResponse rather than a hand-written shape: a structural `{ data,
+ * error }` is satisfied by the `any` an unknown table name produces, so a
+ * typo'd table inside the callback type-checked even with the Database generic
+ * applied. This signature makes the callback's result a constrained position.
+ */
+type Fetcher<T> = () => PromiseLike<PostgrestResponse<T>>;
 
 export function useQueryState<T>(fetcher: Fetcher<T>, deps: unknown[] = []): Result<T> {
   const [rows, setRows] = useState<T[]>([]);

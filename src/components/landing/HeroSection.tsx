@@ -20,6 +20,13 @@ export function HeroSection() {
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  // The block fades to opacity 0 but stays in the DOM, so both CTAs remained
+  // focusable while completely invisible — a keyboard user tabbed onto nothing
+  // they could see (WCAG 2.4.7). Drive visibility from the same value so the
+  // browser removes them from the tab order once they're gone.
+  const contentVisibility = useTransform(scrollYProgress, (v) =>
+    v > 0.58 ? "hidden" : "visible",
+  );
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -81,7 +88,7 @@ export function HeroSection() {
 
       <motion.div
         className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20 w-full"
-        style={{ y: contentY, opacity: contentOpacity }}
+        style={{ y: contentY, opacity: contentOpacity, visibility: contentVisibility }}
       >
         <div className="max-w-3xl">
           <motion.p

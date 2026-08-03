@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import type { BlogPost } from "@/lib/database.types";
@@ -7,18 +7,21 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { applySEO } from "@/lib/seo";
 import { ROUTE_META } from "@/lib/route-meta";
+import { useQueryState } from "@/lib/use-query-state";
+import { SectionError, SectionEmpty } from "@/components/SectionState";
 
 export default function BlogListing() {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     applySEO(ROUTE_META["/insights"]);
-    supabase.from("blog_posts").select("*").eq("is_published", true).order("published_at", { ascending: false }).then(({ data }) => {
-      setPosts(data ?? []);
-      setLoading(false);
-    });
   }, []);
+
+  const { rows: posts, state, retry } = useQueryState<BlogPost>(() =>
+    supabase
+      .from("blog_posts")
+      .select("*")
+      .eq("is_published", true)
+      .order("published_at", { ascending: false }),
+  );
 
   return (
     <>
@@ -35,7 +38,14 @@ export default function BlogListing() {
             </p>
           </div>
 
-          {loading ? (
+          {state === "error" ? (
+            <SectionError onRetry={retry} what="our insights" />
+          ) : state === "empty" ? (
+            <SectionEmpty>
+              Our corridor notes go to clients first. Tell us which corridor
+              you're looking at and we'll send you the current one.
+            </SectionEmpty>
+          ) : state === "loading" ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="bg-card border border-border rounded-2xl overflow-hidden animate-pulse">

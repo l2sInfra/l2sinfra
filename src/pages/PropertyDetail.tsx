@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import type { Property, PropertyType } from "@/lib/database.types";
@@ -8,6 +8,8 @@ import { Footer } from "@/components/landing/Footer";
 import { PHONE_DISPLAY, PHONE_E164, whatsappLink } from "@/lib/site-contact";
 import { applySEO } from "@/lib/seo";
 import { propertyMeta } from "@/lib/route-meta";
+import { useRecordState } from "@/lib/use-record-state";
+import { SectionError } from "@/components/SectionState";
 
 const typeLabel: Record<PropertyType, string> = {
   residential: "Residential",
@@ -43,37 +45,31 @@ function getYouTubeEmbedUrl(url: string): string | null {
 
 export default function PropertyDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const [property, setProperty] = useState<Property | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+  const { record: property, state, retry } = useRecordState<Property>(
+    () => supabase.from("properties").select("*").eq("slug", slug!).single(),
+    [slug],
+  );
 
   useEffect(() => {
-    if (!slug) return;
-    supabase
-      .from("properties")
-      .select("*")
-      .eq("slug", slug)
-      .single()
-      .then(({ data, error }) => {
-        if (error || !data) {
-          setNotFound(true);
-        } else {
-          setProperty(data);
-          applySEO(propertyMeta(data));
-        }
-        setLoading(false);
-      });
-  }, [slug]);
+    if (property) applySEO(propertyMeta(property));
+  }, [property]);
 
   const videoEmbedUrl = property?.video_url ? getYouTubeEmbedUrl(property.video_url) : null;
 
-  if (notFound) return <Navigate to="/properties" replace />;
+  // Only a genuinely absent listing redirects. A failed query renders an error
+  // with a retry — sending someone to a listing page that will also be empty
+  // tells them the catalogue is gone when the database is merely unreachable.
+  if (state === "missing") return <Navigate to="/properties" replace />;
 
   return (
     <>
       <Navbar />
       <main id="main" className="min-h-screen bg-background pt-24">
-        {loading ? (
+        {state === "error" ? (
+          <div className="max-w-2xl mx-auto section-padding">
+            <SectionError onRetry={retry} what="this listing" />
+          </div>
+        ) : state === "loading" ? (
           <div className="max-w-6xl mx-auto section-padding animate-pulse space-y-6">
             <div className="h-80 bg-muted rounded-2xl" />
             <div className="h-8 bg-muted rounded w-1/2" />

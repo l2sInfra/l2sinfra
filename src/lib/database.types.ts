@@ -82,6 +82,12 @@ export interface SiteSetting {
 }
 
 export interface Database {
+  // supabase-js 2.99 looks for this marker to recognise a typed Database.
+  // Without it the whole type is unrecognised and every Insert resolves to
+  // `never`, which is why applying the generic produced 16 errors.
+  __InternalSupabase: {
+    PostgrestVersion: "12";
+  };
   public: {
     Tables: {
       properties: {

@@ -97,6 +97,11 @@ export function ContactSection() {
   };
 
   const inp = "w-full border border-border rounded-lg px-4 py-3 text-sm bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1";
+  // Placeholder-as-label fails WCAG 1.3.1 and 3.3.2 — it vanishes the moment
+  // someone types, taking the required marker with it. And <select> takes no
+  // placeholder at all, so those three had no accessible name whatsoever.
+  const req = <span className="text-gold-ink" aria-hidden="true"> *</span>;
+  const lbl = "block text-sm font-medium text-foreground mb-2";
 
   return (
     <section id="contact" className="section-padding bg-background">
@@ -126,24 +131,42 @@ export function ContactSection() {
             className="space-y-5"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input type="text" placeholder="Full Name *" required autoComplete="name" maxLength={100} value={form.full_name} onChange={(e) => set("full_name", e.target.value)} className={inp} />
-              <input type="email" placeholder="Email Address *" required autoComplete="email" maxLength={255} value={form.email} onChange={(e) => set("email", e.target.value)} className={inp} />
+              <div>
+                <label htmlFor="c-name" className={lbl}>Full name{req}</label>
+                <input id="c-name" type="text" required autoComplete="name" maxLength={100} value={form.full_name} onChange={(e) => set("full_name", e.target.value)} className={inp} />
+              </div>
+              <div>
+                <label htmlFor="c-email" className={lbl}>Email address{req}</label>
+                <input id="c-email" type="email" required autoComplete="email" maxLength={255} value={form.email} onChange={(e) => set("email", e.target.value)} className={inp} />
+              </div>
             </div>
-            <input type="tel" placeholder="Phone (with country code) *" required autoComplete="tel" maxLength={20} value={form.phone} onChange={(e) => set("phone", e.target.value)} className={inp} />
+            <div>
+              <label htmlFor="c-phone" className={lbl}>Phone, with country code{req}</label>
+              <input id="c-phone" type="tel" required autoComplete="tel" maxLength={20} value={form.phone} onChange={(e) => set("phone", e.target.value)} className={inp} />
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <select required value={form.property_interest} onChange={(e) => set("property_interest", e.target.value)} className={inp}>
-                <option value="">Property Interest *</option>
-                {propertyInterests.map((p) => <option key={p} value={p}>{p}</option>)}
-              </select>
-              <select required value={form.budget_range} onChange={(e) => set("budget_range", e.target.value)} className={inp}>
-                <option value="">Budget Range *</option>
-                {budgetRanges.map((b) => <option key={b} value={b}>{b}</option>)}
+              <div>
+                <label htmlFor="c-interest" className={lbl}>What are you looking for?{req}</label>
+                <select id="c-interest" required value={form.property_interest} onChange={(e) => set("property_interest", e.target.value)} className={inp}>
+                  <option value="">Please choose</option>
+                  {propertyInterests.map((p) => <option key={p} value={p}>{p}</option>)}
+                </select>
+              </div>
+              <div>
+                <label htmlFor="c-budget" className={lbl}>Budget range{req}</label>
+                <select id="c-budget" required value={form.budget_range} onChange={(e) => set("budget_range", e.target.value)} className={inp}>
+                  <option value="">Please choose</option>
+                  {budgetRanges.map((b) => <option key={b} value={b}>{b}</option>)}
+                </select>
+              </div>
+            </div>
+            <div>
+              <label htmlFor="c-location" className={lbl}>Preferred location</label>
+              <select id="c-location" value={form.preferred_location} onChange={(e) => set("preferred_location", e.target.value)} className={inp}>
+                <option value="">No preference yet</option>
+                {locations.map((l) => <option key={l} value={l}>{l}</option>)}
               </select>
             </div>
-            <select value={form.preferred_location} onChange={(e) => set("preferred_location", e.target.value)} className={inp}>
-              <option value="">Preferred Location</option>
-              {locations.map((l) => <option key={l} value={l}>{l}</option>)}
-            </select>
             {/* Honeypot. Hidden from assistive tech and from sighted users. */}
             <div aria-hidden="true" className="absolute left-[-9999px] w-px h-px overflow-hidden">
               <label htmlFor="company">Company (leave blank)</label>
@@ -157,14 +180,17 @@ export function ContactSection() {
                 onChange={(e) => setCompany(e.target.value)}
               />
             </div>
-            <textarea
-              placeholder="Tell us about your requirements..."
-              rows={4}
-              maxLength={1000}
-              value={form.message}
-              onChange={(e) => set("message", e.target.value)}
-              className={`${inp} resize-none`}
-            />
+            <div>
+              <label htmlFor="c-message" className={lbl}>Anything we should know</label>
+              <textarea
+                id="c-message"
+                rows={4}
+                maxLength={1000}
+                value={form.message}
+                onChange={(e) => set("message", e.target.value)}
+                className={`${inp} resize-none`}
+              />
+            </div>
             <div className="flex items-start gap-2 text-sm text-muted-foreground">
               <input
                 id="consent"

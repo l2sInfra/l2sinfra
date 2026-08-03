@@ -12,6 +12,34 @@ import type { Property, BlogPost, Lead, Testimonial } from "@/lib/database.types
 import { toast } from "sonner";
 import { applySEO } from "@/lib/seo";
 
+/**
+ * Postgres errors are not user-facing sentences. Map the ones an operator can
+ * actually hit; fall back to a plain apology rather than leaking constraint
+ * names into the UI.
+ */
+function describeDbError(error: { code?: string; message: string }): string {
+  if (error.code === "23505") return "Something with that name or URL already exists.";
+  if (error.code === "23502") return "A required field is missing.";
+  if (error.code === "42501" || error.code === "PGRST301")
+    return "You don't have permission to do that. Try signing in again.";
+  return "That didn't save. Please try again.";
+}
+
+/**
+ * Deletes under RLS return success with zero rows when the policy denies them,
+ * so `await delete()` then `toast.success` could report a deletion that never
+ * happened. Ask for the deleted rows back and check we got one.
+ */
+async function deleteChecked(
+  table: "properties" | "blog_posts" | "testimonials",
+  id: string,
+): Promise<string | null> {
+  const { data, error } = await supabase.from(table).delete().eq("id", id).select("id");
+  if (error) return describeDbError(error);
+  if (!data || data.length === 0) return "Nothing was deleted — you may not have permission.";
+  return null;
+}
+
 const sidebarItems = [
   { label: "Dashboard", icon: LayoutDashboard, key: "dashboard" },
   { label: "Properties", icon: Building2, key: "properties" },
@@ -181,7 +209,8 @@ function PropertiesPanel() {
 
   const remove = async (id: string) => {
     if (!confirm("Delete this property?")) return;
-    await supabase.from("properties").delete().eq("id", id);
+    const failure = await deleteChecked("properties", id);
+    if (failure) { toast.error(failure); return; }
     toast.success("Property deleted.");
     load();
   };
@@ -405,14 +434,19 @@ function BlogsPanel() {
   };
 
   const togglePublish = async (post: BlogPost) => {
-    await supabase.from("blog_posts").update({ is_published: !post.is_published }).eq("id", post.id);
+    const { error } = await supabase
+      .from("blog_posts")
+      .update({ is_published: !post.is_published })
+      .eq("id", post.id);
+    if (error) { toast.error(describeDbError(error)); return; }
     toast.success(post.is_published ? "Post unpublished." : "Post published!");
     load();
   };
 
   const remove = async (id: string) => {
     if (!confirm("Delete this post?")) return;
-    await supabase.from("blog_posts").delete().eq("id", id);
+    const failure = await deleteChecked("blog_posts", id);
+    if (failure) { toast.error(failure); return; }
     toast.success("Post deleted.");
     load();
   };
@@ -490,7 +524,7 @@ function BlogForm({ post, onChange, onSave, onCancel, isNew }: {
           </div>
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">Publish Date</label>
-            <input type="date" className={inp} value={post.published_at ? post.published_at.slice(0, 10) : ""} onChange={(e) => f("published_at", new Date(e.target.value).toISOString())} />
+            <input type="date" className={inp} value={post.published_at ? post.published_at.slice(0, 10) : ""} onChange={(e) => f("published_at", e.target.value ? new Date(e.target.value).toISOString() : null)} />
           </div>
         </div>
 
@@ -561,7 +595,8 @@ function LeadsPanel() {
   useEffect(() => { load(); }, [filter]);
 
   const updateStatus = async (id: string, status: Lead["status"]) => {
-    await supabase.from("leads").update({ status }).eq("id", id);
+    const { error } = await supabase.from("leads").update({ status }).eq("id", id);
+    if (error) { toast.error(describeDbError(error)); return; }
     toast.success("Status updated.");
     load();
   };
@@ -659,24 +694,30 @@ function TestimonialsPanel() {
 
   const save = async () => {
     if (!editing?.quote || !editing?.client_name) { toast.error("Quote and name required."); return; }
-    if (isNew) {
-      await supabase.from("testimonials").insert({ ...editing, is_active: true, sort_order: testimonials.length } as Testimonial);
-    } else {
-      await supabase.from("testimonials").update(editing).eq("id", editing.id!);
-    }
+    const { error } = isNew
+      ? await supabase
+          .from("testimonials")
+          .insert({ ...editing, is_active: true, sort_order: testimonials.length } as Testimonial)
+      : await supabase.from("testimonials").update(editing).eq("id", editing.id!);
+    if (error) { toast.error(describeDbError(error)); return; }
     toast.success("Testimonial saved!");
     setEditing(null);
     load();
   };
 
   const toggle = async (t: Testimonial) => {
-    await supabase.from("testimonials").update({ is_active: !t.is_active }).eq("id", t.id);
+    const { error } = await supabase
+      .from("testimonials")
+      .update({ is_active: !t.is_active })
+      .eq("id", t.id);
+    if (error) { toast.error(describeDbError(error)); return; }
     load();
   };
 
   const remove = async (id: string) => {
     if (!confirm("Delete testimonial?")) return;
-    await supabase.from("testimonials").delete().eq("id", id);
+    const failure = await deleteChecked("testimonials", id);
+    if (failure) { toast.error(failure); return; }
     load();
   };
 
@@ -755,10 +796,10 @@ function SettingsPanel() {
 
   const save = async () => {
     setSaving(true);
-    for (const [key, value] of Object.entries(settings)) {
-      await supabase.from("site_settings").upsert({ key, value }, { onConflict: "key" });
-    }
+    const rows = Object.entries(settings).map(([key, value]) => ({ key, value }));
+    const { error } = await supabase.from("site_settings").upsert(rows, { onConflict: "key" });
     setSaving(false);
+    if (error) { toast.error(describeDbError(error)); return; }
     toast.success("Settings saved!");
   };
 
