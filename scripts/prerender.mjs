@@ -135,9 +135,23 @@ async function main() {
       continue;
     }
 
-    const outDir = meta.path === "/" ? DIST : path.join(DIST, meta.path);
-    await mkdir(outDir, { recursive: true });
-    await writeFile(path.join(outDir, "index.html"), html, "utf-8");
+    // Written in both shapes on purpose. Static hosts disagree about how a
+    // extensionless path resolves: some look for "<route>.html", others for
+    // "<route>/index.html". Serving only one form meant /properties fell
+    // through to the SPA shell while /properties/ worked — which builds
+    // cleanly and fails in production. vercel.json pins cleanUrls so exactly
+    // one of these is the canonical URL and the rest 308 to it.
+    if (meta.path === "/") {
+      await writeFile(path.join(DIST, "index.html"), html, "utf-8");
+    } else {
+      const dir = path.join(DIST, meta.path);
+      await mkdir(dir, { recursive: true });
+      await writeFile(path.join(dir, "index.html"), html, "utf-8");
+
+      const flat = path.join(DIST, `${meta.path}.html`);
+      await mkdir(path.dirname(flat), { recursive: true });
+      await writeFile(flat, html, "utf-8");
+    }
     console.log(`  ✓ ${meta.path}`);
     written++;
   }
