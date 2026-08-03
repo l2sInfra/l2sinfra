@@ -18,6 +18,7 @@ const AdminResetPassword = lazy(() => import("./pages/AdminResetPassword"));
 const BlogListing = lazy(() => import("./pages/BlogListing"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const PropertiesListing = lazy(() => import("./pages/PropertiesListing"));
+const Sell = lazy(() => import("./pages/Sell"));
 const PropertyDetail = lazy(() => import("./pages/PropertyDetail"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const Terms = lazy(() => import("./pages/Terms"));
@@ -83,6 +84,7 @@ export function AppRoutes() {
             <Route path="/insights/:slug" element={<BlogPost />} />
             <Route path="/properties" element={<PropertiesListing />} />
             <Route path="/properties/:slug" element={<PropertyDetail />} />
+            <Route path="/sell" element={<Sell />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<Terms />} />
             <Route path="/disclaimer" element={<Disclaimer />} />

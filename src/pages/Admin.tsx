@@ -598,6 +598,11 @@ function LeadsPanel() {
                     <span className={`text-xs px-2 py-0.5 rounded-full ${statusColor(lead.status)}`}>
                       {lead.status.replace("_", " ")}
                     </span>
+                    {lead.enquiry_type === "sell" && (
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground font-semibold">
+                        Seller
+                      </span>
+                    )}
                   </div>
                   <p className="text-sm text-muted-foreground">{lead.email} · {lead.phone} · {new Date(lead.created_at).toLocaleDateString("en-IN")}</p>
                 </div>
@@ -619,7 +624,7 @@ function LeadsPanel() {
               {expanded === lead.id && (
                 <div className="px-4 pb-4 border-t border-border pt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div><span className="text-muted-foreground">Interest:</span> <span className="text-foreground ml-2">{lead.property_interest}</span></div>
-                  <div><span className="text-muted-foreground">Budget:</span> <span className="text-foreground ml-2">{lead.budget_range}</span></div>
+                  <div><span className="text-muted-foreground">Budget:</span> <span className="text-foreground ml-2">{lead.enquiry_type === "sell" ? "—  (seller)" : lead.budget_range || "Not specified"}</span></div>
                   <div><span className="text-muted-foreground">Location:</span> <span className="text-foreground ml-2">{lead.preferred_location || "Not specified"}</span></div>
                   <div><span className="text-muted-foreground">Source:</span> <span className="text-foreground ml-2">{lead.source || "Website"}</span></div>
                   {lead.message && (

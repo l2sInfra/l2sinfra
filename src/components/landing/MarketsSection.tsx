@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const markets = [
   {
@@ -78,9 +79,14 @@ export function MarketsSection() {
               <p className="text-secondary-foreground/60 text-sm leading-relaxed">
                 {market.description}
               </p>
-              <a href="#contact" className="inline-block mt-4 text-primary text-sm font-semibold hover:text-gold-light transition-colors">
-                Explore Properties →
-              </a>
+              <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold">
+                <Link to="/properties" className="text-primary hover:text-gold-light transition-colors">
+                  Buying here? See what's available
+                </Link>
+                <Link to="/sell" className="text-primary hover:text-gold-light transition-colors">
+                  Selling here? Get the comparables
+                </Link>
+              </div>
             </motion.div>
           ))}
         </div>

@@ -1,6 +1,8 @@
 export type PropertyType = "residential" | "commercial" | "farmhouse_land";
 export type PropertyStatus = "available" | "sold" | "under_negotiation";
 export type LeadStatus = "new" | "contacted" | "in_discussion" | "closed";
+/** Which side of the deal an enquiry is. See migration 0002. */
+export type EnquiryType = "buy" | "sell";
 
 export interface Property {
   id: string;
@@ -51,9 +53,11 @@ export interface Lead {
   email: string;
   phone: string;
   property_interest: string;
-  budget_range: string;
+  /** Null for sellers — they have a property, not a budget. */
+  budget_range?: string | null;
   preferred_location?: string | null;
   message?: string | null;
+  enquiry_type: EnquiryType;
   status: LeadStatus;
   notes?: string | null;
   source?: string | null;

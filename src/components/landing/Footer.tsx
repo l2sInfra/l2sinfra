@@ -5,6 +5,7 @@ import { useSiteContact } from "@/lib/site-contact";
 const quickLinks = [
   { label: "Services", href: "/#services" },
   { label: "Properties", href: "/properties" },
+  { label: "Sell your property", href: "/sell" },
   { label: "Markets", href: "/#markets" },
   { label: "Insights", href: "/insights" },
   { label: "Contact", href: "/#contact" },

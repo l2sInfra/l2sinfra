@@ -21,6 +21,12 @@ export const ROUTE_META: Record<string, SEOOptions> = {
       "Luxury residential, commercial and farmhouse property for sale in Gurgaon and Delhi NCR — Golf Course Road, Golf Course Extension, Dwarka Expressway, Sohna Road and New Gurgaon. Buy or sell with L2S Infra.",
     path: "/properties",
   },
+  "/sell": {
+    title: "Sell Your Property in Gurgaon & Delhi | L2S Infra",
+    description:
+      "Selling a flat, floor or plot in Gurgaon or Delhi? We price against what comparable units in your sector actually transacted for, then run the sale through to registry. Free sector comparables, no obligation.",
+    path: "/sell",
+  },
   "/insights": {
     title: "Market Insights & Real Estate Research | L2S Infra",
     description:

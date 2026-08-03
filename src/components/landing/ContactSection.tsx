@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { useSiteContact, whatsappLink } from "@/lib/site-contact";
 
 const budgetRanges = ["₹2 – 5 Cr", "₹5 – 10 Cr", "₹10 – 25 Cr", "₹25 – 50 Cr", "₹50 Cr+"];
-const propertyInterests = ["Luxury Residential", "Premium Commercial", "Lands & Plots", "Farm Houses", "Investment Portfolio"];
+const propertyInterests = ["I want to sell my property", "Luxury Residential", "Premium Commercial", "Lands & Plots", "Farm Houses", "Investment Portfolio"];
 const locations = [
   "Gurgaon — Golf Course Road",
   "Gurgaon — Golf Course Extension",

@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 // Plain facts, not counters. The figures that used to animate here — years,
 // portfolio value, a satisfaction percentage — were not sourced from anything.
@@ -120,12 +121,12 @@ export function HeroSection() {
             >
               Schedule a consultation
             </a>
-            <a
-              href="#properties"
+            <Link
+              to="/sell"
               className="border-2 border-secondary-foreground/40 text-secondary-foreground px-8 py-4 rounded-lg text-sm font-semibold hover:border-primary hover:text-primary transition-colors text-center"
             >
-              See current listings
-            </a>
+              See what your property is worth
+            </Link>
           </motion.div>
         </div>
       </motion.div>
