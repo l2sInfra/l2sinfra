@@ -14,8 +14,6 @@ const locations = [
   "Gurgaon — Sohna Road",
   "Gurgaon — New Gurgaon",
   "Delhi",
-  "Noida",
-  "Faridabad",
 ];
 
 interface FormData {

@@ -2,13 +2,13 @@ import { motion } from "framer-motion";
 
 const partners = [
   { name: "DLF", abbr: "DLF" },
-  { name: "Lodha", abbr: "LDH" },
   { name: "Godrej Properties", abbr: "GOD" },
   { name: "Sobha Limited", abbr: "SOB" },
   { name: "Birla Estates", abbr: "BRL" },
-  { name: "Adani Realty", abbr: "ADN" },
-  { name: "Trump Towers", abbr: "TRM" },
-  { name: "Emaar India", abbr: "EMR" },
+  { name: "Max Estates", abbr: "MAX" },
+  { name: "Signature Global", abbr: "SGN" },
+  { name: "Ashiana Housing", abbr: "ASH" },
+  { name: "Trump Residences", abbr: "TRM" },
 ];
 
 export function PartnersSection() {
@@ -29,8 +29,9 @@ export function PartnersSection() {
             Trusted by <span className="text-gradient-gold">India's Finest</span>
           </h2>
           <p className="text-accent-foreground/50 mt-6 max-w-2xl mx-auto text-lg">
-            Direct partnerships with Tier-1 developers ensuring you get priority access, 
-            the best pricing, and unmatched after-sales support.
+            The developers building in the corridors we cover. We track their launches,
+            their pricing and — more usefully — how long their last three projects took
+            to actually deliver.
           </p>
         </motion.div>
 

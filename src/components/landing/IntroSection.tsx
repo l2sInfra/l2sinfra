@@ -4,9 +4,9 @@ import { useRef } from "react";
 import luxuryImg from "@/assets/luxury-residential.jpg";
 
 const trustIndicators = [
-  { icon: Shield, label: "RERA Compliant" },
-  { icon: Award, label: "Award-Winning Advisory" },
-  { icon: Users, label: "500+ HNI Clients" },
+  { icon: Shield, label: "One market, not twelve" },
+  { icon: Award, label: "Published corridor research" },
+  { icon: Users, label: "Residential · Commercial · Land" },
 ];
 
 export function IntroSection() {
@@ -32,18 +32,28 @@ export function IntroSection() {
               About L2S Infra
             </p>
             <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground leading-tight mb-6">
-              Redefining Luxury{" "}
-              <span className="text-gradient-gold">Real Estate</span> in India
+              We cover one market.{" "}
+              <span className="text-gradient-gold">That is the point.</span>
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                L2S Infra stands as India's most trusted luxury real estate advisory, serving high-net-worth individuals and NRIs with an unparalleled understanding of the premium property market. With over 15 years of dedicated expertise, we have curated a portfolio exceeding ₹500 crores across Mumbai, Delhi NCR, Bangalore, and other premier destinations.
+                An advisory that sells in six cities knows six markets shallowly. We have
+                worked in Gurgaon and Delhi since 2010, and nowhere else. That is a smaller
+                business and a better one, because the questions that decide a Gurgaon
+                purchase are local ones.
               </p>
               <p>
-                Our mission is to transform real estate investment from a complex transaction into a seamless, rewarding experience. Every client receives personalized attention from our seasoned advisors who leverage deep market intelligence, exclusive developer relationships, and comprehensive due diligence to identify opportunities that align with both lifestyle aspirations and investment objectives.
+                Which side of Golf Course Extension gets the metro alignment. Which sectors
+                on Dwarka Expressway still have an occupancy problem. Which developer's last
+                three deliveries slipped, and by how long. Which tower in a project faces the
+                service road nobody mentions at the launch. None of that is in a brochure.
               </p>
               <p>
-                What sets us apart is our commitment to discretion, transparency, and results. From the initial consultation to post-purchase management, we provide a white-glove service that has earned us the trust of India's most discerning property buyers.
+                So we do the unglamorous part. We read the title chain, check the RERA
+                filing and the approval status, look at what comparable units in the same
+                sector actually resold for, and tell you when the answer is that you should
+                not buy. Then we publish the corridor research we used, so you can argue
+                with it.
               </p>
             </div>
 
@@ -67,14 +77,14 @@ export function IntroSection() {
           >
             <motion.img
               src={luxuryImg}
-              alt="Luxury residential property showcasing modern architecture and elegant interiors"
+              alt="Premium residential tower in Gurgaon with landscaped grounds"
               className="w-full h-[550px] object-cover shadow-2xl"
               style={{ y: imgY }}
               loading="lazy"
             />
             <div className="absolute -bottom-6 -left-6 bg-secondary text-secondary-foreground p-6 rounded-xl shadow-xl z-10">
-              <p className="font-heading text-3xl font-bold text-primary">₹500Cr+</p>
-              <p className="text-secondary-foreground/70 text-sm">Properties Transacted</p>
+              <p className="font-heading text-3xl font-bold text-primary">Since 2010</p>
+              <p className="text-secondary-foreground/70 text-sm">Advising in Gurgaon &amp; Delhi</p>
             </div>
           </motion.div>
         </div>

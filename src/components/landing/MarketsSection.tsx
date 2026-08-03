@@ -3,34 +3,34 @@ import { MapPin } from "lucide-react";
 
 const markets = [
   {
-    city: "Mumbai",
-    neighborhoods: "Worli, Bandra, Lower Parel, BKC, Juhu",
+    city: "Golf Course Road",
+    neighborhoods: "Sectors 42–56, DLF Phases I–V",
     description:
-      "India's financial capital offers unmatched luxury living with sea-facing penthouses, heritage apartments, and world-class commercial spaces in South Mumbai and the Western suburbs.",
+      "Gurgaon's established address, and the one with the longest resale record. Supply is close to finished, which is what supports pricing here — but a unit's floor, tower and view drive a wide spread within the same project. Worth paying for. Worth checking carefully.",
   },
   {
-    city: "Delhi NCR",
-    neighborhoods: "Lutyens, Golf Course Road, Aerocity, Noida",
+    city: "Golf Course Extension Road",
+    neighborhoods: "Sectors 58–67, SPR junction",
     description:
-      "From Lutyens' heritage bungalows to Gurgaon's ultra-modern sky villas, Delhi NCR presents diverse premium opportunities across residential, commercial, and institutional segments.",
+      "Where most new luxury launches now sit. The corridor is not uniform: proximity to the SPR interchange and to committed metro alignment separates sectors that will hold value from sectors currently priced as though they already have the infrastructure.",
   },
   {
-    city: "Bangalore",
-    neighborhoods: "Whitefield, UB City, Koramangala, Hebbal",
+    city: "Dwarka Expressway",
+    neighborhoods: "Sectors 99–113, New Gurgaon",
     description:
-      "India's tech capital combines modern luxury with excellent appreciation potential. Premium apartments near tech corridors and villa communities offer outstanding lifestyle and investment value.",
+      "Now operational, which removed the main risk the corridor was discounted for. The question has shifted from whether it opens to which sectors reach real occupancy first — an unoccupied tower is a rental yield of nothing, whatever the sticker price says.",
   },
   {
-    city: "Pune",
-    neighborhoods: "Koregaon Park, Kalyani Nagar, Boat Club Road",
+    city: "Sohna Road & South Gurgaon",
+    neighborhoods: "Sectors 68–80, Sohna, Karma Lakeland",
     description:
-      "An emerging luxury market with strong fundamentals. Premium villas and apartments in East Pune's established neighborhoods offer excellent value compared to Mumbai's price points.",
+      "Lower entry prices, longer horizons, and the widest quality gap between developers of any Gurgaon corridor. This is where the developer's delivery record matters more than the specification sheet. Also where most of the low-density and farmhouse stock sits.",
   },
   {
-    city: "Hyderabad",
-    neighborhoods: "Jubilee Hills, Banjara Hills, Gachibowli, HITEC City",
+    city: "Delhi",
+    neighborhoods: "South Delhi, Lutyens, Aerocity",
     description:
-      "Hyderabad's luxury segment is experiencing rapid growth, driven by the tech boom. Premium gated communities and commercial spaces offer compelling appreciation and rental yields.",
+      "A different market entirely: supply-constrained, transacted privately, and priced on land rather than built-up area. Few listings, long searches, and title work that genuinely needs doing. We take Delhi mandates selectively.",
   },
 ];
 
@@ -49,9 +49,13 @@ export function MarketsSection() {
             Our Markets
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold">
-            Presence Across India's{" "}
-            <span className="text-gradient-gold">Premier Destinations</span>
+            Five corridors. Five{" "}
+            <span className="text-gradient-gold">different arguments.</span>
           </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto mt-4">
+            Gurgaon is not one market. What drives value on Golf Course Road has
+            almost nothing to do with what drives it on Dwarka Expressway.
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

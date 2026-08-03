@@ -8,24 +8,28 @@ import {
 
 const faqs = [
   {
-    q: "What makes L2S Infra different from other real estate agencies?",
-    a: "We focus exclusively on premium and ultra-luxury segments with direct Tier-1 developer partnerships. Our white-glove service covers everything from property discovery to post-purchase management, ensuring a frictionless experience.",
+    q: "Which areas do you cover?",
+    a: "Gurgaon and Delhi. Within Gurgaon that means Golf Course Road, Golf Course Extension, Dwarka Expressway, Sohna Road and South Gurgaon, and New Gurgaon; in Delhi, chiefly South Delhi and Lutyens. We do not operate in other cities, and we will say so rather than take the mandate.",
   },
   {
-    q: "Do you assist NRI clients with property purchases in India?",
-    a: "Absolutely. Our dedicated NRI Desk handles virtual site tours, legal documentation, power-of-attorney processes, FEMA compliance, and seamless cross-border transactions. We've served 50+ NRI clients across 12 countries.",
+    q: "What makes an advisor different from a broker?",
+    a: "A broker is paid to close the transaction in front of them. Our value is in the recommendation, which includes telling you not to buy — so every shortlist comes with the corridor comparables, the developer's delivery record and the downside case written down, and you are free to disagree with it.",
   },
   {
-    q: "What is the minimum investment range for your properties?",
-    a: "Our residential portfolio starts at ₹2 Crore, with ultra-luxury options going up to ₹100 Crore+. Commercial assets start at ₹5 Crore. We also offer fractional investment opportunities starting at ₹25 Lakhs.",
+    q: "Do you work with NRI buyers?",
+    a: "Yes, and it is a large part of what we do. Video walkthroughs of the specific unit rather than the show flat, FEMA and repatriation questions settled before you commit, power-of-attorney set up correctly, and construction progress reported to you directly instead of through a relative doing you a favour.",
   },
   {
-    q: "Which cities do you operate in?",
-    a: "We have a strong presence in Mumbai, Delhi NCR, Bangalore, Hyderabad, Pune, and Goa. We're expanding to Chennai and Ahmedabad — emerging high-growth corridors.",
+    q: "What does an engagement look like?",
+    a: "A first conversation about what you are trying to achieve and over what horizon. Then a written corridor view and a shortlist, usually within a fortnight. Then site visits, due diligence on anything you are serious about, negotiation, and documentation through to registry. You can stop at any stage.",
   },
   {
-    q: "How do you ensure the best pricing for clients?",
-    a: "Our direct developer relationships and volume-based partnerships allow us to negotiate exclusive pricing, pre-launch access, and preferential payment plans that aren't available through other channels.",
+    q: "How do you get paid?",
+    a: "Ask us directly and we will set it out in writing before you engage us — including anything we receive from a developer on a transaction. You should know how any advisor is paid before you take their advice, from us or from anyone else.",
+  },
+  {
+    q: "Is now a good time to buy in Gurgaon?",
+    a: "It depends entirely on the corridor and the horizon, which is an unsatisfying answer but the true one. An established Golf Course Road resale and a New Gurgaon pre-launch are not the same investment and do not respond to the same conditions. We publish our corridor research so you can see the reasoning rather than take a view on faith.",
   },
 ];
 
@@ -58,7 +62,7 @@ export function FAQSection() {
           className="text-center mb-16"
         >
           <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">
-            Frequently Asked
+            Questions
           </p>
           <h2 className="font-heading text-4xl md:text-6xl font-bold text-foreground">
             Your Questions, <span className="text-gradient-gold">Answered</span>

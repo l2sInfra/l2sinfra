@@ -271,7 +271,7 @@ function PropertyForm({ property, onChange, onSave, onCancel, isNew }: {
             <label className="block text-sm font-medium text-foreground mb-2">City *</label>
             <select className={inp} value={property.city ?? ""} onChange={(e) => f("city", e.target.value)}>
               <option value="">Select city</option>
-              {["Gurgaon", "Delhi", "Noida", "Faridabad"].map(c => <option key={c} value={c}>{c}</option>)}
+              {["Gurgaon", "Delhi"].map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
         </div>
@@ -771,7 +771,7 @@ function SettingsPanel() {
           { key: "contact_email", label: "Contact Email", placeholder: "connect@l2sinfra.com" },
           { key: "office_address", label: "Office Address", placeholder: "Bani City Centre, Sector 63, Gurgaon" },
           { key: "business_hours", label: "Business Hours", placeholder: "Mon – Sat: 10:00 AM – 7:00 PM" },
-          { key: "ticker_text", label: "Trust Ticker Text", placeholder: "₹500Cr+ Transacted · 15+ Years..." },
+          { key: "ticker_text", label: "Trust Ticker Text", placeholder: "Gurgaon & Delhi · Advising since 2010..." },
         ].map(({ key, label, placeholder }) => (
           <div key={key}>
             <label className="block text-sm font-medium text-foreground mb-2">{label}</label>

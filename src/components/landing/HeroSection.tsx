@@ -1,31 +1,13 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import heroBg from "@/assets/hero-bg.jpg";
 
-function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    let start = 0;
-    const duration = 2000;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [target]);
-  return <>{count}{suffix}</>;
-}
-
-const stats = [
-  { value: 15, suffix: "+", label: "Years Experience" },
-  { value: 500, suffix: "+ Cr", label: "Portfolio Value" },
-  { value: 98, suffix: "%", label: "Client Satisfaction" },
+// Plain facts, not counters. The figures that used to animate here — years,
+// portfolio value, a satisfaction percentage — were not sourced from anything.
+const facts = [
+  { value: "Gurgaon & Delhi", label: "Where we work" },
+  { value: "Since 2010", label: "Advising buyers" },
+  { value: "Resale-tested", label: "How we judge an address" },
 ];
 
 export function HeroSection() {
@@ -44,7 +26,7 @@ export function HeroSection() {
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <img
           src={heroBg}
-          alt="Luxury Indian cityscape with premium high-rise properties at golden hour"
+          alt="Gurgaon skyline of premium high-rise residential towers at golden hour"
           className="w-full h-[120%] object-cover"
           loading="eager"
         />
@@ -62,7 +44,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-6"
           >
-            Luxury Real Estate Advisory
+            Luxury Real Estate Advisory · Gurgaon &amp; Delhi NCR
           </motion.p>
 
           <motion.h1
@@ -71,9 +53,9 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tight text-secondary-foreground mb-6"
           >
-            India's Premier Luxury
+            In Gurgaon, the corridor decides
             <br />
-            Real Estate <span className="text-gradient-gold">Advisory</span>
+            your return. Not the <span className="text-gradient-gold">floor plan.</span>
           </motion.h1>
 
           <motion.p
@@ -82,7 +64,9 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="text-lg md:text-xl text-secondary-foreground/70 max-w-xl mb-10 font-light leading-relaxed"
           >
-            Curating exceptional properties for discerning clients across Mumbai, Delhi, Bangalore &amp; beyond.
+            Two flats of the same size, a kilometre apart, will not hold their value the
+            same way. We advise buyers across Gurgaon's five corridors and Delhi on which
+            addresses resell — and which only look good on launch day.
           </motion.p>
 
           {/* Stats */}
@@ -92,12 +76,12 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.7 }}
             className="flex flex-wrap gap-8 mb-10"
           >
-            {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="font-heading text-3xl md:text-4xl font-bold text-primary">
-                  <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+            {facts.map((fact) => (
+              <div key={fact.label}>
+                <p className="font-heading text-2xl md:text-3xl font-bold text-primary">
+                  {fact.value}
                 </p>
-                <p className="text-secondary-foreground/60 text-xs mt-1 tracking-wider uppercase">{stat.label}</p>
+                <p className="text-secondary-foreground/60 text-xs mt-1 tracking-wider uppercase">{fact.label}</p>
               </div>
             ))}
           </motion.div>
@@ -113,13 +97,13 @@ export function HeroSection() {
               href="#contact"
               className="bg-primary text-primary-foreground px-8 py-4 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors text-center"
             >
-              Schedule Private Consultation
+              Request a corridor briefing
             </a>
             <a
               href="#properties"
               className="border-2 border-secondary-foreground/40 text-secondary-foreground px-8 py-4 rounded-lg text-sm font-semibold hover:border-primary hover:text-primary transition-colors text-center"
             >
-              Explore Premium Listings
+              See current listings
             </a>
           </motion.div>
         </div>

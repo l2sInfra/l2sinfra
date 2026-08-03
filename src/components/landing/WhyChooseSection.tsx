@@ -4,23 +4,23 @@ import { Trophy, Lock, UserCheck, BarChart3 } from "lucide-react";
 const advantages = [
   {
     icon: Trophy,
-    title: "Market Expertise",
-    description: "15+ years of dedicated luxury real estate experience across India's top metros with deep market knowledge.",
+    title: "One market, in depth",
+    description: "Gurgaon and Delhi only, since 2010. We turn down mandates outside NCR rather than learn a city on your money.",
   },
   {
     icon: Lock,
-    title: "Exclusive Access",
-    description: "Off-market properties and pre-launch opportunities through our direct Tier-1 developer partnerships.",
+    title: "The inventory nobody advertises",
+    description: "Resale units, unsold stock held back from launch, and pre-launch allocations — the parts of the market that never reach a portal.",
   },
   {
     icon: UserCheck,
-    title: "Personalized Service",
-    description: "White-glove, end-to-end service from discovery to handover — every detail managed for you.",
+    title: "One advisor, start to finish",
+    description: "The person who reads your requirement is the person at the site visit and at registry. Nothing is handed to a call centre.",
   },
   {
     icon: BarChart3,
-    title: "Proven Track Record",
-    description: "₹500+ Cr in transactions completed with 98% client satisfaction and repeat business rate.",
+    title: "We show our working",
+    description: "Every recommendation comes with the corridor data behind it — comparables, occupancy, delivery record — so you can check the reasoning, not just the conclusion.",
   },
 ];
 

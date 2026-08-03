@@ -4,28 +4,28 @@ import { MessageSquare, ListFilter, Eye, FileSignature, KeyRound } from "lucide-
 const steps = [
   {
     icon: MessageSquare,
-    title: "Discovery Consultation",
-    description: "We begin with a confidential consultation to understand your lifestyle preferences, investment goals, budget, and preferred locations to create a personalized search strategy.",
+    title: "The brief",
+    description: "What you want the asset to do, over what horizon, and what you would consider a bad outcome. Budget matters less than the horizon — it decides which corridors are even worth discussing.",
   },
   {
     icon: ListFilter,
-    title: "Curated Shortlisting",
-    description: "Our advisors leverage market intelligence and exclusive developer networks to shortlist properties that precisely match your criteria, including off-market opportunities.",
+    title: "The corridor view",
+    description: "A written note on the two or three corridors that fit, with comparable resale evidence, occupancy in nearby completed towers and the case against each. Then a shortlist drawn from it — including resale and unlisted stock.",
   },
   {
     icon: Eye,
-    title: "Property Viewings",
-    description: "Experience guided property tours with our experts who provide insights on construction quality, neighborhood dynamics, appreciation potential, and lifestyle aspects.",
+    title: "Site visits",
+    description: "The actual unit, not the show flat. Which way it faces at four in the afternoon, what is planned on the adjoining plot, how the completed phases have aged, and what the residents there now will tell you.",
   },
   {
     icon: FileSignature,
-    title: "Negotiation & Documentation",
-    description: "We negotiate the best terms on your behalf and manage all legal documentation, ensuring RERA compliance, clear titles, and secure transaction processes.",
+    title: "Diligence and negotiation",
+    description: "Title chain, encumbrance, RERA filing history, approvals and occupation certificate — before any booking amount moves. Then price, payment schedule and the clauses in the builder-buyer agreement that matter on exit.",
   },
   {
     icon: KeyRound,
-    title: "Seamless Handover",
-    description: "From final inspection to key handover, we oversee every detail. Post-purchase, we assist with interiors, rental management, and ongoing portfolio monitoring.",
+    title: "Registry and after",
+    description: "Documentation through to registry, snagging at handover, and a standing view on the asset afterwards — what it is worth, what it should rent for, and when it is better sold than held.",
   },
 ];
 
@@ -44,7 +44,7 @@ export function HowItWorksSection() {
             Our Process
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
-            Your Journey to{" "}
+            How the work{" "}
             <span className="text-gradient-gold">Luxury Living</span>
           </h2>
         </motion.div>

@@ -7,24 +7,24 @@ import landsImg from "@/assets/lands-farmhouses.jpg";
 
 const categories = [
   {
-    title: "Ultra-Luxury Residential",
-    description: "Handpicked residences in India's most prestigious addresses. Sky villas, penthouses, and bespoke homes.",
+    title: "Residential",
+    description: "Apartments, builder floors and low-density homes across Gurgaon's corridors and South Delhi — shortlisted against resale evidence in the same sector.",
     image: luxuryImg,
-    stats: "₹5Cr — ₹100Cr+",
+    stats: "Gurgaon · Delhi",
     span: "md:col-span-2 md:row-span-2",
   },
   {
-    title: "Strategic Commercial",
-    description: "Grade-A office spaces, retail flagships, and institutional-grade commercial assets.",
+    title: "Commercial",
+    description: "Grade-A office and retail in Cyber City, Golf Course Road and Udyog Vihar. Judged on the tenant and the lease, not the lobby.",
     image: commercialImg,
-    stats: "8-12% Yield",
+    stats: "Leased & vacant",
     span: "md:col-span-1",
   },
   {
-    title: "Lands & Farm Houses",
-    description: "Premium plots and luxury farm houses in Gurgaon's most sought-after corridors with exceptional appreciation.",
+    title: "Land & Farmhouses",
+    description: "Plots and farmhouses in South Gurgaon and along Sohna Road, where the developer's delivery record matters more than the specification.",
     image: landsImg,
-    stats: "2-3x Appreciation",
+    stats: "South Gurgaon · Sohna",
     span: "md:col-span-1",
   },
 ];

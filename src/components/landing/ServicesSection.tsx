@@ -4,39 +4,39 @@ import { Home, Building2, TrendingUp, Globe, Briefcase, FileCheck } from "lucide
 const services = [
   {
     icon: Home,
-    title: "Luxury Residential Advisory",
+    title: "Residential Advisory",
     description:
-      "Discover ultra-premium residences across India's most prestigious addresses. From sky villas and penthouses in Mumbai to heritage properties in Lutyens Delhi, we curate homes that match your lifestyle. Our advisors provide exclusive access to pre-launch opportunities and off-market listings.",
+      "Apartments, builder floors and low-density homes across Gurgaon's five corridors and South Delhi. We shortlist against resale evidence in the same sector rather than the launch brochure, and we tell you which towers within a project to avoid.",
   },
   {
     icon: Building2,
-    title: "Premium Commercial Real Estate",
+    title: "Commercial & Office",
     description:
-      "Strategic commercial investments in Grade-A office spaces, retail flagships, and institutional-grade assets. We identify high-yield commercial properties in established business districts like BKC Mumbai, Cyber City Gurgaon, and Whitefield Bangalore with proven rental appreciation trajectories.",
+      "Grade-A office and retail in Cyber City, Golf Course Road and Udyog Vihar. Commercial is bought on the tenant, not the lobby — so we look at the lease covenant, the escalation clause and the exit market before the specification.",
   },
   {
     icon: TrendingUp,
-    title: "Investment Consulting",
+    title: "Investment Analysis",
     description:
-      "Data-driven investment strategies tailored for maximum returns. Our research team analyzes market trends, infrastructure developments, and regulatory changes to identify emerging high-growth corridors. We help you build a diversified real estate portfolio aligned with your financial goals.",
+      "The corridor case, written down. Committed infrastructure against announced infrastructure, absorption and occupancy in nearby completed towers, comparable resale spreads, and the honest downside. If the numbers argue against buying, that is what the note will say.",
   },
   {
     icon: Globe,
-    title: "NRI Property Services",
+    title: "NRI Advisory",
     description:
-      "Comprehensive support for Non-Resident Indians looking to invest in Indian real estate. From virtual property tours and FEMA compliance to power-of-attorney assistance and seamless cross-border transactions, we handle every complexity so you can invest with confidence from anywhere.",
+      "Buying Gurgaon from abroad, without a relative doing you a favour. Video walkthroughs of the actual unit, FEMA and repatriation questions answered before you commit, power-of-attorney set up properly, and someone at the site who reports to you.",
   },
   {
     icon: Briefcase,
-    title: "Portfolio Management",
+    title: "Portfolio Review",
     description:
-      "End-to-end portfolio management for multi-property investors. We monitor market valuations, manage rental yields, coordinate with property managers, and advise on optimal exit strategies. Our technology-driven approach ensures complete transparency and maximum return on your investments.",
+      "For owners of several NCR assets. Current valuations against the sector, which holdings are carrying the portfolio and which are dead money, rental performance versus achievable, and when a unit is better sold than held.",
   },
   {
     icon: FileCheck,
-    title: "Due Diligence & Legal",
+    title: "Due Diligence",
     description:
-      "Rigorous due diligence covering title verification, RERA compliance, builder credibility, and legal documentation. Our legal team reviews every transaction to protect your interests, ensuring clear titles, proper approvals, and watertight agreements before any commitment is made.",
+      "Title chain, encumbrance, RERA registration and its filing history, approval and occupation certificate status, and the developer's actual delivery record on their last completed projects. Done before you pay a booking amount, not after.",
   },
 ];
 
@@ -55,7 +55,7 @@ export function ServicesSection() {
             Our Services
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
-            Comprehensive Luxury Real Estate{" "}
+            What we actually{" "}
             <span className="text-gradient-gold">Solutions</span>
           </h2>
         </motion.div>

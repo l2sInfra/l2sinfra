@@ -13,7 +13,7 @@ const typeLabel: Record<PropertyType, string> = {
   farmhouse_land: "Farmhouse & Land",
 };
 
-const cities = ["All Cities", "Gurgaon", "Delhi", "Noida", "Faridabad"];
+const cities = ["All Cities", "Gurgaon", "Delhi"];
 
 export default function PropertiesListing() {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -60,7 +60,7 @@ export default function PropertiesListing() {
               Premium <span className="text-gradient-gold">Property Listings</span>
             </h1>
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-              Curated luxury residential, commercial, and land properties across India's most coveted addresses.
+              Residential, commercial and land across Gurgaon's corridors and Delhi. Resale and unlisted stock is not shown here — ask us.
             </p>
           </div>
 
