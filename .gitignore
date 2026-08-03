@@ -30,3 +30,6 @@ supabase/.temp/
 .env
 .env.*
 !.env.example
+
+# SSR bundle used only by the prerender step
+dist-ssr

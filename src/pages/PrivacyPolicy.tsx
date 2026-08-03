@@ -3,14 +3,11 @@ import { Footer } from "@/components/landing/Footer";
 import { useEffect } from "react";
 import { CONTACT_EMAIL, PHONE_DISPLAY } from "@/lib/site-contact";
 import { applySEO } from "@/lib/seo";
+import { ROUTE_META } from "@/lib/route-meta";
 
 export default function PrivacyPolicy() {
   useEffect(() => {
-    applySEO({
-      title: "Privacy Policy | L2S Infra",
-      description: "How L2S Infra collects, uses, stores and deletes the personal information you share with us.",
-      path: "/privacy-policy",
-    });
+    applySEO(ROUTE_META["/privacy-policy"]);
   }, []);
   return (
     <>

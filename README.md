@@ -23,11 +23,19 @@ npm run dev        # http://localhost:8080
 Other scripts:
 
 ```sh
-npm run build      # production build to dist/
-npm run preview    # serve the production build locally
-npm run lint       # eslint
-npm run test       # vitest
+npm run build         # client build + SSR bundle + prerender, output in dist/
+npm run build:client  # client bundle only, skips the prerender
+npm run prerender     # re-run the prerender against an existing build
+npm run preview       # serve the production build locally
+npm run lint          # eslint
+npm run test          # vitest
 ```
+
+`npm run build` runs three steps: the client bundle, an SSR bundle to
+`dist-ssr/`, then `scripts/prerender.mjs`, which renders each route to static
+HTML in `dist/`. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in the
+build environment — without them the static routes still prerender, but
+property and insight pages are skipped with a warning.
 
 ### Environment
 
@@ -57,23 +65,33 @@ supabase/functions/          edge functions (lead notification email)
 component. The one copy that can't import it is the JSON-LD block in
 `index.html`; keep it in sync by hand.
 
-**Every route must set its own SEO tags.** This is a single-page app, so every
-URL is served the same `index.html`. Without an `applySEO()` call, a page reports
-the *homepage's* canonical and Open Graph tags, and search engines treat it as a
-duplicate. Any new route needs an `applySEO({ title, description, path })` in an
-effect. Admin and error pages pass `noindex: true`.
+**Route metadata lives in `src/lib/route-meta.ts`.** Both the running app and
+the build-time prerenderer read it, so the HTML a crawler receives and the tags
+the client sets after hydration cannot drift apart. A new public route needs an
+entry there plus an `applySEO(ROUTE_META["/its-path"])` in an effect; admin and
+error pages pass `noindex: true` inline.
+
+**Prerendering has one rule: don't fetch during render.** `renderToString`
+never runs effects, so Supabase-backed sections render their loading skeleton —
+which is exactly what the client renders on first mount, so hydration matches.
+If you ever move a query into render, the server and client output will diverge
+and React will throw away the prerendered DOM. Keep data loading in effects.
 
 **Canonical domain is `https://www.l2sinfra.com`** (with `www`). It is set in
 `SITE_ORIGIN` in `src/lib/seo.ts`, in `index.html`, and in `public/sitemap.xml` —
 these three must agree exactly, and non-www must 301 to www at the DNS/host
 level.
 
-**`public/sitemap.xml` is maintained by hand.** Property and insight URLs are
-listed literally, so publishing or unpublishing content in the admin console
-does not update it. Update it when content changes.
+**The sitemap is generated at build time** by the prerender step, from the same
+route list it walks — so it only ever contains URLs that were actually built.
+`public/sitemap.xml` is no longer the source of truth; `dist/sitemap.xml`
+overwrites it. Rebuild after publishing content so new URLs appear.
 
-**SEO limits.** Because rendering is client-side, crawlers that don't execute
-JavaScript — which includes most social-preview bots — see only the static tags
-in `index.html`. Unknown URLs also return HTTP 200 rather than 404 (the SPA
-rewrite), so 404s are handled with a `noindex` tag instead of a status code.
-Prerendering would fix both and is the recommended next step.
+**What prerendering does and doesn't cover.** Static routes ship real HTML with
+their own head, so crawlers and social-preview bots get correct titles, canonical
+URLs and share cards without executing JavaScript. Property and insight *detail*
+pages get the correct head but their body arrives after hydration, because the
+content comes from Supabase — serialising query results into the HTML would fix
+that and is the next step. Unknown URLs still return HTTP 200 via the SPA
+rewrite, so 404s are handled with a `noindex` tag rather than a status code;
+a genuine 404 needs edge middleware.

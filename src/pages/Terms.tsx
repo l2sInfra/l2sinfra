@@ -2,14 +2,11 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { useEffect } from "react";
 import { applySEO } from "@/lib/seo";
+import { ROUTE_META } from "@/lib/route-meta";
 
 export default function Terms() {
   useEffect(() => {
-    applySEO({
-      title: "Terms of Service | L2S Infra",
-      description: "The terms governing use of the L2S Infra website and services.",
-      path: "/terms-of-service",
-    });
+    applySEO(ROUTE_META["/terms-of-service"]);
   }, []);
   return (
     <>

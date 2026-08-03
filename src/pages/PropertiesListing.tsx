@@ -6,6 +6,7 @@ import { MapPin, BedDouble, Maximize, ArrowRight, Search } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { applySEO } from "@/lib/seo";
+import { ROUTE_META } from "@/lib/route-meta";
 
 const typeLabel: Record<PropertyType, string> = {
   residential: "Residential",
@@ -23,12 +24,7 @@ export default function PropertiesListing() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    applySEO({
-      title: "Premium Property Listings | L2S Infra - Luxury Real Estate India",
-      description:
-        "Luxury residential, commercial and farmhouse property for sale in Gurgaon and Delhi NCR — Golf Course Road, Golf Course Extension, Dwarka Expressway, Sohna Road and New Gurgaon. Buy or sell with L2S Infra.",
-      path: "/properties",
-    });
+    applySEO(ROUTE_META["/properties"]);
     supabase
       .from("properties")
       .select("*")

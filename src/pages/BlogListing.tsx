@@ -6,18 +6,14 @@ import { Calendar, User, ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { applySEO } from "@/lib/seo";
+import { ROUTE_META } from "@/lib/route-meta";
 
 export default function BlogListing() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    applySEO({
-      title: "Market Insights & Real Estate Research | L2S Infra",
-      description:
-        "Research-led commentary on the Gurgaon and Delhi NCR luxury property market — corridor-by-corridor pricing, new launches and NRI guidance from the L2S Infra team.",
-      path: "/insights",
-    });
+    applySEO(ROUTE_META["/insights"]);
     supabase.from("blog_posts").select("*").eq("is_published", true).order("published_at", { ascending: false }).then(({ data }) => {
       setPosts(data ?? []);
       setLoading(false);

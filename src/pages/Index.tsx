@@ -16,15 +16,11 @@ import { Footer } from "@/components/landing/Footer";
 import { WhatsAppButton } from "@/components/landing/WhatsAppButton";
 import { useEffect } from "react";
 import { applySEO } from "@/lib/seo";
+import { ROUTE_META } from "@/lib/route-meta";
 
 const Index = () => {
   useEffect(() => {
-    applySEO({
-      title: "L2S Infra — Luxury Real Estate Agency in Gurgaon & Delhi NCR",
-      description:
-        "Luxury real estate agency in Gurgaon and Delhi NCR. L2S Infra helps buyers and sellers with premium residential, commercial and farmhouse property on Golf Course Road, Golf Course Extension, Dwarka Expressway and Sohna Road. Partnered with premium builders.",
-      path: "/",
-    });
+    applySEO(ROUTE_META["/"]);
   }, []);
 
   return (

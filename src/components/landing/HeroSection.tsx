@@ -29,6 +29,10 @@ export function HeroSection() {
           alt="Gurgaon skyline of premium high-rise residential towers at golden hour"
           className="w-full h-[120%] object-cover"
           loading="eager"
+          decoding="async"
+          // React 18 doesn't recognise camelCase fetchPriority; the lowercase
+          // DOM attribute is what the browser reads.
+          {...{ fetchpriority: "high" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-secondary/70 via-secondary/40 to-secondary/80" />
       </motion.div>

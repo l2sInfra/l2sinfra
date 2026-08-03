@@ -7,6 +7,7 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { PHONE_DISPLAY, PHONE_E164, whatsappLink } from "@/lib/site-contact";
 import { applySEO } from "@/lib/seo";
+import { propertyMeta } from "@/lib/route-meta";
 
 const typeLabel: Record<PropertyType, string> = {
   residential: "Residential",
@@ -58,14 +59,7 @@ export default function PropertyDetail() {
           setNotFound(true);
         } else {
           setProperty(data);
-          applySEO({
-            title: `${data.meta_title || data.title} | L2S Infra`,
-            description:
-              data.meta_description ||
-              `${data.title} in ${data.location}. ${data.price}. ${data.area}. Contact L2S Infra for a private consultation.`,
-            path: `/properties/${data.slug}`,
-            image: data.image_url,
-          });
+          applySEO(propertyMeta(data));
         }
         setLoading(false);
       });

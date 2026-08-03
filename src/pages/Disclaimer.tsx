@@ -2,14 +2,11 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { useEffect } from "react";
 import { applySEO } from "@/lib/seo";
+import { ROUTE_META } from "@/lib/route-meta";
 
 export default function Disclaimer() {
   useEffect(() => {
-    applySEO({
-      title: "Disclaimer | L2S Infra",
-      description: "Important disclosures about property information, pricing and advisory content published by L2S Infra.",
-      path: "/disclaimer",
-    });
+    applySEO(ROUTE_META["/disclaimer"]);
   }, []);
   return (
     <>

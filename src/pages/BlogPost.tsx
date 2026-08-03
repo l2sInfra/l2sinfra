@@ -6,6 +6,7 @@ import { Calendar, User, ArrowLeft, Tag } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { applySEO } from "@/lib/seo";
+import { postMeta } from "@/lib/route-meta";
 import { sanitizeHtml } from "@/lib/sanitize";
 
 export default function BlogPost() {
@@ -27,13 +28,7 @@ export default function BlogPost() {
           setNotFound(true);
         } else {
           setPost(data);
-          applySEO({
-            title: `${data.meta_title || data.title} | L2S Infra`,
-            description: data.meta_description || data.excerpt,
-            path: `/insights/${data.slug}`,
-            image: data.image_url,
-            type: "article",
-          });
+          applySEO(postMeta(data));
         }
         setLoading(false);
       });
