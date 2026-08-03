@@ -7,7 +7,16 @@ import { CONTACT_EMAIL, PHONE_DISPLAY, PHONE_E164, whatsappLink } from "@/lib/si
 
 const budgetRanges = ["₹2 – 5 Cr", "₹5 – 10 Cr", "₹10 – 25 Cr", "₹25 – 50 Cr", "₹50 Cr+"];
 const propertyInterests = ["Luxury Residential", "Premium Commercial", "Lands & Plots", "Farm Houses", "Investment Portfolio"];
-const locations = ["Mumbai", "Delhi NCR", "Bangalore", "Pune", "Hyderabad", "Goa", "Gurgaon"];
+const locations = [
+  "Gurgaon — Golf Course Road",
+  "Gurgaon — Golf Course Extension",
+  "Gurgaon — Dwarka Expressway",
+  "Gurgaon — Sohna Road",
+  "Gurgaon — New Gurgaon",
+  "Delhi",
+  "Noida",
+  "Faridabad",
+];
 
 interface FormData {
   full_name: string;

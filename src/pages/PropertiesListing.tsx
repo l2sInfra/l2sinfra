@@ -13,7 +13,7 @@ const typeLabel: Record<PropertyType, string> = {
   farmhouse_land: "Farmhouse & Land",
 };
 
-const cities = ["All Cities", "Gurgaon", "Mumbai", "Delhi NCR", "Bangalore", "Pune", "Hyderabad", "Goa"];
+const cities = ["All Cities", "Gurgaon", "Delhi", "Noida", "Faridabad"];
 
 export default function PropertiesListing() {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -26,7 +26,7 @@ export default function PropertiesListing() {
     applySEO({
       title: "Premium Property Listings | L2S Infra - Luxury Real Estate India",
       description:
-        "Browse curated luxury residential, commercial and farmhouse properties across Gurgaon, Mumbai, Delhi NCR, Bangalore, Pune, Hyderabad and Goa, advised by L2S Infra.",
+        "Luxury residential, commercial and farmhouse property in Gurgaon and Delhi NCR — Golf Course Road, Golf Course Extension, Dwarka Expressway, Sohna Road and New Gurgaon. Advised by L2S Infra.",
       path: "/properties",
     });
     supabase

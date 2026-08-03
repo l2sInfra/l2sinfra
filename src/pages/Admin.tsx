@@ -271,7 +271,7 @@ function PropertyForm({ property, onChange, onSave, onCancel, isNew }: {
             <label className="block text-sm font-medium text-foreground mb-2">City *</label>
             <select className={inp} value={property.city ?? ""} onChange={(e) => f("city", e.target.value)}>
               <option value="">Select city</option>
-              {["Gurgaon", "Mumbai", "Delhi NCR", "Bangalore", "Pune", "Hyderabad", "Goa"].map(c => <option key={c} value={c}>{c}</option>)}
+              {["Gurgaon", "Delhi", "Noida", "Faridabad"].map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
         </div>

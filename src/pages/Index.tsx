@@ -19,9 +19,9 @@ import { applySEO } from "@/lib/seo";
 const Index = () => {
   useEffect(() => {
     applySEO({
-      title: "L2S Infra - Luxury Real Estate Advisory in India | Premium Properties Gurgaon, Mumbai, Delhi",
+      title: "L2S Infra — Luxury Real Estate Advisory in Gurgaon & Delhi NCR",
       description:
-        "India's premier luxury real estate advisory. L2S Infra curates premium residential, commercial, and farmhouse properties in Gurgaon, Mumbai, Delhi NCR, Bangalore for HNI investors and NRIs.",
+        "Luxury real estate advisory for Gurgaon and Delhi NCR. L2S Infra advises HNI and NRI buyers on premium residential, commercial and farmhouse property on Golf Course Road, Golf Course Extension, Dwarka Expressway and Sohna Road.",
       path: "/",
     });
   }, []);
