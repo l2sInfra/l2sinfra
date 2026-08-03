@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Shield, Award, Users } from "lucide-react";
 import { useRef } from "react";
-import luxuryImg from "@/assets/luxury-residential.jpg";
 
 const trustIndicators = [
   { icon: Shield, label: "Buying & selling" },
@@ -74,13 +73,20 @@ export function IntroSection() {
             transition={{ duration: 0.8 }}
             className="relative overflow-hidden rounded-2xl"
           >
-            <motion.img
-              src={luxuryImg}
-              alt="Premium residential tower in Gurgaon with landscaped grounds"
-              className="w-full h-[550px] object-cover shadow-2xl"
-              style={{ y: imgY }}
-              loading="lazy"
-            />
+            <picture>
+              <source type="image/avif" srcSet="/img/luxury-residential-800.avif" />
+              <source type="image/webp" srcSet="/img/luxury-residential-800.webp" />
+              <motion.img
+                src="/img/luxury-residential-800.jpg"
+                alt="High-rise residential tower with landscaped grounds"
+                width={800}
+                height={800}
+                className="w-full h-[550px] object-cover shadow-2xl"
+                style={{ y: imgY }}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
             <div className="absolute -bottom-6 -left-6 bg-secondary text-secondary-foreground p-6 rounded-xl shadow-xl z-10">
               <p className="font-heading text-3xl font-bold text-gold-ink">Since 2010</p>
               <p className="text-secondary-foreground/70 text-sm">Buying &amp; selling in Gurgaon</p>

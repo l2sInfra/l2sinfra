@@ -1,29 +1,26 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useRef } from "react";
-import luxuryImg from "@/assets/luxury-residential.jpg";
-import commercialImg from "@/assets/commercial.jpg";
-import landsImg from "@/assets/lands-farmhouses.jpg";
 
 const categories = [
   {
     title: "Residential",
     description: "Apartments, builder floors and low-density homes across Gurgaon's corridors and South Delhi — shortlisted against resale evidence in the same sector.",
-    image: luxuryImg,
+    image: "luxury-residential",
     stats: "Gurgaon · Delhi",
     span: "md:col-span-2 md:row-span-2",
   },
   {
     title: "Commercial",
     description: "Grade-A office and retail in Cyber City, Golf Course Road and Udyog Vihar. Judged on the tenant and the lease, not the lobby.",
-    image: commercialImg,
+    image: "commercial",
     stats: "Leased & vacant",
     span: "md:col-span-1",
   },
   {
     title: "Land & Farmhouses",
     description: "Plots and farmhouses in South Gurgaon and along Sohna Road, where the developer's delivery record matters more than the specification.",
-    image: landsImg,
+    image: "lands-farmhouses",
     stats: "South Gurgaon · Sohna",
     span: "md:col-span-1",
   },
@@ -47,13 +44,22 @@ function ParallaxCard({ cat, index }: { cat: typeof categories[0]; index: number
       transition={{ duration: 0.7, delay: index * 0.15 }}
       className={`group relative rounded-2xl overflow-hidden cursor-pointer hover-lift ${cat.span}`}
     >
-      <motion.img
-        src={cat.image}
-        alt={cat.title}
-        className="absolute inset-0 w-[110%] h-[120%] object-cover transition-transform duration-700 group-hover:scale-105"
-        style={{ y: imgY }}
-        loading="lazy"
-      />
+      {/* alt="" on purpose: the heading immediately below names the category,
+          so describing it again just makes a screen reader say it twice. */}
+      <picture>
+        <source type="image/avif" srcSet={`/img/${cat.image}-800.avif`} />
+        <source type="image/webp" srcSet={`/img/${cat.image}-800.webp`} />
+        <motion.img
+          src={`/img/${cat.image}-800.jpg`}
+          alt=""
+          width={800}
+          height={800}
+          className="absolute inset-0 w-[110%] h-[120%] object-cover transition-transform duration-700 group-hover:scale-105"
+          style={{ y: imgY }}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-8">
         <span className="text-gold-ink text-xs font-bold tracking-widest uppercase">
