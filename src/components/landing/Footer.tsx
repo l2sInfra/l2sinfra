@@ -29,8 +29,8 @@ export function Footer() {
               L2S <span className="text-gradient-gold">Infra</span>
             </span>
             <p className="text-secondary-foreground/50 mt-4 max-w-xs leading-relaxed text-sm">
-              Luxury real estate advisory for Gurgaon and Delhi. Working in one
-              market, in depth, since 2010.
+              A luxury real estate agency for Gurgaon and Delhi — buying, selling
+              and partnered with the premium builders. In one market since 2010.
             </p>
           </div>
           <div>

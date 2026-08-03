@@ -12,24 +12,24 @@ const faqs = [
     a: "Gurgaon and Delhi. Within Gurgaon that means Golf Course Road, Golf Course Extension, Dwarka Expressway, Sohna Road and South Gurgaon, and New Gurgaon; in Delhi, chiefly South Delhi and Lutyens. We do not operate in other cities, and we will say so rather than take the mandate.",
   },
   {
-    q: "What makes an advisor different from a broker?",
-    a: "A broker is paid to close the transaction in front of them. Our value is in the recommendation, which includes telling you not to buy — so every shortlist comes with the corridor comparables, the developer's delivery record and the downside case written down, and you are free to disagree with it.",
+    q: "Do you handle selling as well as buying?",
+    a: "Yes — it is half the business. We price your unit against what comparable flats in your sector actually transacted for, handle photography and listing, bring qualified buyers rather than curious ones, and run the negotiation and paperwork through to registry.",
   },
   {
-    q: "Do you work with NRI buyers?",
-    a: "Yes, and it is a large part of what we do. Video walkthroughs of the specific unit rather than the show flat, FEMA and repatriation questions settled before you commit, power-of-attorney set up correctly, and construction progress reported to you directly instead of through a relative doing you a favour.",
+    q: "What do your builder partnerships get me?",
+    a: "Direct relationships with the premium developers building these corridors mean our buyers see pre-launch allocations and held-back inventory before it is advertised, usually at launch pricing rather than the resale premium that follows. It also means we can tell you how a developer's last three projects actually performed on delivery.",
   },
   {
-    q: "What does an engagement look like?",
-    a: "A first conversation about what you are trying to achieve and over what horizon. Then a written corridor view and a shortlist, usually within a fortnight. Then site visits, due diligence on anything you are serious about, negotiation, and documentation through to registry. You can stop at any stage.",
+    q: "Do you work with NRI clients?",
+    a: "Yes, and it is a large part of what we do — buying and selling. Video walkthroughs of the specific unit rather than the show flat, FEMA and repatriation questions settled before you commit, power-of-attorney set up correctly, and progress reported to you directly instead of through a relative doing you a favour.",
   },
   {
-    q: "How do you get paid?",
-    a: "Ask us directly and we will set it out in writing before you engage us — including anything we receive from a developer on a transaction. You should know how any advisor is paid before you take their advice, from us or from anyone else.",
+    q: "What does working with you look like?",
+    a: "A first conversation about what you are trying to achieve and over what horizon. Then a written view on the corridors that fit and a shortlist — or, if you are selling, a price and a plan. Then viewings, due diligence, negotiation and documentation through to registry.",
   },
   {
     q: "Is now a good time to buy in Gurgaon?",
-    a: "It depends entirely on the corridor and the horizon, which is an unsatisfying answer but the true one. An established Golf Course Road resale and a New Gurgaon pre-launch are not the same investment and do not respond to the same conditions. We publish our corridor research so you can see the reasoning rather than take a view on faith.",
+    a: "It depends on the corridor and the horizon, which is unsatisfying but true. An established Golf Course Road resale and a New Gurgaon pre-launch are not the same purchase and do not respond to the same conditions. We publish our corridor research so you can see the reasoning rather than take a view on faith.",
   },
 ];
 

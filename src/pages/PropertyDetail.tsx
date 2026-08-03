@@ -174,7 +174,7 @@ export default function PropertyDetail() {
               <div className="space-y-6">
                 <div className="bg-card border border-border rounded-xl p-6 sticky top-28">
                   <h2 className="font-heading text-lg font-bold text-foreground mb-1">Interested in this property?</h2>
-                  <p className="text-muted-foreground text-sm mb-6">Speak with our advisory team for pricing, availability, and a private viewing.</p>
+                  <p className="text-muted-foreground text-sm mb-6">Speak to us about pricing, availability and a viewing.</p>
 
                   <a
                     href={whatsappLink(`Hi, I'm interested in ${property.title} at ${property.location}. Please share more details.`)}
@@ -202,7 +202,7 @@ export default function PropertyDetail() {
                   <div className="mt-6 pt-6 border-t border-border space-y-3 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary" /> RERA compliant transaction</div>
                     <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary" /> Legal due diligence included</div>
-                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary" /> NRI advisory available</div>
+                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary" /> NRI buyers supported</div>
                   </div>
                 </div>
 

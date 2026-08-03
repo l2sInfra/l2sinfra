@@ -4,39 +4,39 @@ import { Home, Building2, TrendingUp, Globe, Briefcase, FileCheck } from "lucide
 const services = [
   {
     icon: Home,
-    title: "Residential Advisory",
+    title: "Buying a Home",
     description:
-      "Apartments, builder floors and low-density homes across Gurgaon's five corridors and South Delhi. We shortlist against resale evidence in the same sector rather than the launch brochure, and we tell you which towers within a project to avoid.",
+      "Apartments, builder floors and low-density homes across Gurgaon's five corridors and South Delhi. Our builder partnerships open pre-launch allocations and pricing that never reaches a portal — and we shortlist against what comparable units in the sector actually resold for.",
+  },
+  {
+    icon: Briefcase,
+    title: "Selling & Resale",
+    description:
+      "We price your unit against real transacted comparables in your sector, not the optimistic number down the corridor. Photography, listing, qualified viewings and the negotiation itself — run by us, so you are not fielding calls from fifteen brokers.",
   },
   {
     icon: Building2,
     title: "Commercial & Office",
     description:
-      "Grade-A office and retail in Cyber City, Golf Course Road and Udyog Vihar. Commercial is bought on the tenant, not the lobby — so we look at the lease covenant, the escalation clause and the exit market before the specification.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Investment Analysis",
-    description:
-      "The corridor case, written down. Committed infrastructure against announced infrastructure, absorption and occupancy in nearby completed towers, comparable resale spreads, and the honest downside. If the numbers argue against buying, that is what the note will say.",
+      "Grade-A office and retail in Cyber City, Golf Course Road and Udyog Vihar, to buy, sell or lease. Commercial trades on the tenant and the lease covenant, not the lobby — so that is what we look at first.",
   },
   {
     icon: Globe,
-    title: "NRI Advisory",
+    title: "NRI Services",
     description:
-      "Buying Gurgaon from abroad, without a relative doing you a favour. Video walkthroughs of the actual unit, FEMA and repatriation questions answered before you commit, power-of-attorney set up properly, and someone at the site who reports to you.",
+      "Buying or selling Gurgaon from abroad, without a relative doing you a favour. Video walkthroughs of the actual unit, FEMA and repatriation handled before you commit, power-of-attorney set up properly, and someone at the site reporting to you.",
   },
   {
-    icon: Briefcase,
-    title: "Portfolio Review",
+    icon: TrendingUp,
+    title: "Investment & Portfolio",
     description:
-      "For owners of several NCR assets. Current valuations against the sector, which holdings are carrying the portfolio and which are dead money, rental performance versus achievable, and when a unit is better sold than held.",
+      "The corridor case written down: committed infrastructure against announced, occupancy in nearby completed towers, comparable resale spreads and the honest downside. For existing owners, which holdings to keep, which to exit, and when.",
   },
   {
     icon: FileCheck,
-    title: "Due Diligence",
+    title: "Due Diligence & Paperwork",
     description:
-      "Title chain, encumbrance, RERA registration and its filing history, approval and occupation certificate status, and the developer's actual delivery record on their last completed projects. Done before you pay a booking amount, not after.",
+      "Title chain, encumbrance, RERA registration and filing history, approvals and occupation certificate, and the developer's real delivery record — done before money moves. Then documentation through to registry, on either side of the deal.",
   },
 ];
 

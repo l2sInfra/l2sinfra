@@ -35,7 +35,7 @@ export function TestimonialsSection() {
             Testimonials
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
-            Trusted by <span className="text-gradient-gold">India's Elite</span>
+            What our <span className="text-gradient-gold">clients say</span>
           </h2>
         </motion.div>
 

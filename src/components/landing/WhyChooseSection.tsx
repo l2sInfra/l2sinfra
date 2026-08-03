@@ -5,22 +5,22 @@ const advantages = [
   {
     icon: Trophy,
     title: "One market, in depth",
-    description: "Gurgaon and Delhi only, since 2010. We turn down mandates outside NCR rather than learn a city on your money.",
+    description: "Gurgaon and Delhi since 2010, and nowhere else. We turn down mandates outside NCR rather than learn a city on your money.",
   },
   {
     icon: Lock,
-    title: "The inventory nobody advertises",
-    description: "Resale units, unsold stock held back from launch, and pre-launch allocations — the parts of the market that never reach a portal.",
+    title: "Premium builder partnerships",
+    description: "Direct relationships with the developers building these corridors — pre-launch allocations, held-back inventory and pricing that never reaches a portal.",
   },
   {
     icon: UserCheck,
-    title: "One advisor, start to finish",
-    description: "The person who reads your requirement is the person at the site visit and at registry. Nothing is handed to a call centre.",
+    title: "We work both sides",
+    description: "Buying and selling. When you exit, the same sector knowledge that found you the unit is what prices and negotiates it.",
   },
   {
     icon: BarChart3,
     title: "We show our working",
-    description: "Every recommendation comes with the corridor data behind it — comparables, occupancy, delivery record — so you can check the reasoning, not just the conclusion.",
+    description: "Every recommendation comes with the data behind it — comparables, occupancy, delivery record — so you can check the reasoning, not just the conclusion.",
   },
 ];
 

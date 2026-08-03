@@ -26,7 +26,7 @@ export default function PropertiesListing() {
     applySEO({
       title: "Premium Property Listings | L2S Infra - Luxury Real Estate India",
       description:
-        "Luxury residential, commercial and farmhouse property in Gurgaon and Delhi NCR — Golf Course Road, Golf Course Extension, Dwarka Expressway, Sohna Road and New Gurgaon. Advised by L2S Infra.",
+        "Luxury residential, commercial and farmhouse property for sale in Gurgaon and Delhi NCR — Golf Course Road, Golf Course Extension, Dwarka Expressway, Sohna Road and New Gurgaon. Buy or sell with L2S Infra.",
       path: "/properties",
     });
     supabase
@@ -60,7 +60,7 @@ export default function PropertiesListing() {
               Premium <span className="text-gradient-gold">Property Listings</span>
             </h1>
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-              Residential, commercial and land across Gurgaon's corridors and Delhi. Resale and unlisted stock is not shown here — ask us.
+              Residential, commercial and land across Gurgaon's corridors and Delhi. Pre-launch allocations and resale stock are not listed here — ask us.
             </p>
           </div>
 

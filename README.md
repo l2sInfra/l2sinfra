@@ -1,6 +1,6 @@
 # L2S Infra — website
 
-Marketing site and admin console for L2S Infra, a luxury real estate advisory
+Marketing site and admin console for L2S Infra, a luxury real estate agency
 operating in Gurgaon and Delhi NCR. Live at **https://www.l2sinfra.com**.
 
 ## Stack

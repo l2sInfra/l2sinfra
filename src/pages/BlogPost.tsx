@@ -120,7 +120,7 @@ export default function BlogPost() {
                     Ready to Explore Premium Properties?
                   </h3>
                   <p className="text-muted-foreground text-sm mb-4">
-                    Our advisory team is available for a private consultation. No obligation, complete confidentiality.
+                    We are available for a private consultation. No obligation, complete confidentiality.
                   </p>
                   <Link to="/#contact" className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors">
                     Schedule Private Consultation

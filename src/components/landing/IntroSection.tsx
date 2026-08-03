@@ -4,9 +4,9 @@ import { useRef } from "react";
 import luxuryImg from "@/assets/luxury-residential.jpg";
 
 const trustIndicators = [
-  { icon: Shield, label: "One market, not twelve" },
-  { icon: Award, label: "Published corridor research" },
-  { icon: Users, label: "Residential · Commercial · Land" },
+  { icon: Shield, label: "Buying & selling" },
+  { icon: Award, label: "Premium builder partnerships" },
+  { icon: Users, label: "Gurgaon & Delhi since 2010" },
 ];
 
 export function IntroSection() {
@@ -32,15 +32,14 @@ export function IntroSection() {
               About L2S Infra
             </p>
             <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground leading-tight mb-6">
-              We cover one market.{" "}
-              <span className="text-gradient-gold">That is the point.</span>
+              One market.{" "}
+              <span className="text-gradient-gold">Both sides of it.</span>
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                An advisory that sells in six cities knows six markets shallowly. We have
-                worked in Gurgaon and Delhi since 2010, and nowhere else. That is a smaller
-                business and a better one, because the questions that decide a Gurgaon
-                purchase are local ones.
+                An agency that works in six cities knows six markets shallowly. We have
+                worked in Gurgaon and Delhi since 2010, and nowhere else — which is why we
+                can answer the questions that actually decide a transaction here.
               </p>
               <p>
                 Which side of Golf Course Extension gets the metro alignment. Which sectors
@@ -49,11 +48,11 @@ export function IntroSection() {
                 service road nobody mentions at the launch. None of that is in a brochure.
               </p>
               <p>
-                So we do the unglamorous part. We read the title chain, check the RERA
-                filing and the approval status, look at what comparable units in the same
-                sector actually resold for, and tell you when the answer is that you should
-                not buy. Then we publish the corridor research we used, so you can argue
-                with it.
+                We are partnered with the premium builders working these corridors, which
+                gets our buyers pre-launch allocations and pricing that does not reach the
+                portals. And we sell as hard as we buy: if you are exiting, we price the
+                unit against what comparable flats in your sector actually fetched, and we
+                run the negotiation rather than wait for an offer.
               </p>
             </div>
 
@@ -84,7 +83,7 @@ export function IntroSection() {
             />
             <div className="absolute -bottom-6 -left-6 bg-secondary text-secondary-foreground p-6 rounded-xl shadow-xl z-10">
               <p className="font-heading text-3xl font-bold text-primary">Since 2010</p>
-              <p className="text-secondary-foreground/70 text-sm">Advising in Gurgaon &amp; Delhi</p>
+              <p className="text-secondary-foreground/70 text-sm">Buying &amp; selling in Gurgaon</p>
             </div>
           </motion.div>
         </div>

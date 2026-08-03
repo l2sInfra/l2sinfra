@@ -19,9 +19,9 @@ import { applySEO } from "@/lib/seo";
 const Index = () => {
   useEffect(() => {
     applySEO({
-      title: "L2S Infra — Luxury Real Estate Advisory in Gurgaon & Delhi NCR",
+      title: "L2S Infra — Luxury Real Estate Agency in Gurgaon & Delhi NCR",
       description:
-        "Luxury real estate advisory for Gurgaon and Delhi NCR. L2S Infra advises HNI and NRI buyers on premium residential, commercial and farmhouse property on Golf Course Road, Golf Course Extension, Dwarka Expressway and Sohna Road.",
+        "Luxury real estate agency in Gurgaon and Delhi NCR. L2S Infra helps buyers and sellers with premium residential, commercial and farmhouse property on Golf Course Road, Golf Course Extension, Dwarka Expressway and Sohna Road. Partnered with premium builders.",
       path: "/",
     });
   }, []);

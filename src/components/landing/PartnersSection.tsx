@@ -26,12 +26,12 @@ export function PartnersSection() {
             Our Network
           </p>
           <h2 className="font-heading text-4xl md:text-6xl font-bold text-accent-foreground">
-            Trusted by <span className="text-gradient-gold">India's Finest</span>
+            Partnered with <span className="text-gradient-gold">the builders that matter here</span>
           </h2>
           <p className="text-accent-foreground/50 mt-6 max-w-2xl mx-auto text-lg">
-            The developers building in the corridors we cover. We track their launches,
-            their pricing and — more usefully — how long their last three projects took
-            to actually deliver.
+            Direct partnerships with the premium builders working Gurgaon and Delhi —
+            which is how our buyers reach pre-launch allocations and held-back inventory
+            before it is advertised anywhere.
           </p>
         </motion.div>
 

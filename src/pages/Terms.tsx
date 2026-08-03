@@ -7,7 +7,7 @@ export default function Terms() {
   useEffect(() => {
     applySEO({
       title: "Terms of Service | L2S Infra",
-      description: "The terms governing use of the L2S Infra website and advisory services.",
+      description: "The terms governing use of the L2S Infra website and services.",
       path: "/terms-of-service",
     });
   }, []);
@@ -22,7 +22,7 @@ export default function Terms() {
             <h2>1. Acceptance of Terms</h2>
             <p>By accessing and using the L2S Infra website (l2sinfra.com), you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our website.</p>
             <h2>2. Services</h2>
-            <p>L2S Infra provides real estate advisory services for luxury residential, commercial, and land properties across India. Information on this website is for general guidance only and does not constitute a binding offer or agreement.</p>
+            <p>L2S Infra provides real estate agency and advisory services for luxury residential, commercial and land properties in Gurgaon and Delhi NCR. Information on this website is for general guidance only and does not constitute a binding offer or agreement.</p>
             <h2>3. Property Information</h2>
             <p>While we strive to maintain accurate and up-to-date property listings, information including pricing, availability, and specifications is subject to change without notice. All transactions are subject to formal agreement and documentation.</p>
             <h2>4. No Professional Advice</h2>

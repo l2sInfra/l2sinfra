@@ -5,27 +5,27 @@ const steps = [
   {
     icon: MessageSquare,
     title: "The brief",
-    description: "What you want the asset to do, over what horizon, and what you would consider a bad outcome. Budget matters less than the horizon — it decides which corridors are even worth discussing.",
+    description: "What you are trying to achieve and by when — buying or selling. If you are buying, the horizon decides which corridors are worth discussing at all. If you are selling, it decides the price we can realistically hold out for.",
   },
   {
     icon: ListFilter,
-    title: "The corridor view",
-    description: "A written note on the two or three corridors that fit, with comparable resale evidence, occupancy in nearby completed towers and the case against each. Then a shortlist drawn from it — including resale and unlisted stock.",
+    title: "The shortlist, or the price",
+    description: "Buyers get a written view on the corridors that fit and a shortlist drawn from it — including pre-launch allocations through our builder partnerships and resale stock that never reaches a portal. Sellers get a price backed by what comparable units in the sector actually fetched.",
   },
   {
     icon: Eye,
-    title: "Site visits",
-    description: "The actual unit, not the show flat. Which way it faces at four in the afternoon, what is planned on the adjoining plot, how the completed phases have aged, and what the residents there now will tell you.",
+    title: "Viewings",
+    description: "Buyers see the actual unit, not the show flat — which way it faces at four in the afternoon, what is planned on the adjoining plot, how the completed phases have aged. Sellers get qualified buyers brought to them, not a stream of tyre-kickers.",
   },
   {
     icon: FileSignature,
     title: "Diligence and negotiation",
-    description: "Title chain, encumbrance, RERA filing history, approvals and occupation certificate — before any booking amount moves. Then price, payment schedule and the clauses in the builder-buyer agreement that matter on exit.",
+    description: "Title chain, encumbrance, RERA filing history, approvals and occupation certificate — checked before any money moves. Then we run the negotiation: price, payment schedule, and the clauses that will matter on exit.",
   },
   {
     icon: KeyRound,
     title: "Registry and after",
-    description: "Documentation through to registry, snagging at handover, and a standing view on the asset afterwards — what it is worth, what it should rent for, and when it is better sold than held.",
+    description: "Documentation through to registry on either side of the deal, snagging at handover, and a standing view on the asset afterwards — what it is worth, what it should rent for, and when it is better sold than held.",
   },
 ];
 

@@ -15,7 +15,7 @@ export default function BlogListing() {
     applySEO({
       title: "Market Insights & Real Estate Research | L2S Infra",
       description:
-        "Research-led commentary on the Gurgaon and Delhi NCR luxury property market — corridor-by-corridor pricing, new launches and NRI investment guidance from the L2S Infra advisory team.",
+        "Research-led commentary on the Gurgaon and Delhi NCR luxury property market — corridor-by-corridor pricing, new launches and NRI guidance from the L2S Infra team.",
       path: "/insights",
     });
     supabase.from("blog_posts").select("*").eq("is_published", true).order("published_at", { ascending: false }).then(({ data }) => {
@@ -35,7 +35,7 @@ export default function BlogListing() {
               Market Insights & <span className="text-gradient-gold">Expertise</span>
             </h1>
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-              Research-backed analysis of India's luxury real estate markets. Stay informed on price trends, investment opportunities, and regulatory developments.
+              Research-backed analysis of the Gurgaon and Delhi NCR property market — corridor pricing, new launches and the regulatory changes that affect what you own.
             </p>
           </div>
 

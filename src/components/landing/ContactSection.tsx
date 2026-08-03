@@ -75,7 +75,7 @@ export function ContactSection() {
       },
     }).catch((err) => console.error("Email function error:", err));
 
-    toast.success("Thank you! Our advisory team will contact you within 24 hours.");
+    toast.success("Thank you — we will be in touch within 24 hours.");
     setForm(empty);
     setAgreed(false);
     setLoading(false);

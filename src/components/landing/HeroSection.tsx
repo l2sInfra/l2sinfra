@@ -6,8 +6,8 @@ import heroBg from "@/assets/hero-bg.jpg";
 // portfolio value, a satisfaction percentage — were not sourced from anything.
 const facts = [
   { value: "Gurgaon & Delhi", label: "Where we work" },
-  { value: "Since 2010", label: "Advising buyers" },
-  { value: "Resale-tested", label: "How we judge an address" },
+  { value: "Buying & selling", label: "Both sides of the deal" },
+  { value: "Since 2010", label: "In this market" },
 ];
 
 export function HeroSection() {
@@ -44,7 +44,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-6"
           >
-            Luxury Real Estate Advisory · Gurgaon &amp; Delhi NCR
+            Real Estate Agency · Gurgaon &amp; Delhi NCR
           </motion.p>
 
           <motion.h1
@@ -53,9 +53,9 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tight text-secondary-foreground mb-6"
           >
-            In Gurgaon, the corridor decides
+            Buy well in Gurgaon.
             <br />
-            your return. Not the <span className="text-gradient-gold">floor plan.</span>
+            Sell for what it&rsquo;s <span className="text-gradient-gold">actually worth.</span>
           </motion.h1>
 
           <motion.p
@@ -64,9 +64,8 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="text-lg md:text-xl text-secondary-foreground/70 max-w-xl mb-10 font-light leading-relaxed"
           >
-            Two flats of the same size, a kilometre apart, will not hold their value the
-            same way. We advise buyers across Gurgaon's five corridors and Delhi on which
-            addresses resell — and which only look good on launch day.
+            A full-service agency for Gurgaon and Delhi, partnered with the premium
+            builders — and on your side of the table whichever side you are on.
           </motion.p>
 
           {/* Stats */}
@@ -97,7 +96,7 @@ export function HeroSection() {
               href="#contact"
               className="bg-primary text-primary-foreground px-8 py-4 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors text-center"
             >
-              Request a corridor briefing
+              Schedule a consultation
             </a>
             <a
               href="#properties"
