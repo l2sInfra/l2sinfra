@@ -14,6 +14,7 @@ import Index from "./pages/Index";
 // homepage past the JS budget.
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminResetPassword = lazy(() => import("./pages/AdminResetPassword"));
 const BlogListing = lazy(() => import("./pages/BlogListing"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const PropertiesListing = lazy(() => import("./pages/PropertiesListing"));
@@ -94,6 +95,9 @@ const App = () => (
                 <AuthProvider>
                   <Routes>
                     <Route path="login" element={<AdminLogin />} />
+                    {/* Outside ProtectedRoute: the recovery link establishes a
+                        session, but the user must be able to land here either way. */}
+                    <Route path="reset-password" element={<AdminResetPassword />} />
                     <Route
                       path="*"
                       element={

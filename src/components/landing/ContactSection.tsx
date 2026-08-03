@@ -36,6 +36,8 @@ export function ContactSection() {
   const contact = useSiteContact();
   const [form, setForm] = useState<FormData>(empty);
   const [agreed, setAgreed] = useState(false);
+  // Honeypot — hidden from people, filled by bots. See send-lead-email.
+  const [company, setCompany] = useState("");
   const [loading, setLoading] = useState(false);
 
   const set = (field: keyof FormData, value: string) => setForm((prev) => ({ ...prev, [field]: value }));
@@ -82,8 +84,9 @@ export function ContactSection() {
         phone: form.phone,
         property_interest: form.property_interest,
         budget_range: form.budget_range,
-        preferred_location: form.preferred_location || "Not specified",
-        message: form.message || "No message provided",
+        preferred_location: form.preferred_location || "",
+        message: form.message || "",
+        company,
       },
     }).catch((err) => console.error("Email function error:", err));
 
@@ -123,10 +126,10 @@ export function ContactSection() {
             className="space-y-5"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input type="text" placeholder="Full Name *" required maxLength={100} value={form.full_name} onChange={(e) => set("full_name", e.target.value)} className={inp} />
-              <input type="email" placeholder="Email Address *" required maxLength={255} value={form.email} onChange={(e) => set("email", e.target.value)} className={inp} />
+              <input type="text" placeholder="Full Name *" required autoComplete="name" maxLength={100} value={form.full_name} onChange={(e) => set("full_name", e.target.value)} className={inp} />
+              <input type="email" placeholder="Email Address *" required autoComplete="email" maxLength={255} value={form.email} onChange={(e) => set("email", e.target.value)} className={inp} />
             </div>
-            <input type="tel" placeholder="Phone (with country code) *" required maxLength={20} value={form.phone} onChange={(e) => set("phone", e.target.value)} className={inp} />
+            <input type="tel" placeholder="Phone (with country code) *" required autoComplete="tel" maxLength={20} value={form.phone} onChange={(e) => set("phone", e.target.value)} className={inp} />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <select required value={form.property_interest} onChange={(e) => set("property_interest", e.target.value)} className={inp}>
                 <option value="">Property Interest *</option>
@@ -141,6 +144,19 @@ export function ContactSection() {
               <option value="">Preferred Location</option>
               {locations.map((l) => <option key={l} value={l}>{l}</option>)}
             </select>
+            {/* Honeypot. Hidden from assistive tech and from sighted users. */}
+            <div aria-hidden="true" className="absolute left-[-9999px] w-px h-px overflow-hidden">
+              <label htmlFor="company">Company (leave blank)</label>
+              <input
+                id="company"
+                name="company"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+              />
+            </div>
             <textarea
               placeholder="Tell us about your requirements..."
               rows={4}

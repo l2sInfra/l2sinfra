@@ -14,7 +14,13 @@ const typeLabel: Record<PropertyType, string> = {
   farmhouse_land: "Farmhouse & Land",
 };
 
-function getYouTubeEmbedUrl(url: string): string {
+/**
+ * Returns an embed URL only for a recognised YouTube link. A validator that
+ * falls through to trusting its input is worse than no validator: the previous
+ * version returned the raw string, so `javascript:...` in video_url executed
+ * in our origin.
+ */
+function getYouTubeEmbedUrl(url: string): string | null {
   try {
     // Handle youtu.be/VIDEO_ID
     const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
@@ -24,10 +30,13 @@ function getYouTubeEmbedUrl(url: string): string {
     const longMatch = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
     if (longMatch) return `https://www.youtube.com/embed/${longMatch[1]}`;
 
-    // Already an embed URL or other format — use as-is
-    return url;
+    // Anything we don't recognise is not rendered.
+    const embedMatch = url.match(/youtube(?:-nocookie)?\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+    if (embedMatch) return `https://www.youtube.com/embed/${embedMatch[1]}`;
+
+    return null;
   } catch {
-    return url;
+    return null;
   }
 }
 
@@ -61,6 +70,8 @@ export default function PropertyDetail() {
         setLoading(false);
       });
   }, [slug]);
+
+  const videoEmbedUrl = property?.video_url ? getYouTubeEmbedUrl(property.video_url) : null;
 
   if (notFound) return <Navigate to="/properties" replace />;
 
@@ -160,11 +171,18 @@ export default function PropertyDetail() {
                 </div>
 
                 {/* Video */}
-                {property.video_url && (
+                {videoEmbedUrl && (
                   <div className="bg-card border border-border rounded-xl p-6">
                     <h2 className="font-heading text-xl font-bold text-foreground mb-4">Property Video</h2>
                     <div className="aspect-video rounded-lg overflow-hidden">
-                      <iframe src={getYouTubeEmbedUrl(property.video_url)} className="w-full h-full" allowFullScreen title={`${property.title} video`} />
+                      <iframe
+                        src={videoEmbedUrl}
+                        className="w-full h-full"
+                        allowFullScreen
+                        sandbox="allow-scripts allow-same-origin allow-presentation"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        title={`${property.title} video`}
+                      />
                     </div>
                   </div>
                 )}

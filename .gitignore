@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Supabase CLI scratch — leaks project ref, region and pooler DB user
+supabase/.temp/
+
+# Env files (*.local was covered; .env and .env.production were not)
+.env
+.env.*
+!.env.example

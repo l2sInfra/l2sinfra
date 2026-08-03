@@ -6,6 +6,7 @@ import { Calendar, User, ArrowLeft, Tag } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { applySEO } from "@/lib/seo";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -111,7 +112,7 @@ export default function BlogPost() {
                     prose-blockquote:border-l-primary prose-blockquote:text-muted-foreground
                     prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
                     prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
                 />
 
                 {/* CTA */}
