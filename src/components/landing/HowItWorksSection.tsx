@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { MessageSquare, ListFilter, Eye, FileSignature, KeyRound } from "lucide-react";
 
 const steps = [
@@ -33,7 +33,7 @@ export function HowItWorksSection() {
   return (
     <section className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -47,7 +47,7 @@ export function HowItWorksSection() {
             How the work{" "}
             <span className="text-gradient-gold">actually goes</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         {/* Roadmap layout */}
         <div className="relative">
@@ -60,7 +60,7 @@ export function HowItWorksSection() {
           {/* Desktop: horizontal roadmap */}
           <div className="hidden md:grid md:grid-cols-5 gap-8 relative">
             {steps.map((step, i) => (
-              <motion.div
+              <m.div
                 key={step.title}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -84,14 +84,14 @@ export function HowItWorksSection() {
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   {step.description}
                 </p>
-              </motion.div>
+              </m.div>
             ))}
           </div>
 
           {/* Mobile: vertical roadmap */}
           <div className="md:hidden space-y-10 relative">
             {steps.map((step, i) => (
-              <motion.div
+              <m.div
                 key={step.title}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -118,7 +118,7 @@ export function HowItWorksSection() {
                     {step.description}
                   </p>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>

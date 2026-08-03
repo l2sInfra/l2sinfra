@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import { Shield, Award, Users } from "lucide-react";
 import { useRef } from "react";
 
@@ -21,7 +21,7 @@ export function IntroSection() {
     <section className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -63,9 +63,9 @@ export function IntroSection() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             ref={imgRef}
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -76,7 +76,7 @@ export function IntroSection() {
             <picture>
               <source type="image/avif" srcSet="/img/luxury-residential-800.avif" />
               <source type="image/webp" srcSet="/img/luxury-residential-800.webp" />
-              <motion.img
+              <m.img
                 src="/img/luxury-residential-800.jpg"
                 alt="High-rise residential tower with landscaped grounds"
                 width={800}
@@ -91,7 +91,7 @@ export function IntroSection() {
               <p className="font-heading text-3xl font-bold text-gold-ink">Since 2010</p>
               <p className="text-secondary-foreground/70 text-sm">Buying &amp; selling in Gurgaon</p>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

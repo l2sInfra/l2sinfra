@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 const partners = [
   { name: "DLF", abbr: "DLF" },
@@ -15,7 +15,7 @@ export function PartnersSection() {
   return (
     <section id="network" className="section-padding bg-accent">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -33,11 +33,11 @@ export function PartnersSection() {
             which is how our buyers reach pre-launch allocations and held-back inventory
             before it is advertised anywhere.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
           {partners.map((partner, i) => (
-            <motion.div
+            <m.div
               key={partner.name}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -53,7 +53,7 @@ export function PartnersSection() {
               <span className="text-accent-foreground/60 text-sm font-medium text-center">
                 {partner.name}
               </span>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

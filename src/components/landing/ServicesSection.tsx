@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Home, Building2, TrendingUp, Globe, Briefcase, FileCheck } from "lucide-react";
 
 const services = [
@@ -44,7 +44,7 @@ export function ServicesSection() {
   return (
     <section id="services" className="section-padding bg-cream">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -58,11 +58,11 @@ export function ServicesSection() {
             What we actually{" "}
             <span className="text-gradient-gold">do</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((svc, i) => (
-            <motion.div
+            <m.div
               key={svc.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -82,7 +82,7 @@ export function ServicesSection() {
               <a href="#contact" className="text-gold-ink text-sm font-semibold hover:text-gold-dark transition-colors">
                 Learn More →
               </a>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

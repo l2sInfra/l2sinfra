@@ -12,10 +12,9 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#1e293b">
 
-    <!-- Fonts: preconnect + direct <link> beats an @import in CSS, which blocks render -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap">
+    <!-- Self-hosted. No third-party origin, no CSS-then-font round trip. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/playfair-latin.woff2" crossorigin>
 
     <!-- Primary SEO -->
     <title>L2S Infra — Luxury Real Estate Agency in Gurgaon &amp; Delhi NCR</title>

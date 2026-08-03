@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 
@@ -30,7 +30,7 @@ export function HeroSection() {
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <motion.div className="absolute inset-0" style={{ y: bgY }}>
+      <m.div className="absolute inset-0" style={{ y: bgY }}>
         {/* Served from public/ rather than imported: the prerendered HTML needs a
             stable path it can name, and Vite hashes anything imported from src/.
             AVIF first, WebP next, JPEG last. A phone at 2x picks the 828w AVIF —
@@ -84,23 +84,23 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-secondary/65 via-secondary/45 to-secondary/80" />
         <div className="absolute inset-0 bg-secondary/45 md:bg-transparent" />
         <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-secondary/85 via-secondary/60 to-transparent" />
-      </motion.div>
+      </m.div>
 
-      <motion.div
+      <m.div
         className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20 w-full"
         style={{ y: contentY, opacity: contentOpacity, visibility: contentVisibility }}
       >
         <div className="max-w-3xl">
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-secondary-foreground text-sm font-semibold tracking-[0.3em] uppercase mb-6"
           >
             Real Estate Agency · Gurgaon &amp; Delhi NCR
-          </motion.p>
+          </m.p>
 
-          <motion.h1
+          <m.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -109,9 +109,9 @@ export function HeroSection() {
             Buy well in Gurgaon.
             <br />
             Sell for what it&rsquo;s <span className="text-gold-light">actually worth.</span>
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
@@ -119,10 +119,10 @@ export function HeroSection() {
           >
             A full-service agency for Gurgaon and Delhi, partnered with the premium
             builders — and on your side of the table whichever side you are on.
-          </motion.p>
+          </m.p>
 
           {/* Stats */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
@@ -136,10 +136,10 @@ export function HeroSection() {
                 <p className="text-secondary-foreground/60 text-xs mt-1 tracking-wider uppercase">{fact.label}</p>
               </div>
             ))}
-          </motion.div>
+          </m.div>
 
           {/* CTAs */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9 }}
@@ -157,9 +157,9 @@ export function HeroSection() {
             >
               See what your property is worth
             </Link>
-          </motion.div>
+          </m.div>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 }

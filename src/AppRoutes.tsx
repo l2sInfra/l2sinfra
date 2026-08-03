@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/lib/auth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { MotionConfig } from "framer-motion";
+import { MotionConfig, LazyMotion, domAnimation } from "framer-motion";
 import { Suspense, lazy, useEffect } from "react";
 
 // The homepage ships eagerly — it's the landing route and must paint fast.
@@ -67,6 +67,12 @@ export function AppRoutes() {
     // reducedMotion="user" makes framer-motion honour the OS setting; it does
     // not by default, and this site runs five parallax rigs and ~40 animations.
     <MotionConfig reducedMotion="user">
+      {/* LazyMotion + `m` instead of `motion`: the full motion component
+          statically pulls in layout-projection and drag machinery — ~33 kB raw
+          of code this site never touches, since nothing uses drag, layout or
+          layoutId. `strict` makes a stray `motion.*` throw rather than silently
+          reintroducing the whole bundle. */}
+      <LazyMotion features={domAnimation} strict>
       <Sonner />
       <ScrollToHash />
       <a
@@ -119,6 +125,7 @@ export function AppRoutes() {
           </Routes>
         </Suspense>
       </ErrorBoundary>
+      </LazyMotion>
     </MotionConfig>
   );
 }

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { MapPin, BedDouble, Maximize, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
@@ -29,7 +29,7 @@ export function FeaturedPropertiesSection() {
   return (
     <section id="properties" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -42,7 +42,7 @@ export function FeaturedPropertiesSection() {
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
             Curated <span className="text-gradient-gold">Premium Listings</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         {state === "error" ? (
           <SectionError onRetry={retry} what="our current listings" />
@@ -69,7 +69,7 @@ export function FeaturedPropertiesSection() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {properties.map((prop, i) => (
-              <motion.article
+              <m.article
                 key={prop.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -117,12 +117,12 @@ export function FeaturedPropertiesSection() {
                     </Link>
                   </div>
                 </div>
-              </motion.article>
+              </m.article>
             ))}
           </div>
         )}
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -135,7 +135,7 @@ export function FeaturedPropertiesSection() {
           >
             View All Properties <ArrowRight size={16} />
           </Link>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

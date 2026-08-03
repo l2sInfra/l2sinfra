@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
@@ -19,7 +19,7 @@ export function InsightsSection() {
   return (
     <section id="insights" className="section-padding bg-cream">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -33,7 +33,7 @@ export function InsightsSection() {
             Market Insights &{" "}
             <span className="text-gradient-gold">Expertise</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         {state === "error" ? (
           <SectionError onRetry={retry} what="our latest insights" />
@@ -59,7 +59,7 @@ export function InsightsSection() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {articles.map((article, i) => (
-              <motion.article
+              <m.article
                 key={article.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -98,12 +98,12 @@ export function InsightsSection() {
                     Read More <ArrowRight size={14} />
                   </Link>
                 </div>
-              </motion.article>
+              </m.article>
             ))}
           </div>
         )}
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -116,7 +116,7 @@ export function InsightsSection() {
           >
             View All Insights <ArrowRight size={16} />
           </Link>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

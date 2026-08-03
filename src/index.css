@@ -1,4 +1,73 @@
-/* Fonts are loaded in index.html with preconnect — an @import here blocks render. */
+/* Self-hosted fonts.
+ *
+ * Previously two third-party origins with a serialised dependency: the browser
+ * fetched CSS from fonts.googleapis.com, and only then learned the woff2 URLs
+ * on fonts.gstatic.com. Both files are variable, so four Inter weights and two
+ * Playfair weights come from one file each instead of six static faces.
+ *
+ * The -ext files exist for one reason worth remembering: the rupee sign is
+ * U+20B9, which sits in latin-ext, not latin. Shipping latin alone would have
+ * rendered every price in a fallback font. They are subset to Latin Extended-A
+ * plus currency and punctuation, so they cost ~36 kB rather than the ~103 kB
+ * of Google's full latin-ext.
+ *
+ * size-adjust on the fallbacks is measured, not guessed: average advance width
+ * of this font against the system fallback (see the note in the commit). It
+ * keeps the swap from reflowing the page now that prerendering makes first
+ * paint happen before the fonts arrive.
+ */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-ext.woff2') format('woff2');
+  unicode-range: U+0100-017F, U+018F, U+0192, U+01A0-01A1, U+01AF-01B0, U+0218-021B, U+0237, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+20A0-20BF, U+2113, U+2190-2193;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/playfair-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/playfair-ext.woff2') format('woff2');
+  unicode-range: U+0100-017F, U+018F, U+0192, U+01A0-01A1, U+01AF-01B0, U+0218-021B, U+0237, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+20A0-20BF, U+2113, U+2190-2193;
+}
+
+/* Metric-matched fallbacks, so the swap doesn't shift layout. */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 104.3%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Playfair Fallback';
+  src: local('Georgia');
+  size-adjust: 97.6%;
+  ascent-override: 105%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
 
 @tailwind base;
 @tailwind components;
@@ -66,8 +135,8 @@
     --sidebar-border: 213 20% 22%;
     --sidebar-ring: 39 46% 57%;
 
-    --font-heading: 'Playfair Display', Georgia, serif;
-    --font-body: 'Inter', system-ui, sans-serif;
+    --font-heading: 'Playfair Display', 'Playfair Fallback', Georgia, serif;
+    --font-body: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   }
 }
 

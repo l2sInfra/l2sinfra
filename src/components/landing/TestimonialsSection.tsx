@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Star } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { Testimonial } from "@/lib/database.types";
@@ -18,7 +18,7 @@ export function TestimonialsSection() {
   return (
     <section className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -31,7 +31,7 @@ export function TestimonialsSection() {
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
             What our <span className="text-gradient-gold">clients say</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         {state === "error" ? (
           <SectionError onRetry={retry} what="our client references" />
@@ -59,7 +59,7 @@ export function TestimonialsSection() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((t, i) => (
-              <motion.div
+              <m.div
                 key={t.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -80,7 +80,7 @@ export function TestimonialsSection() {
                   <p className="text-muted-foreground text-xs">{t.designation}</p>
                   <p className="text-gold-ink text-xs font-semibold mt-1">{t.property_transacted}</p>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         )}

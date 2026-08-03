@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Trophy, Lock, UserCheck, BarChart3 } from "lucide-react";
 
 const advantages = [
@@ -28,7 +28,7 @@ export function WhyChooseSection() {
   return (
     <section className="section-padding bg-cream">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -41,11 +41,11 @@ export function WhyChooseSection() {
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
             The L2S Infra <span className="text-gradient-gold">Advantage</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {advantages.map((adv, i) => (
-            <motion.div
+            <m.div
               key={adv.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ export function WhyChooseSection() {
               </div>
               <h3 className="font-heading text-xl font-bold text-foreground mb-3">{adv.title}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">{adv.description}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

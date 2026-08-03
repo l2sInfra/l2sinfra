@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useRef } from "react";
 
@@ -36,7 +36,7 @@ function ParallaxCard({ cat, index }: { cat: typeof categories[0]; index: number
   const imgY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -49,7 +49,7 @@ function ParallaxCard({ cat, index }: { cat: typeof categories[0]; index: number
       <picture>
         <source type="image/avif" srcSet={`/img/${cat.image}-800.avif`} />
         <source type="image/webp" srcSet={`/img/${cat.image}-800.webp`} />
-        <motion.img
+        <m.img
           src={`/img/${cat.image}-800.jpg`}
           alt=""
           width={800}
@@ -75,7 +75,7 @@ function ParallaxCard({ cat, index }: { cat: typeof categories[0]; index: number
           Explore <ArrowUpRight size={16} />
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -83,7 +83,7 @@ export function PortfolioSection() {
   return (
     <section id="portfolio" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -98,7 +98,7 @@ export function PortfolioSection() {
             <br />
             <span className="text-gradient-gold">Discerning Few</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[280px]">

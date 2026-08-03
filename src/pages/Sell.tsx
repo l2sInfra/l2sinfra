@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { WhatsAppButton } from "@/components/landing/WhatsAppButton";
@@ -108,7 +108,7 @@ export default function Sell() {
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {steps.map((step, i) => (
-                <motion.div
+                <m.div
                   key={step.title}
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -123,7 +123,7 @@ export default function Sell() {
                     {step.title}
                   </h2>
                   <p className="text-muted-foreground text-sm leading-relaxed">{step.body}</p>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </div>

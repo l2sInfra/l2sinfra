@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useState } from "react";
 import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
@@ -106,7 +106,7 @@ export function ContactSection() {
   return (
     <section id="contact" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -118,11 +118,11 @@ export function ContactSection() {
             Begin Your Luxury{" "}
             <span className="text-gradient-gold">Property Journey</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Form */}
-          <motion.form
+          <m.form
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -219,10 +219,10 @@ export function ContactSection() {
             >
               {loading ? "Submitting..." : "Schedule Consultation"}
             </button>
-          </motion.form>
+          </m.form>
 
           {/* Contact Info */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -282,7 +282,7 @@ export function ContactSection() {
                 title="L2S Infra Office Location - Bani City Centre, Sector 63, Gurgaon"
               />
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -39,7 +39,7 @@ export function MarketsSection() {
   return (
     <section id="markets" className="section-padding bg-secondary text-secondary-foreground">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -57,11 +57,11 @@ export function MarketsSection() {
             Gurgaon is not one market. What drives value on Golf Course Road has
             almost nothing to do with what drives it on Dwarka Expressway.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {markets.map((market, i) => (
-            <motion.div
+            <m.div
               key={market.city}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -87,7 +87,7 @@ export function MarketsSection() {
                   Selling here? Get the comparables
                 </Link>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
