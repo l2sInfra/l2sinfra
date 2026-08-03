@@ -35,7 +35,7 @@ export function WhyChooseSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">
+          <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">
             Why L2S Infra
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
@@ -54,7 +54,7 @@ export function WhyChooseSection() {
               className="text-center group"
             >
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
-                <adv.icon size={30} className="text-primary" />
+                <adv.icon size={30} className="text-gold-ink" />
               </div>
               <h3 className="font-heading text-xl font-bold text-foreground mb-3">{adv.title}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">{adv.description}</p>

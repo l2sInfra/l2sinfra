@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, BedDouble, Maximize, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import type { Property, PropertyType } from "@/lib/database.types";
+import { useQueryState } from "@/lib/use-query-state";
+import { SectionError, SectionEmpty } from "@/components/SectionState";
 
 const typeLabel: Record<PropertyType, string> = {
   residential: "Residential",
@@ -12,30 +13,18 @@ const typeLabel: Record<PropertyType, string> = {
 };
 
 export function FeaturedPropertiesSection() {
-  const [properties, setProperties] = useState<Property[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
+  // Featured first, then fill with the rest. This replaces a sequential
+  // "query, and if empty query again" fallback that cost a second round trip
+  // and could not tell an empty result from a failed one.
+  const { rows: properties, state, retry } = useQueryState<Property>(() =>
     supabase
       .from("properties")
       .select("*")
-      .eq("is_featured", true)
       .eq("status", "available")
+      .order("is_featured", { ascending: false })
       .order("created_at", { ascending: false })
-      .limit(6)
-      .then(({ data }) => {
-        if (!data || data.length === 0) {
-          // Fallback: show any available properties if none are featured
-          supabase.from("properties").select("*").eq("status", "available").order("created_at", { ascending: false }).limit(6).then(({ data: fallback }) => {
-            setProperties(fallback ?? []);
-            setLoading(false);
-          });
-        } else {
-          setProperties(data);
-          setLoading(false);
-        }
-      });
-  }, []);
+      .limit(6),
+  );
 
   return (
     <section id="properties" className="section-padding bg-background">
@@ -47,7 +36,7 @@ export function FeaturedPropertiesSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">
+          <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">
             Featured Properties
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
@@ -55,16 +44,24 @@ export function FeaturedPropertiesSection() {
           </h2>
         </motion.div>
 
-        {loading ? (
+        {state === "error" ? (
+          <SectionError onRetry={retry} what="our current listings" />
+        ) : state === "empty" ? (
+          <SectionEmpty>
+            Nothing is on the public list right now. Pre-launch allocations and
+            resale stock never reach it — tell us what you're after and we'll
+            send what's actually available.
+          </SectionEmpty>
+        ) : state === "loading" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="bg-card border border-border rounded-2xl overflow-hidden animate-pulse">
-                <div className="h-56 bg-secondary" />
+                <div className="h-56 bg-muted" />
                 <div className="p-6 space-y-3">
-                  <div className="h-5 bg-secondary rounded w-3/4" />
-                  <div className="h-4 bg-secondary rounded w-1/2" />
-                  <div className="h-4 bg-secondary rounded w-full" />
-                  <div className="h-8 bg-secondary rounded w-1/3" />
+                  <div className="h-5 bg-muted rounded w-3/4" />
+                  <div className="h-4 bg-muted rounded w-1/2" />
+                  <div className="h-4 bg-muted rounded w-full" />
+                  <div className="h-8 bg-muted rounded w-1/3" />
                 </div>
               </div>
             ))}
@@ -96,7 +93,7 @@ export function FeaturedPropertiesSection() {
                     {prop.title}
                   </h3>
                   <div className="flex items-center gap-1 text-muted-foreground text-sm mb-3">
-                    <MapPin size={14} className="text-primary" />
+                    <MapPin size={14} className="text-gold-ink" />
                     {prop.location}
                   </div>
                   <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
@@ -111,10 +108,10 @@ export function FeaturedPropertiesSection() {
                   </div>
                   <p className="text-muted-foreground text-xs mb-4 line-clamp-2">{prop.features}</p>
                   <div className="flex items-center justify-between">
-                    <p className="font-heading text-xl font-bold text-primary">{prop.price}</p>
+                    <p className="font-heading text-xl font-bold text-gold-ink">{prop.price}</p>
                     <Link
                       to={`/properties/${prop.slug}`}
-                      className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors"
+                      className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-gold-ink transition-colors"
                     >
                       View Details <ArrowRight size={14} />
                     </Link>
@@ -134,7 +131,7 @@ export function FeaturedPropertiesSection() {
         >
           <Link
             to="/properties"
-            className="inline-flex items-center gap-2 border border-primary text-primary px-8 py-3 rounded-lg font-semibold text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
+            className="inline-flex items-center gap-2 border border-gold-ink text-gold-ink px-8 py-3 rounded-lg font-semibold text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
           >
             View All Properties <ArrowRight size={16} />
           </Link>

@@ -1,26 +1,20 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import type { BlogPost } from "@/lib/database.types";
+import { useQueryState } from "@/lib/use-query-state";
+import { SectionError, SectionEmpty } from "@/components/SectionState";
 
 export function InsightsSection() {
-  const [articles, setArticles] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
+  const { rows: articles, state, retry } = useQueryState<BlogPost>(() =>
     supabase
       .from("blog_posts")
       .select("*")
       .eq("is_published", true)
       .order("published_at", { ascending: false })
-      .limit(3)
-      .then(({ data }) => {
-        setArticles(data ?? []);
-        setLoading(false);
-      });
-  }, []);
+      .limit(3),
+  );
 
   return (
     <section id="insights" className="section-padding bg-cream">
@@ -32,7 +26,7 @@ export function InsightsSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">
+          <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">
             Insights
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
@@ -41,16 +35,23 @@ export function InsightsSection() {
           </h2>
         </motion.div>
 
-        {loading ? (
+        {state === "error" ? (
+          <SectionError onRetry={retry} what="our latest insights" />
+        ) : state === "empty" ? (
+          <SectionEmpty>
+            Our corridor notes go to clients first. Tell us which corridor you're
+            looking at and we'll send you the current one.
+          </SectionEmpty>
+        ) : state === "loading" ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
               <div key={i} className="bg-card border border-border rounded-2xl overflow-hidden animate-pulse">
-                <div className="h-48 bg-secondary" />
+                <div className="h-48 bg-muted" />
                 <div className="p-6 space-y-3">
-                  <div className="h-4 bg-secondary rounded w-1/2" />
-                  <div className="h-5 bg-secondary rounded w-3/4" />
-                  <div className="h-4 bg-secondary rounded w-full" />
-                  <div className="h-4 bg-secondary rounded w-2/3" />
+                  <div className="h-4 bg-muted rounded w-1/2" />
+                  <div className="h-5 bg-muted rounded w-3/4" />
+                  <div className="h-4 bg-muted rounded w-full" />
+                  <div className="h-4 bg-muted rounded w-2/3" />
                 </div>
               </div>
             ))}
@@ -84,7 +85,7 @@ export function InsightsSection() {
                       <User size={12} /> {article.author}
                     </span>
                   </div>
-                  <h3 className="font-heading text-lg font-bold text-card-foreground mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="font-heading text-lg font-bold text-card-foreground mb-2 group-hover:text-gold-ink transition-colors">
                     {article.title}
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
@@ -92,7 +93,7 @@ export function InsightsSection() {
                   </p>
                   <Link
                     to={`/insights/${article.slug}`}
-                    className="text-primary text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all"
+                    className="text-gold-ink text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all"
                   >
                     Read More <ArrowRight size={14} />
                   </Link>
@@ -111,7 +112,7 @@ export function InsightsSection() {
         >
           <Link
             to="/insights"
-            className="inline-flex items-center gap-2 border border-primary text-primary px-8 py-3 rounded-lg font-semibold text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
+            className="inline-flex items-center gap-2 border border-gold-ink text-gold-ink px-8 py-3 rounded-lg font-semibold text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
           >
             View All Insights <ArrowRight size={16} />
           </Link>

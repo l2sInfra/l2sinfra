@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
+// Root-relative, not bare fragments. "#services" on /properties/some-slug
+// resolves against that URL and matches nothing, so the whole nav was dead on
+// every route except the homepage. Properties and Insights are real pages.
 const navItems = [
-  { label: "Services", href: "#services" },
-  { label: "Properties", href: "#properties" },
-  { label: "Markets", href: "#markets" },
-  { label: "Insights", href: "#insights" },
-  { label: "Contact", href: "#contact" },
+  { label: "Services", to: "/#services" },
+  { label: "Properties", to: "/properties" },
+  { label: "Markets", to: "/#markets" },
+  { label: "Insights", to: "/insights" },
+  { label: "Contact", to: "/#contact" },
 ];
 
 export function Navbar() {
@@ -41,30 +44,32 @@ export function Navbar() {
 
         <div className="hidden md:flex items-center gap-10">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.label}
-              href={item.href}
+              to={item.to}
               className={`text-sm font-medium tracking-wide transition-colors duration-300 ${
                 scrolled
-                  ? "text-foreground/70 hover:text-primary"
+                  ? "text-foreground/70 hover:text-gold-ink"
                   : "text-secondary-foreground/80 hover:text-secondary-foreground"
               }`}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#contact"
-            className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors duration-300"
+          <Link
+            to="/#contact"
+            className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors duration-300"
           >
             Get in Touch
-          </a>
+          </Link>
         </div>
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className={`md:hidden ${scrolled ? "text-foreground" : "text-secondary-foreground"}`}
-          aria-label="Toggle menu"
+          className={`md:hidden p-2.5 -m-2.5 ${scrolled ? "text-foreground" : "text-secondary-foreground"}`}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -76,26 +81,27 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background border-t border-border mt-2 overflow-hidden"
+            id="mobile-nav"
+            className="md:hidden bg-background border-t border-border overflow-hidden"
           >
             <div className="p-6 flex flex-col gap-4">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.label}
-                  href={item.href}
+                  to={item.to}
                   onClick={() => setMobileOpen(false)}
-                  className="text-foreground font-medium py-2"
+                  className="text-foreground font-medium py-2 min-h-[44px] flex items-center"
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
-              <a
-                href="#contact"
+              <Link
+                to="/#contact"
                 onClick={() => setMobileOpen(false)}
                 className="bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold text-center"
               >
                 Get in Touch
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}

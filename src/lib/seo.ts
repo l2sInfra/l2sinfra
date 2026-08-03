@@ -18,6 +18,14 @@ export const SITE_ORIGIN = "https://www.l2sinfra.com";
 
 export const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/og-image.jpg`;
 
+/**
+ * Used when a route supplies no description of its own. Without this the
+ * previous route's description stayed attached — so an article with an empty
+ * excerpt inherited whatever page the visitor happened to view before it.
+ */
+export const DEFAULT_DESCRIPTION =
+  "Luxury real estate agency in Gurgaon and Delhi NCR. L2S Infra helps buyers and sellers with premium residential, commercial and farmhouse property.";
+
 export interface SEOOptions {
   /** Full <title>. Callers append "| L2S Infra" themselves where it reads better. */
   title: string;
@@ -64,11 +72,12 @@ export function applySEO({ title, description, path, image, type = "website", no
   setMeta('meta[name="robots"]', "name", "robots", noindex ? "noindex, nofollow" : "index, follow");
   setCanonical(url);
 
-  if (description) {
-    setMeta('meta[name="description"]', "name", "description", description);
-    setMeta('meta[property="og:description"]', "property", "og:description", description);
-    setMeta('meta[name="twitter:description"]', "name", "twitter:description", description);
-  }
+  // Written unconditionally — a conditional write leaves the previous route's
+  // description in place, which is a cross-route leak, not a no-op.
+  const desc = description?.trim() || DEFAULT_DESCRIPTION;
+  setMeta('meta[name="description"]', "name", "description", desc);
+  setMeta('meta[property="og:description"]', "property", "og:description", desc);
+  setMeta('meta[name="twitter:description"]', "name", "twitter:description", desc);
 
   setMeta('meta[property="og:title"]', "property", "og:title", title);
   setMeta('meta[property="og:url"]', "property", "og:url", url);

@@ -46,8 +46,8 @@ export function PartnersSection() {
               className="flex flex-col items-center justify-center p-8 rounded-2xl border border-accent-foreground/10 hover:border-primary/40 transition-all duration-300 group"
             >
               <div className="w-16 h-16 rounded-full bg-accent-foreground/5 flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
-                <span className="font-heading text-xl font-bold text-accent-foreground/40 group-hover:text-primary transition-colors">
-                  {partner.abbr}
+                <span className="font-heading text-lg font-semibold text-accent-foreground/70 group-hover:text-primary transition-colors text-center leading-tight">
+                  {partner.name}
                 </span>
               </div>
               <span className="text-accent-foreground/60 text-sm font-medium text-center">

@@ -94,7 +94,7 @@ export function HeroSection() {
           >
             <a
               href="#contact"
-              className="bg-primary text-primary-foreground px-8 py-4 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors text-center"
+              className="bg-primary text-primary-foreground px-8 py-4 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors text-center"
             >
               Schedule a consultation
             </a>

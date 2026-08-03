@@ -67,20 +67,20 @@ export default function PropertyDetail() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-24">
+      <main id="main" className="min-h-screen bg-background pt-24">
         {loading ? (
           <div className="max-w-6xl mx-auto section-padding animate-pulse space-y-6">
-            <div className="h-80 bg-secondary rounded-2xl" />
-            <div className="h-8 bg-secondary rounded w-1/2" />
-            <div className="h-4 bg-secondary rounded w-1/3" />
+            <div className="h-80 bg-muted rounded-2xl" />
+            <div className="h-8 bg-muted rounded w-1/2" />
+            <div className="h-4 bg-muted rounded w-1/3" />
           </div>
         ) : property ? (
           <div className="max-w-6xl mx-auto px-4 md:px-6 pb-16">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-              <Link to="/" className="hover:text-primary">Home</Link>
+              <Link to="/" className="hover:text-gold-ink">Home</Link>
               <span>/</span>
-              <Link to="/properties" className="hover:text-primary">Properties</Link>
+              <Link to="/properties" className="hover:text-gold-ink">Properties</Link>
               <span>/</span>
               <span className="text-foreground line-clamp-1">{property.title}</span>
             </div>
@@ -111,7 +111,7 @@ export default function PropertyDetail() {
                     {property.title}
                   </h1>
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <MapPin size={16} className="text-primary" />
+                    <MapPin size={16} className="text-gold-ink" />
                     <span>{property.location}, {property.city}</span>
                   </div>
                 </div>
@@ -120,7 +120,7 @@ export default function PropertyDetail() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="bg-card border border-border rounded-xl p-4 text-center">
                     <p className="text-xs text-muted-foreground mb-1">Price</p>
-                    <p className="font-heading font-bold text-primary">{property.price}</p>
+                    <p className="font-heading font-bold text-gold-ink">{property.price}</p>
                   </div>
                   <div className="bg-card border border-border rounded-xl p-4 text-center">
                     <p className="text-xs text-muted-foreground mb-1">Area</p>
@@ -152,7 +152,7 @@ export default function PropertyDetail() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {property.features.split(",").map((f) => (
                       <div key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <CheckCircle size={14} className="text-primary shrink-0" />
+                        <CheckCircle size={14} className="text-gold-ink shrink-0" />
                         {f.trim()}
                       </div>
                     ))}
@@ -187,22 +187,22 @@ export default function PropertyDetail() {
 
                   <a
                     href={`tel:${PHONE_E164}`}
-                    className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors mb-3"
+                    className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors mb-3"
                   >
                     <Phone size={16} /> Call {PHONE_DISPLAY}
                   </a>
 
                   <Link
                     to="/#contact"
-                    className="w-full flex items-center justify-center gap-2 border border-border text-foreground py-3 rounded-lg text-sm font-semibold hover:border-primary hover:text-primary transition-colors"
+                    className="w-full flex items-center justify-center gap-2 border border-border text-foreground py-3 rounded-lg text-sm font-semibold hover:border-gold-ink hover:text-gold-ink transition-colors"
                   >
                     Schedule Consultation
                   </Link>
 
                   <div className="mt-6 pt-6 border-t border-border space-y-3 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary" /> RERA compliant transaction</div>
-                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary" /> Legal due diligence included</div>
-                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary" /> NRI buyers supported</div>
+                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-gold-ink" /> RERA compliant transaction</div>
+                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-gold-ink" /> Legal due diligence included</div>
+                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-gold-ink" /> NRI buyers supported</div>
                   </div>
                 </div>
 
@@ -210,7 +210,7 @@ export default function PropertyDetail() {
                 {property.developer && (
                   <div className="bg-card border border-border rounded-xl p-6">
                     <div className="flex items-center gap-2 mb-2">
-                      <Building2 size={16} className="text-primary" />
+                      <Building2 size={16} className="text-gold-ink" />
                       <h3 className="font-semibold text-foreground text-sm">Developer</h3>
                     </div>
                     <p className="text-muted-foreground text-sm">{property.developer}</p>
@@ -220,7 +220,7 @@ export default function PropertyDetail() {
             </div>
 
             <div className="mt-10">
-              <Link to="/properties" className="flex items-center gap-2 text-muted-foreground hover:text-primary text-sm transition-colors">
+              <Link to="/properties" className="flex items-center gap-2 text-muted-foreground hover:text-gold-ink text-sm transition-colors">
                 <ArrowLeft size={14} /> Back to All Properties
               </Link>
             </div>

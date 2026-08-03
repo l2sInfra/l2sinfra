@@ -56,7 +56,7 @@ function ParallaxCard({ cat, index }: { cat: typeof categories[0]; index: number
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-8">
-        <span className="text-primary text-xs font-bold tracking-widest uppercase">
+        <span className="text-gold-ink text-xs font-bold tracking-widest uppercase">
           {cat.stats}
         </span>
         <h3 className="font-heading text-2xl md:text-3xl font-bold text-accent-foreground mt-2 mb-2">
@@ -65,7 +65,7 @@ function ParallaxCard({ cat, index }: { cat: typeof categories[0]; index: number
         <p className="text-accent-foreground/60 text-sm leading-relaxed max-w-md">
           {cat.description}
         </p>
-        <div className="mt-4 flex items-center gap-2 text-primary text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="mt-4 flex items-center gap-2 text-gold-ink text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           Explore <ArrowUpRight size={16} />
         </div>
       </div>
@@ -84,7 +84,7 @@ export function PortfolioSection() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">
+          <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">
             Our Portfolio
           </p>
           <h2 className="font-heading text-4xl md:text-6xl font-bold text-foreground leading-tight">

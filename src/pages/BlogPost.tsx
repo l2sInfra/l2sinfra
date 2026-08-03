@@ -43,13 +43,13 @@ export default function BlogPost() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-24">
+      <main id="main" className="min-h-screen bg-background pt-24">
         {loading ? (
           <div className="max-w-3xl mx-auto section-padding animate-pulse space-y-6">
-            <div className="h-8 bg-secondary rounded w-3/4" />
-            <div className="h-64 bg-secondary rounded-2xl" />
+            <div className="h-8 bg-muted rounded w-3/4" />
+            <div className="h-64 bg-muted rounded-2xl" />
             <div className="space-y-3">
-              {[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-4 bg-secondary rounded" />)}
+              {[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-4 bg-muted rounded" />)}
             </div>
           </div>
         ) : post ? (
@@ -65,9 +65,9 @@ export default function BlogPost() {
               <div className="bg-card border border-border rounded-2xl p-8 md:p-12">
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-                  <Link to="/" className="hover:text-primary transition-colors">Home</Link>
+                  <Link to="/" className="hover:text-gold-ink transition-colors">Home</Link>
                   <span>/</span>
-                  <Link to="/insights" className="hover:text-primary transition-colors">Insights</Link>
+                  <Link to="/insights" className="hover:text-gold-ink transition-colors">Insights</Link>
                   <span>/</span>
                   <span className="text-foreground line-clamp-1">{post.title}</span>
                 </div>
@@ -75,11 +75,11 @@ export default function BlogPost() {
                 {/* Meta */}
                 <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
                   <span className="flex items-center gap-1.5">
-                    <Calendar size={14} className="text-primary" />
+                    <Calendar size={14} className="text-gold-ink" />
                     {new Date(post.published_at).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <User size={14} className="text-primary" />
+                    <User size={14} className="text-gold-ink" />
                     {post.author}
                   </span>
                 </div>
@@ -93,7 +93,7 @@ export default function BlogPost() {
                 {post.tags && post.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-8">
                     {post.tags.map((tag) => (
-                      <span key={tag} className="flex items-center gap-1 text-xs bg-primary/10 text-primary px-3 py-1 rounded-full">
+                      <span key={tag} className="flex items-center gap-1 text-xs bg-primary/10 text-gold-ink px-3 py-1 rounded-full">
                         <Tag size={10} /> {tag}
                       </span>
                     ))}
@@ -102,12 +102,12 @@ export default function BlogPost() {
 
                 {/* Content */}
                 <div
-                  className="prose prose-sm md:prose-base prose-invert max-w-none
+                  className="prose prose-sm md:prose-base max-w-none
                     prose-headings:font-heading prose-headings:font-bold prose-headings:text-foreground
                     prose-p:text-muted-foreground prose-p:leading-relaxed
                     prose-li:text-muted-foreground
                     prose-strong:text-foreground
-                    prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+                    prose-a:text-gold-ink prose-a:no-underline hover:prose-a:underline
                     prose-blockquote:border-l-primary prose-blockquote:text-muted-foreground
                     prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
                     prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3"
@@ -116,20 +116,20 @@ export default function BlogPost() {
 
                 {/* CTA */}
                 <div className="mt-12 p-6 bg-secondary rounded-xl border border-border">
-                  <h3 className="font-heading text-lg font-bold text-foreground mb-2">
+                  <h3 className="font-heading text-lg font-bold text-secondary-foreground mb-2">
                     Ready to Explore Premium Properties?
                   </h3>
-                  <p className="text-muted-foreground text-sm mb-4">
+                  <p className="text-secondary-foreground/80 text-sm mb-4">
                     We are available for a private consultation. No obligation, complete confidentiality.
                   </p>
-                  <Link to="/#contact" className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors">
+                  <Link to="/#contact" className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors">
                     Schedule Private Consultation
                   </Link>
                 </div>
 
                 {/* Back */}
                 <div className="mt-8">
-                  <Link to="/insights" className="flex items-center gap-2 text-muted-foreground hover:text-primary text-sm transition-colors">
+                  <Link to="/insights" className="flex items-center gap-2 text-muted-foreground hover:text-gold-ink text-sm transition-colors">
                     <ArrowLeft size={14} /> Back to Insights
                   </Link>
                 </div>

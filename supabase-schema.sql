@@ -152,7 +152,7 @@ insert into site_settings (key, value) values
   ('contact_phone', '+91-9818242500'),
   ('office_address', 'Bani City Centre, Sector 63, Gurgaon, Haryana'),
   ('business_hours', 'Mon – Sat: 10:00 AM – 7:00 PM | Sunday: By Appointment'),
-  ('ticker_text', '₹500Cr+ Transacted · 15+ Years Experience · 200+ Premium Properties · 98% Client Satisfaction');
+  ('ticker_text', 'Gurgaon & Delhi · Buying & selling · In this market since 2010');
 
 -- Seed: Testimonials (anonymous, credible)
 insert into testimonials (quote, client_name, designation, property_transacted, sort_order) values

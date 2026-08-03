@@ -40,7 +40,7 @@ export function HowItWorksSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">
+          <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">
             Our Process
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
@@ -70,8 +70,8 @@ export function HowItWorksSection() {
               >
                 {/* Node circle */}
                 <div className="relative z-10 mx-auto mb-6">
-                  <div className="w-[104px] h-[104px] rounded-full bg-primary/10 border-4 border-primary flex items-center justify-center mx-auto shadow-lg shadow-primary/20">
-                    <step.icon size={32} className="text-primary" />
+                  <div className="w-[104px] h-[104px] rounded-full bg-primary/10 border-4 border-gold-ink flex items-center justify-center mx-auto shadow-lg shadow-primary/20">
+                    <step.icon size={32} className="text-gold-ink" />
                   </div>
                   <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shadow-md">
                     {i + 1}
@@ -101,8 +101,8 @@ export function HowItWorksSection() {
               >
                 {/* Node */}
                 <div className="relative z-10 shrink-0">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 border-4 border-primary flex items-center justify-center shadow-lg shadow-primary/20">
-                    <step.icon size={24} className="text-primary" />
+                  <div className="w-16 h-16 rounded-full bg-primary/10 border-4 border-gold-ink flex items-center justify-center shadow-lg shadow-primary/20">
+                    <step.icon size={24} className="text-gold-ink" />
                   </div>
                   <span className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center shadow-md">
                     {i + 1}

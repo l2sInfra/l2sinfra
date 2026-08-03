@@ -14,11 +14,11 @@ export default function Terms() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-24 pb-16">
+      <main id="main" className="min-h-screen bg-background pt-24 pb-16">
         <div className="max-w-3xl mx-auto px-4 md:px-6">
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-2">Terms of Service</h1>
           <p className="text-muted-foreground text-sm mb-8">Last updated: March 2026</p>
-          <div className="prose prose-sm prose-invert max-w-none prose-headings:font-heading prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground">
+          <div className="prose prose-sm max-w-none prose-a:text-gold-ink prose-a:underline prose-headings:font-heading prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground">
             <h2>1. Acceptance of Terms</h2>
             <p>By accessing and using the L2S Infra website (l2sinfra.com), you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our website.</p>
             <h2>2. Services</h2>

@@ -52,7 +52,7 @@ export function MarketsSection() {
             Five corridors. Five{" "}
             <span className="text-gradient-gold">different arguments.</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto mt-4">
+          <p className="text-secondary-foreground/70 max-w-2xl mx-auto mt-4">
             Gurgaon is not one market. What drives value on Golf Course Road has
             almost nothing to do with what drives it on Dwarka Expressway.
           </p>

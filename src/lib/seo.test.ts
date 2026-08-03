@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { applySEO, SITE_ORIGIN, DEFAULT_OG_IMAGE } from "./seo";
+import { applySEO, SITE_ORIGIN, DEFAULT_OG_IMAGE, DEFAULT_DESCRIPTION } from "./seo";
 
 const canonical = () =>
   document.head.querySelector('link[rel="canonical"]')?.getAttribute("href");
@@ -59,6 +59,27 @@ describe("applySEO", () => {
     expect(document.head.querySelectorAll('meta[property="og:url"]')).toHaveLength(1);
     expect(canonical()).toBe("https://www.l2sinfra.com/properties");
     expect(meta('meta[name="description"]')).toBe("Second");
+  });
+
+  it("does not leak a description from the previous route", () => {
+    // The realistic condition: index.html ships a populated head.
+    document.head.innerHTML =
+      '<meta name="description" content="Homepage marketing copy">' +
+      '<link rel="canonical" href="https://www.l2sinfra.com/">';
+
+    applySEO({ title: "An article", description: "Article specific", path: "/insights/a" });
+    expect(meta('meta[name="description"]')).toBe("Article specific");
+
+    // A route with no description of its own must not inherit the last one.
+    applySEO({ title: "Admin", path: "/admin", noindex: true });
+    expect(meta('meta[name="description"]')).toBe(DEFAULT_DESCRIPTION);
+    expect(meta('meta[property="og:description"]')).toBe(DEFAULT_DESCRIPTION);
+  });
+
+  it("treats an empty-string description as absent", () => {
+    applySEO({ title: "First", description: "Real copy", path: "/a" });
+    applySEO({ title: "Second", description: "   ", path: "/b" });
+    expect(meta('meta[name="description"]')).toBe(DEFAULT_DESCRIPTION);
   });
 
   it("sets article type for blog posts and website by default", () => {

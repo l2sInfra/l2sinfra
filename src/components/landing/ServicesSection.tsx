@@ -51,7 +51,7 @@ export function ServicesSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">
+          <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">
             Our Services
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
@@ -71,7 +71,7 @@ export function ServicesSection() {
               className="group bg-card rounded-2xl p-8 hover-lift border border-border"
             >
               <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors duration-300">
-                <svc.icon size={28} className="text-primary" />
+                <svc.icon size={28} className="text-gold-ink" />
               </div>
               <h3 className="font-heading text-xl font-bold text-card-foreground mb-3">
                 {svc.title}
@@ -79,7 +79,7 @@ export function ServicesSection() {
               <p className="text-muted-foreground leading-relaxed text-sm mb-4">
                 {svc.description}
               </p>
-              <a href="#contact" className="text-primary text-sm font-semibold hover:text-gold-dark transition-colors">
+              <a href="#contact" className="text-gold-ink text-sm font-semibold hover:text-gold-dark transition-colors">
                 Learn More →
               </a>
             </motion.div>

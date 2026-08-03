@@ -28,7 +28,7 @@ export function IntroSection() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
           >
-            <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">
+            <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">
               About L2S Infra
             </p>
             <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground leading-tight mb-6">
@@ -59,7 +59,7 @@ export function IntroSection() {
             <div className="flex flex-wrap gap-6 mt-8">
               {trustIndicators.map((item) => (
                 <div key={item.label} className="flex items-center gap-2 text-sm text-foreground font-medium">
-                  <item.icon size={18} className="text-primary" />
+                  <item.icon size={18} className="text-gold-ink" />
                   {item.label}
                 </div>
               ))}
@@ -82,7 +82,7 @@ export function IntroSection() {
               loading="lazy"
             />
             <div className="absolute -bottom-6 -left-6 bg-secondary text-secondary-foreground p-6 rounded-xl shadow-xl z-10">
-              <p className="font-heading text-3xl font-bold text-primary">Since 2010</p>
+              <p className="font-heading text-3xl font-bold text-gold-ink">Since 2010</p>
               <p className="text-secondary-foreground/70 text-sm">Buying &amp; selling in Gurgaon</p>
             </div>
           </motion.div>

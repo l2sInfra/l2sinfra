@@ -59,7 +59,7 @@ export default function Admin() {
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 ${
                 activeTab === item.key
                   ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-surface-subtle"
               }`}
             >
               <item.icon size={18} className="shrink-0" />
@@ -72,11 +72,11 @@ export default function Admin() {
           {sidebarOpen && user && (
             <p className="text-xs text-muted-foreground truncate px-3">{user.email}</p>
           )}
-          <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-primary text-sm transition-colors px-3 py-2 rounded-lg hover:bg-secondary">
+          <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-gold-ink text-sm transition-colors px-3 py-2 rounded-lg hover:bg-surface-subtle">
             <ArrowLeft size={16} className="shrink-0" />
             {sidebarOpen && <span>Back to Site</span>}
           </Link>
-          <button onClick={handleSignOut} className="w-full flex items-center gap-2 text-muted-foreground hover:text-red-400 text-sm transition-colors px-3 py-2 rounded-lg hover:bg-secondary">
+          <button onClick={handleSignOut} className="w-full flex items-center gap-2 text-muted-foreground hover:text-red-400 text-sm transition-colors px-3 py-2 rounded-lg hover:bg-surface-subtle">
             <LogOut size={16} className="shrink-0" />
             {sidebarOpen && <span>Sign Out</span>}
           </button>
@@ -127,7 +127,7 @@ function DashboardPanel() {
           <div key={s.label} className="bg-card border border-border rounded-xl p-6">
             <div className="flex items-center justify-between mb-3">
               <p className="text-muted-foreground text-sm">{s.label}</p>
-              <s.icon size={18} className="text-primary" />
+              <s.icon size={18} className="text-gold-ink" />
             </div>
             <p className="font-heading text-3xl font-bold text-foreground">{s.value}</p>
           </div>
@@ -209,14 +209,14 @@ function PropertiesPanel() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
                   <h3 className="font-semibold text-foreground truncate">{p.title}</h3>
-                  {p.is_featured && <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full">Featured</span>}
+                  {p.is_featured && <span className="text-xs bg-primary/20 text-gold-ink px-2 py-0.5 rounded-full">Featured</span>}
                   <span className={`text-xs px-2 py-0.5 rounded-full ${p.status === "available" ? "bg-green-500/20 text-green-400" : p.status === "sold" ? "bg-red-500/20 text-red-400" : "bg-yellow-500/20 text-yellow-400"}`}>{p.status}</span>
                 </div>
                 <p className="text-sm text-muted-foreground">{p.location} · {p.price} · {p.property_type}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <button onClick={() => { setIsNew(false); setEditing(p); }} className="p-2 text-muted-foreground hover:text-primary rounded-lg hover:bg-secondary transition-colors"><Pencil size={16} /></button>
-                <button onClick={() => remove(p.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-secondary transition-colors"><Trash2 size={16} /></button>
+                <button onClick={() => { setIsNew(false); setEditing(p); }} className="p-2 text-muted-foreground hover:text-gold-ink rounded-lg hover:bg-surface-subtle transition-colors"><Pencil size={16} /></button>
+                <button onClick={() => remove(p.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-surface-subtle transition-colors"><Trash2 size={16} /></button>
               </div>
             </div>
           ))}
@@ -237,12 +237,12 @@ function PropertyForm({ property, onChange, onSave, onCancel, isNew }: {
   isNew: boolean;
 }) {
   const f = (field: keyof Property, value: unknown) => onChange({ ...property, [field]: value });
-  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1";
 
   return (
     <div>
       <div className="flex items-center gap-3 mb-8">
-        <button onClick={onCancel} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-secondary"><X size={20} /></button>
+        <button onClick={onCancel} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-surface-subtle"><X size={20} /></button>
         <h1 className="font-heading text-2xl font-bold text-foreground">{isNew ? "Add Property" : "Edit Property"}</h1>
       </div>
 
@@ -351,7 +351,7 @@ function PropertyForm({ property, onChange, onSave, onCancel, isNew }: {
         </div>
 
         <div className="flex gap-3">
-          <button onClick={onSave} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors">
+          <button onClick={onSave} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors">
             <Save size={16} /> Save Property
           </button>
           <button onClick={onCancel} className="px-6 py-3 rounded-lg text-sm font-semibold border border-border text-muted-foreground hover:text-foreground transition-colors">
@@ -445,11 +445,11 @@ function BlogsPanel() {
                 <p className="text-sm text-muted-foreground">{p.author} · {new Date(p.published_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <button onClick={() => togglePublish(p)} className="p-2 text-muted-foreground hover:text-primary rounded-lg hover:bg-secondary transition-colors" title={p.is_published ? "Unpublish" : "Publish"}>
+                <button onClick={() => togglePublish(p)} className="p-2 text-muted-foreground hover:text-gold-ink rounded-lg hover:bg-surface-subtle transition-colors" title={p.is_published ? "Unpublish" : "Publish"}>
                   {p.is_published ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
-                <button onClick={() => { setIsNew(false); setEditing(p); }} className="p-2 text-muted-foreground hover:text-primary rounded-lg hover:bg-secondary transition-colors"><Pencil size={16} /></button>
-                <button onClick={() => remove(p.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-secondary transition-colors"><Trash2 size={16} /></button>
+                <button onClick={() => { setIsNew(false); setEditing(p); }} className="p-2 text-muted-foreground hover:text-gold-ink rounded-lg hover:bg-surface-subtle transition-colors"><Pencil size={16} /></button>
+                <button onClick={() => remove(p.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-surface-subtle transition-colors"><Trash2 size={16} /></button>
               </div>
             </div>
           ))}
@@ -468,12 +468,12 @@ function BlogForm({ post, onChange, onSave, onCancel, isNew }: {
   isNew: boolean;
 }) {
   const f = (field: keyof BlogPost, value: unknown) => onChange({ ...post, [field]: value });
-  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1";
 
   return (
     <div>
       <div className="flex items-center gap-3 mb-8">
-        <button onClick={onCancel} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-secondary"><X size={20} /></button>
+        <button onClick={onCancel} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-surface-subtle"><X size={20} /></button>
         <h1 className="font-heading text-2xl font-bold text-foreground">{isNew ? "New Blog Post" : "Edit Blog Post"}</h1>
       </div>
 
@@ -530,7 +530,7 @@ function BlogForm({ post, onChange, onSave, onCancel, isNew }: {
         </div>
 
         <div className="flex gap-3">
-          <button onClick={onSave} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors">
+          <button onClick={onSave} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors">
             <Save size={16} /> Save Post
           </button>
           <button onClick={onCancel} className="px-6 py-3 rounded-lg text-sm font-semibold border border-border text-muted-foreground hover:text-foreground transition-colors">
@@ -606,7 +606,7 @@ function LeadsPanel() {
                     value={lead.status}
                     onChange={(e) => { e.stopPropagation(); updateStatus(lead.id, e.target.value as Lead["status"]); }}
                     onClick={(e) => e.stopPropagation()}
-                    className="bg-secondary border border-border rounded-lg px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    className="bg-surface-subtle border border-border rounded-lg px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                   >
                     <option value="new">New</option>
                     <option value="contacted">Contacted</option>
@@ -675,7 +675,7 @@ function TestimonialsPanel() {
     load();
   };
 
-  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1";
   const f = (field: keyof Testimonial, value: unknown) => setEditing(prev => ({ ...prev, [field]: value }));
 
   return (
@@ -718,11 +718,11 @@ function TestimonialsPanel() {
                   <p className="text-xs text-muted-foreground">{t.designation} · {t.property_transacted}</p>
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={() => toggle(t)} className="p-2 text-muted-foreground hover:text-primary rounded-lg hover:bg-secondary" title={t.is_active ? "Hide" : "Show"}>
+                  <button onClick={() => toggle(t)} className="p-2 text-muted-foreground hover:text-gold-ink rounded-lg hover:bg-surface-subtle" title={t.is_active ? "Hide" : "Show"}>
                     {t.is_active ? <Eye size={16} /> : <EyeOff size={16} />}
                   </button>
-                  <button onClick={() => { setIsNew(false); setEditing(t); }} className="p-2 text-muted-foreground hover:text-primary rounded-lg hover:bg-secondary"><Pencil size={16} /></button>
-                  <button onClick={() => remove(t.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-secondary"><Trash2 size={16} /></button>
+                  <button onClick={() => { setIsNew(false); setEditing(t); }} className="p-2 text-muted-foreground hover:text-gold-ink rounded-lg hover:bg-surface-subtle"><Pencil size={16} /></button>
+                  <button onClick={() => remove(t.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-surface-subtle"><Trash2 size={16} /></button>
                 </div>
               </div>
             </div>
@@ -757,7 +757,7 @@ function SettingsPanel() {
     toast.success("Settings saved!");
   };
 
-  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1";
 
   if (loading) return <div className="text-center py-12 text-muted-foreground">Loading...</div>;
 
@@ -778,7 +778,7 @@ function SettingsPanel() {
             <input className={inp} value={settings[key] ?? ""} onChange={(e) => setSettings(prev => ({ ...prev, [key]: e.target.value }))} placeholder={placeholder} />
           </div>
         ))}
-        <button onClick={save} disabled={saving} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors disabled:opacity-50">
+        <button onClick={save} disabled={saving} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors disabled:opacity-50">
           <Save size={16} /> {saving ? "Saving..." : "Save All Settings"}
         </button>
       </div>

@@ -1,11 +1,10 @@
-import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/lib/auth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { Suspense, lazy } from "react";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { MotionConfig } from "framer-motion";
+import { Suspense, lazy, useEffect } from "react";
 
 // The homepage ships eagerly — it's the landing route and must paint fast.
 import Index from "./pages/Index";
@@ -24,8 +23,6 @@ const Terms = lazy(() => import("./pages/Terms"));
 const Disclaimer = lazy(() => import("./pages/Disclaimer"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-const queryClient = new QueryClient();
-
 /** Shown while a route chunk loads. Matches the pages' own pt-24 offset. */
 function RouteFallback() {
   return (
@@ -39,52 +36,84 @@ function RouteFallback() {
   );
 }
 
+/**
+ * React Router sets the hash but never scrolls to it, so every "/#services"
+ * link from a non-home route dropped the visitor at the top of the homepage.
+ * The offset clears the fixed navbar.
+ */
+function ScrollToHash() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+      return;
+    }
+    // Wait a frame so the target route has committed.
+    const id = requestAnimationFrame(() => {
+      document.querySelector(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [pathname, hash]);
+
+  return null;
+}
+
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <Suspense fallback={<RouteFallback />}>
-            <Routes>
-              {/* Public */}
-              <Route path="/" element={<Index />} />
-              <Route path="/insights" element={<BlogListing />} />
-              <Route path="/insights/:slug" element={<BlogPost />} />
-              <Route path="/properties" element={<PropertiesListing />} />
-              <Route path="/properties/:slug" element={<PropertyDetail />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-of-service" element={<Terms />} />
-              <Route path="/disclaimer" element={<Disclaimer />} />
+  // reducedMotion="user" makes framer-motion honour the OS setting; it does not
+  // by default, and this site runs five parallax rigs and ~40 entrance animations.
+  <MotionConfig reducedMotion="user">
+    <Sonner />
+    <BrowserRouter>
+      <ScrollToHash />
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-background focus:text-foreground focus:px-4 focus:py-2 focus:rounded-lg focus:ring-2 focus:ring-ring"
+      >
+        Skip to content
+      </a>
+      <ErrorBoundary>
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            {/* Public */}
+            <Route path="/" element={<Index />} />
+            <Route path="/insights" element={<BlogListing />} />
+            <Route path="/insights/:slug" element={<BlogPost />} />
+            <Route path="/properties" element={<PropertiesListing />} />
+            <Route path="/properties/:slug" element={<PropertyDetail />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<Terms />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
 
-              {/* Admin */}
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute>
-                    <Admin />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/*"
-                element={
-                  <ProtectedRoute>
-                    <Admin />
-                  </ProtectedRoute>
-                }
-              />
+            {/* Admin. AuthProvider lives here rather than at the root so the
+                public site doesn't fire a getSession() call and open an auth
+                state subscription for a visitor who will never log in. */}
+            <Route
+              path="/admin/*"
+              element={
+                <AuthProvider>
+                  <Routes>
+                    <Route path="login" element={<AdminLogin />} />
+                    <Route
+                      path="*"
+                      element={
+                        <ProtectedRoute>
+                          <Admin />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Routes>
+                </AuthProvider>
+              }
+            />
 
-              {/* 404 */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+            {/* 404 */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
+    </BrowserRouter>
+  </MotionConfig>
 );
 
 export default App;

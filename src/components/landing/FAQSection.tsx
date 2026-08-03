@@ -61,7 +61,7 @@ export function FAQSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">
+          <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">
             Questions
           </p>
           <h2 className="font-heading text-4xl md:text-6xl font-bold text-foreground">
@@ -82,7 +82,7 @@ export function FAQSection() {
                 value={`faq-${i}`}
                 className="bg-card border border-border rounded-xl px-6 data-[state=open]:shadow-lg transition-shadow"
               >
-                <AccordionTrigger className="text-left font-heading text-lg font-semibold text-card-foreground hover:text-primary transition-colors py-6 hover:no-underline">
+                <AccordionTrigger className="text-left font-heading text-lg font-semibold text-card-foreground hover:text-gold-ink transition-colors py-6 hover:no-underline">
                   {faq.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed pb-6">

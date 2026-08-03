@@ -15,11 +15,19 @@
     --popover: 0 0% 100%;
     --popover-foreground: 213 30% 15%;
 
+    /* Gold fill carries NAVY ink, not white. White on this gold is 2.45:1 and
+       fails WCAG AA on every button on the site; navy on it is 6.72:1, and
+       gold-with-dark-ink is what luxury print actually does. */
     --primary: 39 46% 57%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 213 30% 15%;
 
     --secondary: 213 30% 15%;
     --secondary-foreground: 0 0% 100%;
+
+    /* A subtle neutral surface. --secondary is brand navy and is NOT a
+       substitute: it holds the same value as --foreground, so `text-foreground`
+       on `bg-secondary` renders at 1.00:1 — invisible. Use this instead. */
+    --surface-subtle: 220 14% 96%;
 
     --muted: 220 14% 96%;
     --muted-foreground: 213 15% 46%;
@@ -30,15 +38,20 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 39 46% 57%;
+    --border: 220 13% 84%;
+    --input: 220 13% 84%;
+    /* Focus ring must clear 3:1 (WCAG 1.4.11). Gold is 2.45:1 on white; navy
+       is 15.5:1 and is visible on both the light and navy sections. */
+    --ring: 213 30% 15%;
 
     --radius: 0.5rem;
 
     --gold: 39 46% 57%;
     --gold-light: 39 55% 68%;
     --gold-dark: 39 50% 42%;
+    /* Gold for TEXT on light backgrounds: 6.35:1 on white. --gold itself is
+       2.45:1 there and only passes on navy. */
+    --gold-ink: 39 60% 30%;
     --bronze: 32 24% 44%;
     --navy: 213 30% 15%;
     --navy-light: 213 20% 25%;

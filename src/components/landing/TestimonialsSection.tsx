@@ -1,25 +1,19 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { Testimonial } from "@/lib/database.types";
+import { useQueryState } from "@/lib/use-query-state";
+import { SectionError, SectionEmpty } from "@/components/SectionState";
 
 export function TestimonialsSection() {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
+  const { rows: testimonials, state, retry } = useQueryState<Testimonial>(() =>
     supabase
       .from("testimonials")
       .select("*")
       .eq("is_active", true)
       .order("sort_order")
-      .limit(3)
-      .then(({ data }) => {
-        setTestimonials(data ?? []);
-        setLoading(false);
-      });
-  }, []);
+      .limit(3),
+  );
 
   return (
     <section className="section-padding bg-background">
@@ -31,7 +25,7 @@ export function TestimonialsSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">
+          <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">
             Testimonials
           </p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
@@ -39,17 +33,25 @@ export function TestimonialsSection() {
           </h2>
         </motion.div>
 
-        {loading ? (
+        {state === "error" ? (
+          <SectionError onRetry={retry} what="our client references" />
+        ) : state === "empty" ? (
+          <SectionEmpty>
+            We're re-collecting these with our clients' permission, with the
+            transaction attached. In the meantime, ask us for two references in
+            your sector and we'll connect you directly.
+          </SectionEmpty>
+        ) : state === "loading" ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
               <div key={i} className="bg-card border border-border rounded-2xl p-8 animate-pulse space-y-4">
-                <div className="flex gap-1">{[1,2,3,4,5].map((j) => <div key={j} className="w-4 h-4 bg-secondary rounded" />)}</div>
-                <div className="h-4 bg-secondary rounded w-full" />
-                <div className="h-4 bg-secondary rounded w-3/4" />
-                <div className="h-4 bg-secondary rounded w-full" />
+                <div className="flex gap-1">{[1,2,3,4,5].map((j) => <div key={j} className="w-4 h-4 bg-muted rounded" />)}</div>
+                <div className="h-4 bg-muted rounded w-full" />
+                <div className="h-4 bg-muted rounded w-3/4" />
+                <div className="h-4 bg-muted rounded w-full" />
                 <div className="border-t border-border pt-4 space-y-2">
-                  <div className="h-4 bg-secondary rounded w-1/2" />
-                  <div className="h-3 bg-secondary rounded w-1/3" />
+                  <div className="h-4 bg-muted rounded w-1/2" />
+                  <div className="h-3 bg-muted rounded w-1/3" />
                 </div>
               </div>
             ))}
@@ -67,7 +69,7 @@ export function TestimonialsSection() {
               >
                 <div className="flex gap-1 mb-4">
                   {[...Array(5)].map((_, j) => (
-                    <Star key={j} size={16} className="fill-primary text-primary" />
+                    <Star key={j} size={16} className="fill-gold-ink text-gold-ink" />
                   ))}
                 </div>
                 <p className="text-muted-foreground text-sm leading-relaxed mb-6 italic">
@@ -76,7 +78,7 @@ export function TestimonialsSection() {
                 <div className="border-t border-border pt-4">
                   <p className="font-heading font-bold text-card-foreground">{t.client_name}</p>
                   <p className="text-muted-foreground text-xs">{t.designation}</p>
-                  <p className="text-primary text-xs font-semibold mt-1">{t.property_transacted}</p>
+                  <p className="text-gold-ink text-xs font-semibold mt-1">{t.property_transacted}</p>
                 </div>
               </motion.div>
             ))}

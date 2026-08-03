@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
-import { CONTACT_EMAIL, PHONE_DISPLAY, PHONE_E164, whatsappLink } from "@/lib/site-contact";
+import { useSiteContact, whatsappLink } from "@/lib/site-contact";
 
 const budgetRanges = ["₹2 – 5 Cr", "₹5 – 10 Cr", "₹10 – 25 Cr", "₹25 – 50 Cr", "₹50 Cr+"];
 const propertyInterests = ["Luxury Residential", "Premium Commercial", "Lands & Plots", "Farm Houses", "Investment Portfolio"];
@@ -33,6 +33,7 @@ const empty: FormData = {
 };
 
 export function ContactSection() {
+  const contact = useSiteContact();
   const [form, setForm] = useState<FormData>(empty);
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -58,11 +59,22 @@ export function ContactSection() {
       source: "website",
     });
 
+    // The saved row is the record of truth. If it didn't save, say so and keep
+    // what they typed — never tell someone we'll be in touch when we have
+    // nothing to be in touch with.
     if (supabaseError) {
       console.error("Supabase error:", supabaseError);
+      setLoading(false);
+      toast.error(
+        `We couldn't send that just now. Please call or WhatsApp us on ${contact.phoneDisplay} and we'll pick it up straight away.`,
+        { duration: 10000 },
+      );
+      return;
     }
 
-    // 2. Send email via Supabase Edge Function + Resend
+    // 2. Send email via Supabase Edge Function + Resend.
+    // Fire-and-forget on purpose: the lead is already saved, so a failed
+    // notification must not read as a failed submission.
     supabase.functions.invoke("send-lead-email", {
       body: {
         full_name: form.full_name,
@@ -81,7 +93,7 @@ export function ContactSection() {
     setLoading(false);
   };
 
-  const inp = "w-full border border-border rounded-lg px-4 py-3 text-sm bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full border border-border rounded-lg px-4 py-3 text-sm bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1";
 
   return (
     <section id="contact" className="section-padding bg-background">
@@ -93,7 +105,7 @@ export function ContactSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">Contact Us</p>
+          <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">Contact Us</p>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
             Begin Your Luxury{" "}
             <span className="text-gradient-gold">Property Journey</span>
@@ -137,16 +149,31 @@ export function ContactSection() {
               onChange={(e) => set("message", e.target.value)}
               className={`${inp} resize-none`}
             />
-            <label className="flex items-start gap-2 text-sm text-muted-foreground cursor-pointer">
-              <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="mt-1 accent-primary" />
-              I agree to the{" "}
-              <a href="/privacy-policy" target="_blank" className="text-primary hover:underline">privacy policy</a>
-              {" "}and consent to being contacted regarding my inquiry.
-            </label>
+            <div className="flex items-start gap-2 text-sm text-muted-foreground">
+              <input
+                id="consent"
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-1 accent-primary w-4 h-4"
+              />
+              <label htmlFor="consent" className="cursor-pointer">
+                I'd like L2S Infra to contact me about this enquiry. We don't sell
+                or share your details.
+              </label>
+              <a
+                href="/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold-ink hover:underline shrink-0"
+              >
+                Privacy policy
+              </a>
+            </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary text-primary-foreground py-4 rounded-lg font-semibold text-sm hover:bg-gold-dark transition-colors disabled:opacity-50 min-h-[44px]"
+              className="w-full bg-primary text-primary-foreground py-4 rounded-lg font-semibold text-sm hover:bg-gold-light transition-colors disabled:opacity-50 min-h-[44px]"
             >
               {loading ? "Submitting..." : "Schedule Consultation"}
             </button>
@@ -162,40 +189,40 @@ export function ContactSection() {
           >
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <MapPin size={20} className="text-primary mt-1 shrink-0" />
+                <MapPin size={20} className="text-gold-ink mt-1 shrink-0" />
                 <div>
                   <p className="font-semibold text-foreground">Office Address</p>
-                  <p className="text-muted-foreground text-sm">Bani City Centre, Sector 63, Gurgaon, Haryana, India</p>
+                  <p className="text-muted-foreground text-sm">{contact.address}</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <Phone size={20} className="text-primary mt-1 shrink-0" />
+                <Phone size={20} className="text-gold-ink mt-1 shrink-0" />
                 <div>
                   <p className="font-semibold text-foreground">Phone</p>
-                  <a href={`tel:${PHONE_E164}`} className="text-muted-foreground text-sm hover:text-primary transition-colors">{PHONE_DISPLAY}</a>
+                  <a href={`tel:${contact.phoneE164}`} className="text-muted-foreground text-sm hover:text-gold-ink transition-colors">{contact.phoneDisplay}</a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <MessageCircle size={20} className="text-primary mt-1 shrink-0" />
+                <MessageCircle size={20} className="text-gold-ink mt-1 shrink-0" />
                 <div>
                   <p className="font-semibold text-foreground">WhatsApp</p>
-                  <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="text-muted-foreground text-sm hover:text-primary transition-colors">
-                    {PHONE_DISPLAY}
+                  <a href={whatsappLink(undefined, contact.whatsapp)} target="_blank" rel="noopener noreferrer" className="text-muted-foreground text-sm hover:text-gold-ink transition-colors">
+                    {contact.phoneDisplay}
                   </a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <Mail size={20} className="text-primary mt-1 shrink-0" />
+                <Mail size={20} className="text-gold-ink mt-1 shrink-0" />
                 <div>
                   <p className="font-semibold text-foreground">Email</p>
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-muted-foreground text-sm hover:text-primary transition-colors">{CONTACT_EMAIL}</a>
+                  <a href={`mailto:${contact.email}`} className="text-muted-foreground text-sm hover:text-gold-ink transition-colors">{contact.email}</a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <Clock size={20} className="text-primary mt-1 shrink-0" />
+                <Clock size={20} className="text-gold-ink mt-1 shrink-0" />
                 <div>
                   <p className="font-semibold text-foreground">Business Hours</p>
-                  <p className="text-muted-foreground text-sm">Mon – Sat: 10:00 AM – 7:00 PM</p>
+                  <p className="text-muted-foreground text-sm">{contact.hours}</p>
                   <p className="text-muted-foreground text-sm">Sunday: By Appointment</p>
                 </div>
               </div>
