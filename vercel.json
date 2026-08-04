@@ -1,6 +1,13 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/properties/m2m-urbana",
+      "destination": "/properties/m3m-urbana",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/((?!assets/|.*\\.(?:js|css|jpg|jpeg|png|gif|svg|ico|webp|avif|woff2?|webmanifest|xml|txt)).*)",
