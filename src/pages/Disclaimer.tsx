@@ -1,17 +1,21 @@
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { useEffect } from "react";
+import { applySEO } from "@/lib/seo";
+import { ROUTE_META } from "@/lib/route-meta";
 
 export default function Disclaimer() {
-  useEffect(() => { document.title = "Disclaimer | L2S Infra"; }, []);
+  useEffect(() => {
+    applySEO(ROUTE_META["/disclaimer"]);
+  }, []);
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-24 pb-16">
+      <main id="main" className="min-h-screen bg-background pt-24 pb-16">
         <div className="max-w-3xl mx-auto px-4 md:px-6">
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-2">Disclaimer</h1>
           <p className="text-muted-foreground text-sm mb-8">Last updated: March 2026</p>
-          <div className="prose prose-sm prose-invert max-w-none prose-headings:font-heading prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground">
+          <div className="prose prose-sm max-w-none prose-a:text-gold-ink prose-a:underline prose-headings:font-heading prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground">
             <h2>General Disclaimer</h2>
             <p>The information contained on this website is for general informational purposes only. L2S Infra makes no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, or suitability of the information, properties, services, or related graphics for any purpose.</p>
             <h2>Property Listings</h2>

@@ -29,7 +29,7 @@ export function RichTextEditor({ content, onChange, placeholder = "Start writing
   if (!editor) return null;
 
   const btn = (active: boolean) =>
-    `p-2 rounded text-sm transition-colors ${active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-secondary"}`;
+    `p-2 rounded text-sm transition-colors ${active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-surface-subtle"}`;
 
   const addImage = () => {
     const url = window.prompt("Image URL:");
@@ -67,7 +67,7 @@ export function RichTextEditor({ content, onChange, placeholder = "Start writing
       {/* Editor content */}
       <EditorContent
         editor={editor}
-        className="prose prose-sm prose-invert max-w-none min-h-[300px] p-4 bg-background text-foreground focus:outline-none [&_.ProseMirror]:outline-none [&_.ProseMirror]:min-h-[280px] [&_.ProseMirror_p.is-editor-empty:first-child::before]:text-muted-foreground [&_.ProseMirror_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:float-left [&_.ProseMirror_p.is-editor-empty:first-child::before]:pointer-events-none"
+        className="prose prose-sm max-w-none prose-a:text-gold-ink prose-a:underline min-h-[300px] p-4 bg-background text-foreground focus:outline-none [&_.ProseMirror]:outline-none [&_.ProseMirror]:min-h-[280px] [&_.ProseMirror_p.is-editor-empty:first-child::before]:text-muted-foreground [&_.ProseMirror_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:float-left [&_.ProseMirror_p.is-editor-empty:first-child::before]:pointer-events-none"
       />
     </div>
   );

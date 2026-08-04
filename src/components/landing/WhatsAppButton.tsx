@@ -1,9 +1,12 @@
 import { MessageCircle } from "lucide-react";
+import { useSiteContact, whatsappLink } from "@/lib/site-contact";
 
 export function WhatsAppButton() {
+  const contact = useSiteContact();
+
   return (
     <a
-      href="https://wa.me/919773740037?text=Hi%2C%20I%27m%20interested%20in%20luxury%20properties"
+      href={whatsappLink("Hi, I'm interested in luxury properties", contact.whatsapp)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"

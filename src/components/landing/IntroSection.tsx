@@ -1,12 +1,11 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import { Shield, Award, Users } from "lucide-react";
 import { useRef } from "react";
-import luxuryImg from "@/assets/luxury-residential.jpg";
 
 const trustIndicators = [
-  { icon: Shield, label: "RERA Compliant" },
-  { icon: Award, label: "Award-Winning Advisory" },
-  { icon: Users, label: "500+ HNI Clients" },
+  { icon: Shield, label: "Buying & selling" },
+  { icon: Award, label: "Premium builder partnerships" },
+  { icon: Users, label: "Gurgaon & Delhi since 2010" },
 ];
 
 export function IntroSection() {
@@ -22,42 +21,51 @@ export function IntroSection() {
     <section className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
           >
-            <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">
+            <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">
               About L2S Infra
             </p>
             <h2 className="font-heading text-3xl md:text-5xl font-bold text-foreground leading-tight mb-6">
-              Redefining Luxury{" "}
-              <span className="text-gradient-gold">Real Estate</span> in India
+              One market.{" "}
+              <span className="text-gradient-gold">Both sides of it.</span>
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                L2S Infra stands as India's most trusted luxury real estate advisory, serving high-net-worth individuals and NRIs with an unparalleled understanding of the premium property market. With over 15 years of dedicated expertise, we have curated a portfolio exceeding ₹500 crores across Mumbai, Delhi NCR, Bangalore, and other premier destinations.
+                An agency that works in six cities knows six markets shallowly. We have
+                worked in Gurgaon and Delhi since 2010, and nowhere else — which is why we
+                can answer the questions that actually decide a transaction here.
               </p>
               <p>
-                Our mission is to transform real estate investment from a complex transaction into a seamless, rewarding experience. Every client receives personalized attention from our seasoned advisors who leverage deep market intelligence, exclusive developer relationships, and comprehensive due diligence to identify opportunities that align with both lifestyle aspirations and investment objectives.
+                Which side of Golf Course Extension gets the metro alignment. Which sectors
+                on Dwarka Expressway still have an occupancy problem. Which developer's last
+                three deliveries slipped, and by how long. Which tower in a project faces the
+                service road nobody mentions at the launch. None of that is in a brochure.
               </p>
               <p>
-                What sets us apart is our commitment to discretion, transparency, and results. From the initial consultation to post-purchase management, we provide a white-glove service that has earned us the trust of India's most discerning property buyers.
+                We are partnered with the premium builders working these corridors, which
+                gets our buyers pre-launch allocations and pricing that does not reach the
+                portals. And we sell as hard as we buy: if you are exiting, we price the
+                unit against what comparable flats in your sector actually fetched, and we
+                run the negotiation rather than wait for an offer.
               </p>
             </div>
 
             <div className="flex flex-wrap gap-6 mt-8">
               {trustIndicators.map((item) => (
                 <div key={item.label} className="flex items-center gap-2 text-sm text-foreground font-medium">
-                  <item.icon size={18} className="text-primary" />
+                  <item.icon size={18} className="text-gold-ink" />
                   {item.label}
                 </div>
               ))}
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             ref={imgRef}
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -65,18 +73,25 @@ export function IntroSection() {
             transition={{ duration: 0.8 }}
             className="relative overflow-hidden rounded-2xl"
           >
-            <motion.img
-              src={luxuryImg}
-              alt="Luxury residential property showcasing modern architecture and elegant interiors"
-              className="w-full h-[550px] object-cover shadow-2xl"
-              style={{ y: imgY }}
-              loading="lazy"
-            />
+            <picture>
+              <source type="image/avif" srcSet="/img/luxury-residential-800.avif" />
+              <source type="image/webp" srcSet="/img/luxury-residential-800.webp" />
+              <m.img
+                src="/img/luxury-residential-800.jpg"
+                alt="High-rise residential tower with landscaped grounds"
+                width={800}
+                height={800}
+                className="w-full h-[550px] object-cover shadow-2xl"
+                style={{ y: imgY }}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
             <div className="absolute -bottom-6 -left-6 bg-secondary text-secondary-foreground p-6 rounded-xl shadow-xl z-10">
-              <p className="font-heading text-3xl font-bold text-primary">₹500Cr+</p>
-              <p className="text-secondary-foreground/70 text-sm">Properties Transacted</p>
+              <p className="font-heading text-3xl font-bold text-gold-ink">Since 2010</p>
+              <p className="text-secondary-foreground/70 text-sm">Buying &amp; selling in Gurgaon</p>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

@@ -10,6 +10,35 @@ import { useAuth } from "@/lib/auth";
 import { RichTextEditor } from "@/components/RichTextEditor";
 import type { Property, BlogPost, Lead, Testimonial } from "@/lib/database.types";
 import { toast } from "sonner";
+import { applySEO } from "@/lib/seo";
+
+/**
+ * Postgres errors are not user-facing sentences. Map the ones an operator can
+ * actually hit; fall back to a plain apology rather than leaking constraint
+ * names into the UI.
+ */
+function describeDbError(error: { code?: string; message: string }): string {
+  if (error.code === "23505") return "Something with that name or URL already exists.";
+  if (error.code === "23502") return "A required field is missing.";
+  if (error.code === "42501" || error.code === "PGRST301")
+    return "You don't have permission to do that. Try signing in again.";
+  return "That didn't save. Please try again.";
+}
+
+/**
+ * Deletes under RLS return success with zero rows when the policy denies them,
+ * so `await delete()` then `toast.success` could report a deletion that never
+ * happened. Ask for the deleted rows back and check we got one.
+ */
+async function deleteChecked(
+  table: "properties" | "blog_posts" | "testimonials",
+  id: string,
+): Promise<string | null> {
+  const { data, error } = await supabase.from(table).delete().eq("id", id).select("id");
+  if (error) return describeDbError(error);
+  if (!data || data.length === 0) return "Nothing was deleted — you may not have permission.";
+  return null;
+}
 
 const sidebarItems = [
   { label: "Dashboard", icon: LayoutDashboard, key: "dashboard" },
@@ -25,6 +54,11 @@ export default function Admin() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
+
+  // robots.txt Disallow doesn't stop indexing of a URL someone links to — this does.
+  useEffect(() => {
+    applySEO({ title: "Admin | L2S Infra", path: "/admin", noindex: true });
+  }, []);
 
   const handleSignOut = async () => {
     await signOut();
@@ -53,7 +87,7 @@ export default function Admin() {
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 ${
                 activeTab === item.key
                   ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-surface-subtle"
               }`}
             >
               <item.icon size={18} className="shrink-0" />
@@ -66,11 +100,11 @@ export default function Admin() {
           {sidebarOpen && user && (
             <p className="text-xs text-muted-foreground truncate px-3">{user.email}</p>
           )}
-          <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-primary text-sm transition-colors px-3 py-2 rounded-lg hover:bg-secondary">
+          <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-gold-ink text-sm transition-colors px-3 py-2 rounded-lg hover:bg-surface-subtle">
             <ArrowLeft size={16} className="shrink-0" />
             {sidebarOpen && <span>Back to Site</span>}
           </Link>
-          <button onClick={handleSignOut} className="w-full flex items-center gap-2 text-muted-foreground hover:text-red-400 text-sm transition-colors px-3 py-2 rounded-lg hover:bg-secondary">
+          <button onClick={handleSignOut} className="w-full flex items-center gap-2 text-muted-foreground hover:text-red-400 text-sm transition-colors px-3 py-2 rounded-lg hover:bg-surface-subtle">
             <LogOut size={16} className="shrink-0" />
             {sidebarOpen && <span>Sign Out</span>}
           </button>
@@ -121,7 +155,7 @@ function DashboardPanel() {
           <div key={s.label} className="bg-card border border-border rounded-xl p-6">
             <div className="flex items-center justify-between mb-3">
               <p className="text-muted-foreground text-sm">{s.label}</p>
-              <s.icon size={18} className="text-primary" />
+              <s.icon size={18} className="text-gold-ink" />
             </div>
             <p className="font-heading text-3xl font-bold text-foreground">{s.value}</p>
           </div>
@@ -175,7 +209,8 @@ function PropertiesPanel() {
 
   const remove = async (id: string) => {
     if (!confirm("Delete this property?")) return;
-    await supabase.from("properties").delete().eq("id", id);
+    const failure = await deleteChecked("properties", id);
+    if (failure) { toast.error(failure); return; }
     toast.success("Property deleted.");
     load();
   };
@@ -203,14 +238,14 @@ function PropertiesPanel() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
                   <h3 className="font-semibold text-foreground truncate">{p.title}</h3>
-                  {p.is_featured && <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full">Featured</span>}
+                  {p.is_featured && <span className="text-xs bg-primary/20 text-gold-ink px-2 py-0.5 rounded-full">Featured</span>}
                   <span className={`text-xs px-2 py-0.5 rounded-full ${p.status === "available" ? "bg-green-500/20 text-green-400" : p.status === "sold" ? "bg-red-500/20 text-red-400" : "bg-yellow-500/20 text-yellow-400"}`}>{p.status}</span>
                 </div>
                 <p className="text-sm text-muted-foreground">{p.location} · {p.price} · {p.property_type}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <button onClick={() => { setIsNew(false); setEditing(p); }} className="p-2 text-muted-foreground hover:text-primary rounded-lg hover:bg-secondary transition-colors"><Pencil size={16} /></button>
-                <button onClick={() => remove(p.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-secondary transition-colors"><Trash2 size={16} /></button>
+                <button onClick={() => { setIsNew(false); setEditing(p); }} className="p-2 text-muted-foreground hover:text-gold-ink rounded-lg hover:bg-surface-subtle transition-colors"><Pencil size={16} /></button>
+                <button onClick={() => remove(p.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-surface-subtle transition-colors"><Trash2 size={16} /></button>
               </div>
             </div>
           ))}
@@ -231,12 +266,12 @@ function PropertyForm({ property, onChange, onSave, onCancel, isNew }: {
   isNew: boolean;
 }) {
   const f = (field: keyof Property, value: unknown) => onChange({ ...property, [field]: value });
-  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1";
 
   return (
     <div>
       <div className="flex items-center gap-3 mb-8">
-        <button onClick={onCancel} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-secondary"><X size={20} /></button>
+        <button onClick={onCancel} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-surface-subtle"><X size={20} /></button>
         <h1 className="font-heading text-2xl font-bold text-foreground">{isNew ? "Add Property" : "Edit Property"}</h1>
       </div>
 
@@ -265,7 +300,7 @@ function PropertyForm({ property, onChange, onSave, onCancel, isNew }: {
             <label className="block text-sm font-medium text-foreground mb-2">City *</label>
             <select className={inp} value={property.city ?? ""} onChange={(e) => f("city", e.target.value)}>
               <option value="">Select city</option>
-              {["Gurgaon", "Mumbai", "Delhi NCR", "Bangalore", "Pune", "Hyderabad", "Goa"].map(c => <option key={c} value={c}>{c}</option>)}
+              {["Gurgaon", "Delhi"].map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
         </div>
@@ -345,7 +380,7 @@ function PropertyForm({ property, onChange, onSave, onCancel, isNew }: {
         </div>
 
         <div className="flex gap-3">
-          <button onClick={onSave} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors">
+          <button onClick={onSave} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors">
             <Save size={16} /> Save Property
           </button>
           <button onClick={onCancel} className="px-6 py-3 rounded-lg text-sm font-semibold border border-border text-muted-foreground hover:text-foreground transition-colors">
@@ -399,14 +434,19 @@ function BlogsPanel() {
   };
 
   const togglePublish = async (post: BlogPost) => {
-    await supabase.from("blog_posts").update({ is_published: !post.is_published }).eq("id", post.id);
+    const { error } = await supabase
+      .from("blog_posts")
+      .update({ is_published: !post.is_published })
+      .eq("id", post.id);
+    if (error) { toast.error(describeDbError(error)); return; }
     toast.success(post.is_published ? "Post unpublished." : "Post published!");
     load();
   };
 
   const remove = async (id: string) => {
     if (!confirm("Delete this post?")) return;
-    await supabase.from("blog_posts").delete().eq("id", id);
+    const failure = await deleteChecked("blog_posts", id);
+    if (failure) { toast.error(failure); return; }
     toast.success("Post deleted.");
     load();
   };
@@ -439,11 +479,11 @@ function BlogsPanel() {
                 <p className="text-sm text-muted-foreground">{p.author} · {new Date(p.published_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <button onClick={() => togglePublish(p)} className="p-2 text-muted-foreground hover:text-primary rounded-lg hover:bg-secondary transition-colors" title={p.is_published ? "Unpublish" : "Publish"}>
+                <button onClick={() => togglePublish(p)} className="p-2 text-muted-foreground hover:text-gold-ink rounded-lg hover:bg-surface-subtle transition-colors" title={p.is_published ? "Unpublish" : "Publish"}>
                   {p.is_published ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
-                <button onClick={() => { setIsNew(false); setEditing(p); }} className="p-2 text-muted-foreground hover:text-primary rounded-lg hover:bg-secondary transition-colors"><Pencil size={16} /></button>
-                <button onClick={() => remove(p.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-secondary transition-colors"><Trash2 size={16} /></button>
+                <button onClick={() => { setIsNew(false); setEditing(p); }} className="p-2 text-muted-foreground hover:text-gold-ink rounded-lg hover:bg-surface-subtle transition-colors"><Pencil size={16} /></button>
+                <button onClick={() => remove(p.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-surface-subtle transition-colors"><Trash2 size={16} /></button>
               </div>
             </div>
           ))}
@@ -462,12 +502,12 @@ function BlogForm({ post, onChange, onSave, onCancel, isNew }: {
   isNew: boolean;
 }) {
   const f = (field: keyof BlogPost, value: unknown) => onChange({ ...post, [field]: value });
-  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1";
 
   return (
     <div>
       <div className="flex items-center gap-3 mb-8">
-        <button onClick={onCancel} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-secondary"><X size={20} /></button>
+        <button onClick={onCancel} className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-surface-subtle"><X size={20} /></button>
         <h1 className="font-heading text-2xl font-bold text-foreground">{isNew ? "New Blog Post" : "Edit Blog Post"}</h1>
       </div>
 
@@ -484,7 +524,7 @@ function BlogForm({ post, onChange, onSave, onCancel, isNew }: {
           </div>
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">Publish Date</label>
-            <input type="date" className={inp} value={post.published_at ? post.published_at.slice(0, 10) : ""} onChange={(e) => f("published_at", new Date(e.target.value).toISOString())} />
+            <input type="date" className={inp} value={post.published_at ? post.published_at.slice(0, 10) : ""} onChange={(e) => f("published_at", e.target.value ? new Date(e.target.value).toISOString() : null)} />
           </div>
         </div>
 
@@ -524,7 +564,7 @@ function BlogForm({ post, onChange, onSave, onCancel, isNew }: {
         </div>
 
         <div className="flex gap-3">
-          <button onClick={onSave} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors">
+          <button onClick={onSave} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors">
             <Save size={16} /> Save Post
           </button>
           <button onClick={onCancel} className="px-6 py-3 rounded-lg text-sm font-semibold border border-border text-muted-foreground hover:text-foreground transition-colors">
@@ -555,7 +595,8 @@ function LeadsPanel() {
   useEffect(() => { load(); }, [filter]);
 
   const updateStatus = async (id: string, status: Lead["status"]) => {
-    await supabase.from("leads").update({ status }).eq("id", id);
+    const { error } = await supabase.from("leads").update({ status }).eq("id", id);
+    if (error) { toast.error(describeDbError(error)); return; }
     toast.success("Status updated.");
     load();
   };
@@ -592,6 +633,11 @@ function LeadsPanel() {
                     <span className={`text-xs px-2 py-0.5 rounded-full ${statusColor(lead.status)}`}>
                       {lead.status.replace("_", " ")}
                     </span>
+                    {lead.enquiry_type === "sell" && (
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground font-semibold">
+                        Seller
+                      </span>
+                    )}
                   </div>
                   <p className="text-sm text-muted-foreground">{lead.email} · {lead.phone} · {new Date(lead.created_at).toLocaleDateString("en-IN")}</p>
                 </div>
@@ -600,7 +646,7 @@ function LeadsPanel() {
                     value={lead.status}
                     onChange={(e) => { e.stopPropagation(); updateStatus(lead.id, e.target.value as Lead["status"]); }}
                     onClick={(e) => e.stopPropagation()}
-                    className="bg-secondary border border-border rounded-lg px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    className="bg-surface-subtle border border-border rounded-lg px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                   >
                     <option value="new">New</option>
                     <option value="contacted">Contacted</option>
@@ -613,7 +659,7 @@ function LeadsPanel() {
               {expanded === lead.id && (
                 <div className="px-4 pb-4 border-t border-border pt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div><span className="text-muted-foreground">Interest:</span> <span className="text-foreground ml-2">{lead.property_interest}</span></div>
-                  <div><span className="text-muted-foreground">Budget:</span> <span className="text-foreground ml-2">{lead.budget_range}</span></div>
+                  <div><span className="text-muted-foreground">Budget:</span> <span className="text-foreground ml-2">{lead.enquiry_type === "sell" ? "—  (seller)" : lead.budget_range || "Not specified"}</span></div>
                   <div><span className="text-muted-foreground">Location:</span> <span className="text-foreground ml-2">{lead.preferred_location || "Not specified"}</span></div>
                   <div><span className="text-muted-foreground">Source:</span> <span className="text-foreground ml-2">{lead.source || "Website"}</span></div>
                   {lead.message && (
@@ -648,28 +694,34 @@ function TestimonialsPanel() {
 
   const save = async () => {
     if (!editing?.quote || !editing?.client_name) { toast.error("Quote and name required."); return; }
-    if (isNew) {
-      await supabase.from("testimonials").insert({ ...editing, is_active: true, sort_order: testimonials.length } as Testimonial);
-    } else {
-      await supabase.from("testimonials").update(editing).eq("id", editing.id!);
-    }
+    const { error } = isNew
+      ? await supabase
+          .from("testimonials")
+          .insert({ ...editing, is_active: true, sort_order: testimonials.length } as Testimonial)
+      : await supabase.from("testimonials").update(editing).eq("id", editing.id!);
+    if (error) { toast.error(describeDbError(error)); return; }
     toast.success("Testimonial saved!");
     setEditing(null);
     load();
   };
 
   const toggle = async (t: Testimonial) => {
-    await supabase.from("testimonials").update({ is_active: !t.is_active }).eq("id", t.id);
+    const { error } = await supabase
+      .from("testimonials")
+      .update({ is_active: !t.is_active })
+      .eq("id", t.id);
+    if (error) { toast.error(describeDbError(error)); return; }
     load();
   };
 
   const remove = async (id: string) => {
     if (!confirm("Delete testimonial?")) return;
-    await supabase.from("testimonials").delete().eq("id", id);
+    const failure = await deleteChecked("testimonials", id);
+    if (failure) { toast.error(failure); return; }
     load();
   };
 
-  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1";
   const f = (field: keyof Testimonial, value: unknown) => setEditing(prev => ({ ...prev, [field]: value }));
 
   return (
@@ -712,11 +764,11 @@ function TestimonialsPanel() {
                   <p className="text-xs text-muted-foreground">{t.designation} · {t.property_transacted}</p>
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={() => toggle(t)} className="p-2 text-muted-foreground hover:text-primary rounded-lg hover:bg-secondary" title={t.is_active ? "Hide" : "Show"}>
+                  <button onClick={() => toggle(t)} className="p-2 text-muted-foreground hover:text-gold-ink rounded-lg hover:bg-surface-subtle" title={t.is_active ? "Hide" : "Show"}>
                     {t.is_active ? <Eye size={16} /> : <EyeOff size={16} />}
                   </button>
-                  <button onClick={() => { setIsNew(false); setEditing(t); }} className="p-2 text-muted-foreground hover:text-primary rounded-lg hover:bg-secondary"><Pencil size={16} /></button>
-                  <button onClick={() => remove(t.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-secondary"><Trash2 size={16} /></button>
+                  <button onClick={() => { setIsNew(false); setEditing(t); }} className="p-2 text-muted-foreground hover:text-gold-ink rounded-lg hover:bg-surface-subtle"><Pencil size={16} /></button>
+                  <button onClick={() => remove(t.id)} className="p-2 text-muted-foreground hover:text-red-400 rounded-lg hover:bg-surface-subtle"><Trash2 size={16} /></button>
                 </div>
               </div>
             </div>
@@ -744,14 +796,14 @@ function SettingsPanel() {
 
   const save = async () => {
     setSaving(true);
-    for (const [key, value] of Object.entries(settings)) {
-      await supabase.from("site_settings").upsert({ key, value }, { onConflict: "key" });
-    }
+    const rows = Object.entries(settings).map(([key, value]) => ({ key, value }));
+    const { error } = await supabase.from("site_settings").upsert(rows, { onConflict: "key" });
     setSaving(false);
+    if (error) { toast.error(describeDbError(error)); return; }
     toast.success("Settings saved!");
   };
 
-  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50";
+  const inp = "w-full bg-[#0f172a] border border-[#475569] rounded-lg px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1";
 
   if (loading) return <div className="text-center py-12 text-muted-foreground">Loading...</div>;
 
@@ -760,19 +812,19 @@ function SettingsPanel() {
       <h1 className="font-heading text-3xl font-bold text-foreground mb-8">Site Settings</h1>
       <div className="bg-card border border-border rounded-xl p-6 space-y-5">
         {[
-          { key: "whatsapp_number", label: "WhatsApp Number (with country code, no +)", placeholder: "919773740037" },
-          { key: "contact_phone", label: "Display Phone Number", placeholder: "+91-9773740037" },
+          { key: "whatsapp_number", label: "WhatsApp Number (with country code, no +)", placeholder: "919818242500" },
+          { key: "contact_phone", label: "Display Phone Number", placeholder: "+91-9818242500" },
           { key: "contact_email", label: "Contact Email", placeholder: "connect@l2sinfra.com" },
           { key: "office_address", label: "Office Address", placeholder: "Bani City Centre, Sector 63, Gurgaon" },
           { key: "business_hours", label: "Business Hours", placeholder: "Mon – Sat: 10:00 AM – 7:00 PM" },
-          { key: "ticker_text", label: "Trust Ticker Text", placeholder: "₹500Cr+ Transacted · 15+ Years..." },
+          { key: "ticker_text", label: "Trust Ticker Text", placeholder: "Gurgaon & Delhi · Advising since 2010..." },
         ].map(({ key, label, placeholder }) => (
           <div key={key}>
             <label className="block text-sm font-medium text-foreground mb-2">{label}</label>
             <input className={inp} value={settings[key] ?? ""} onChange={(e) => setSettings(prev => ({ ...prev, [key]: e.target.value }))} placeholder={placeholder} />
           </div>
         ))}
-        <button onClick={save} disabled={saving} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors disabled:opacity-50">
+        <button onClick={save} disabled={saving} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors disabled:opacity-50">
           <Save size={16} /> {saving ? "Saving..." : "Save All Settings"}
         </button>
       </div>

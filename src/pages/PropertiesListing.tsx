@@ -5,6 +5,10 @@ import type { Property, PropertyType } from "@/lib/database.types";
 import { MapPin, BedDouble, Maximize, ArrowRight, Search } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
+import { applySEO } from "@/lib/seo";
+import { useQueryState } from "@/lib/use-query-state";
+import { SectionError } from "@/components/SectionState";
+import { ROUTE_META } from "@/lib/route-meta";
 
 const typeLabel: Record<PropertyType, string> = {
   residential: "Residential",
@@ -12,28 +16,25 @@ const typeLabel: Record<PropertyType, string> = {
   farmhouse_land: "Farmhouse & Land",
 };
 
-const cities = ["All Cities", "Gurgaon", "Mumbai", "Delhi NCR", "Bangalore", "Pune", "Hyderabad", "Goa"];
+const cities = ["All Cities", "Gurgaon", "Delhi"];
 
 export default function PropertiesListing() {
-  const [properties, setProperties] = useState<Property[]>([]);
-  const [loading, setLoading] = useState(true);
   const [typeFilter, setTypeFilter] = useState<string>("all");
   const [cityFilter, setCityFilter] = useState("All Cities");
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    document.title = "Premium Property Listings | L2S Infra - Luxury Real Estate India";
+    applySEO(ROUTE_META["/properties"]);
+  }, []);
+
+  const { rows: properties, state, retry } = useQueryState<Property>(() =>
     supabase
       .from("properties")
       .select("*")
       .eq("status", "available")
       .order("is_featured", { ascending: false })
-      .order("created_at", { ascending: false })
-      .then(({ data }) => {
-        setProperties(data ?? []);
-        setLoading(false);
-      });
-  }, []);
+      .order("created_at", { ascending: false }),
+  );
 
   const filtered = properties.filter((p) => {
     const matchType = typeFilter === "all" || p.property_type === typeFilter;
@@ -45,16 +46,16 @@ export default function PropertiesListing() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-24">
+      <main id="main" className="min-h-screen bg-background pt-24">
         <div className="max-w-7xl mx-auto section-padding">
           {/* Header */}
           <div className="text-center mb-12">
-            <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase mb-4">Our Portfolio</p>
+            <p className="text-gold-ink text-sm font-semibold tracking-[0.3em] uppercase mb-4">Our Portfolio</p>
             <h1 className="font-heading text-3xl md:text-5xl font-bold text-foreground">
               Premium <span className="text-gradient-gold">Property Listings</span>
             </h1>
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-              Curated luxury residential, commercial, and land properties across India's most coveted addresses.
+              Residential, commercial and land across Gurgaon's corridors and Delhi. Pre-launch allocations and resale stock are not listed here — ask us.
             </p>
           </div>
 
@@ -67,7 +68,7 @@ export default function PropertiesListing() {
                 placeholder="Search by project name or location..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-card border border-border rounded-lg pl-10 pr-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full bg-card border border-border rounded-lg pl-10 pr-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1"
               />
             </div>
             <div className="flex gap-2 flex-wrap">
@@ -77,26 +78,30 @@ export default function PropertiesListing() {
                 </button>
               ))}
             </div>
-            <select value={cityFilter} onChange={(e) => setCityFilter(e.target.value)} className="bg-card border border-border rounded-lg px-4 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50">
+            <select value={cityFilter} onChange={(e) => setCityFilter(e.target.value)} className="bg-card border border-border rounded-lg px-4 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1">
               {cities.map((c) => <option key={c}>{c}</option>)}
             </select>
           </div>
 
           {/* Results count */}
-          {!loading && (
-            <p className="text-muted-foreground text-sm mb-6">{filtered.length} {filtered.length === 1 ? "property" : "properties"} found</p>
+          {(state === "ready" || state === "empty") && (
+            <p role="status" aria-live="polite" className="text-muted-foreground text-sm mb-6">
+              {filtered.length} {filtered.length === 1 ? "property" : "properties"} found
+            </p>
           )}
 
           {/* Grid */}
-          {loading ? (
+          {state === "error" ? (
+            <SectionError onRetry={retry} what="our listings" />
+          ) : state === "loading" ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="bg-card border border-border rounded-2xl overflow-hidden animate-pulse">
-                  <div className="h-56 bg-secondary" />
+                  <div className="h-56 bg-muted" />
                   <div className="p-6 space-y-3">
-                    <div className="h-5 bg-secondary rounded w-3/4" />
-                    <div className="h-4 bg-secondary rounded w-1/2" />
-                    <div className="h-4 bg-secondary rounded w-full" />
+                    <div className="h-5 bg-muted rounded w-3/4" />
+                    <div className="h-4 bg-muted rounded w-1/2" />
+                    <div className="h-4 bg-muted rounded w-full" />
                   </div>
                 </div>
               ))}
@@ -116,7 +121,7 @@ export default function PropertiesListing() {
                       {typeLabel[prop.property_type]}
                     </span>
                     {prop.is_featured && (
-                      <span className="absolute top-4 right-4 bg-secondary/80 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-foreground">
+                      <span className="absolute top-4 right-4 bg-secondary/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-secondary-foreground">
                         Featured
                       </span>
                     )}
@@ -124,7 +129,7 @@ export default function PropertiesListing() {
                   <div className="p-6">
                     <h2 className="font-heading text-lg font-bold text-card-foreground mb-2">{prop.title}</h2>
                     <div className="flex items-center gap-1 text-muted-foreground text-sm mb-3">
-                      <MapPin size={14} className="text-primary shrink-0" />
+                      <MapPin size={14} className="text-gold-ink shrink-0" />
                       {prop.location}
                     </div>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
@@ -135,10 +140,10 @@ export default function PropertiesListing() {
                     </div>
                     <p className="text-muted-foreground text-xs mb-4 line-clamp-2">{prop.features}</p>
                     <div className="flex items-center justify-between">
-                      <p className="font-heading text-xl font-bold text-primary">{prop.price}</p>
+                      <p className="font-heading text-xl font-bold text-gold-ink">{prop.price}</p>
                       <Link
                         to={`/properties/${prop.slug}`}
-                        className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors"
+                        className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-gold-ink transition-colors"
                       >
                         View Details <ArrowRight size={14} />
                       </Link>
@@ -148,7 +153,7 @@ export default function PropertiesListing() {
               ))}
               {filtered.length === 0 && (
                 <div className="md:col-span-3 text-center py-16 text-muted-foreground">
-                  No properties match your filters. <button onClick={() => { setTypeFilter("all"); setCityFilter("All Cities"); setSearch(""); }} className="text-primary hover:underline ml-1">Clear filters</button>
+                  No properties match your filters. <button onClick={() => { setTypeFilter("all"); setCityFilter("All Cities"); setSearch(""); }} className="text-gold-ink hover:underline ml-1">Clear filters</button>
                 </div>
               )}
             </div>

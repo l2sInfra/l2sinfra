@@ -1,21 +1,21 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 const partners = [
   { name: "DLF", abbr: "DLF" },
-  { name: "Lodha", abbr: "LDH" },
   { name: "Godrej Properties", abbr: "GOD" },
   { name: "Sobha Limited", abbr: "SOB" },
   { name: "Birla Estates", abbr: "BRL" },
-  { name: "Adani Realty", abbr: "ADN" },
-  { name: "Trump Towers", abbr: "TRM" },
-  { name: "Emaar India", abbr: "EMR" },
+  { name: "Max Estates", abbr: "MAX" },
+  { name: "Signature Global", abbr: "SGN" },
+  { name: "Ashiana Housing", abbr: "ASH" },
+  { name: "Trump Residences", abbr: "TRM" },
 ];
 
 export function PartnersSection() {
   return (
     <section id="network" className="section-padding bg-accent">
       <div className="max-w-7xl mx-auto">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -26,17 +26,18 @@ export function PartnersSection() {
             Our Network
           </p>
           <h2 className="font-heading text-4xl md:text-6xl font-bold text-accent-foreground">
-            Trusted by <span className="text-gradient-gold">India's Finest</span>
+            Partnered with <span className="text-gradient-gold">the builders that matter here</span>
           </h2>
           <p className="text-accent-foreground/50 mt-6 max-w-2xl mx-auto text-lg">
-            Direct partnerships with Tier-1 developers ensuring you get priority access, 
-            the best pricing, and unmatched after-sales support.
+            Direct partnerships with the premium builders working Gurgaon and Delhi —
+            which is how our buyers reach pre-launch allocations and held-back inventory
+            before it is advertised anywhere.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
           {partners.map((partner, i) => (
-            <motion.div
+            <m.div
               key={partner.name}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -45,14 +46,14 @@ export function PartnersSection() {
               className="flex flex-col items-center justify-center p-8 rounded-2xl border border-accent-foreground/10 hover:border-primary/40 transition-all duration-300 group"
             >
               <div className="w-16 h-16 rounded-full bg-accent-foreground/5 flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
-                <span className="font-heading text-xl font-bold text-accent-foreground/40 group-hover:text-primary transition-colors">
-                  {partner.abbr}
+                <span className="font-heading text-lg font-semibold text-accent-foreground/70 group-hover:text-primary transition-colors text-center leading-tight">
+                  {partner.name}
                 </span>
               </div>
               <span className="text-accent-foreground/60 text-sm font-medium text-center">
                 {partner.name}
               </span>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

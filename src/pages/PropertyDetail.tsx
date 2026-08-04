@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import type { Property, PropertyType } from "@/lib/database.types";
 import { MapPin, BedDouble, Maximize, ArrowLeft, Phone, MessageCircle, CheckCircle, Building2 } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
+import { PHONE_DISPLAY, PHONE_E164, whatsappLink } from "@/lib/site-contact";
+import { applySEO } from "@/lib/seo";
+import { propertyMeta } from "@/lib/route-meta";
+import { useRecordState } from "@/lib/use-record-state";
+import { SectionError } from "@/components/SectionState";
 
 const typeLabel: Record<PropertyType, string> = {
   residential: "Residential",
@@ -12,7 +17,13 @@ const typeLabel: Record<PropertyType, string> = {
   farmhouse_land: "Farmhouse & Land",
 };
 
-function getYouTubeEmbedUrl(url: string): string {
+/**
+ * Returns an embed URL only for a recognised YouTube link. A validator that
+ * falls through to trusting its input is worse than no validator: the previous
+ * version returned the raw string, so `javascript:...` in video_url executed
+ * in our origin.
+ */
+function getYouTubeEmbedUrl(url: string): string | null {
   try {
     // Handle youtu.be/VIDEO_ID
     const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
@@ -22,58 +33,55 @@ function getYouTubeEmbedUrl(url: string): string {
     const longMatch = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
     if (longMatch) return `https://www.youtube.com/embed/${longMatch[1]}`;
 
-    // Already an embed URL or other format — use as-is
-    return url;
+    // Anything we don't recognise is not rendered.
+    const embedMatch = url.match(/youtube(?:-nocookie)?\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+    if (embedMatch) return `https://www.youtube.com/embed/${embedMatch[1]}`;
+
+    return null;
   } catch {
-    return url;
+    return null;
   }
 }
 
 export default function PropertyDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const [property, setProperty] = useState<Property | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+  const { record: property, state, retry } = useRecordState<Property>(
+    () => supabase.from("properties").select("*").eq("slug", slug!).single(),
+    [slug],
+  );
 
   useEffect(() => {
-    if (!slug) return;
-    supabase
-      .from("properties")
-      .select("*")
-      .eq("slug", slug)
-      .single()
-      .then(({ data, error }) => {
-        if (error || !data) {
-          setNotFound(true);
-        } else {
-          setProperty(data);
-          document.title = `${data.meta_title || data.title} | L2S Infra`;
-          const metaDesc = document.querySelector('meta[name="description"]');
-          if (metaDesc) metaDesc.setAttribute("content", data.meta_description || `${data.title} in ${data.location}. ${data.price}. ${data.area}. Contact L2S Infra for a private consultation.`);
-        }
-        setLoading(false);
-      });
-  }, [slug]);
+    if (property) applySEO(propertyMeta(property));
+  }, [property]);
 
-  if (notFound) return <Navigate to="/properties" replace />;
+  const videoEmbedUrl = property?.video_url ? getYouTubeEmbedUrl(property.video_url) : null;
+
+  // Only a genuinely absent listing redirects. A failed query renders an error
+  // with a retry — sending someone to a listing page that will also be empty
+  // tells them the catalogue is gone when the database is merely unreachable.
+  if (state === "missing") return <Navigate to="/properties" replace />;
 
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-24">
-        {loading ? (
+      <main id="main" className="min-h-screen bg-background pt-24">
+        {state === "error" ? (
+          <div className="max-w-2xl mx-auto section-padding">
+            <SectionError onRetry={retry} what="this listing" />
+          </div>
+        ) : state === "loading" ? (
           <div className="max-w-6xl mx-auto section-padding animate-pulse space-y-6">
-            <div className="h-80 bg-secondary rounded-2xl" />
-            <div className="h-8 bg-secondary rounded w-1/2" />
-            <div className="h-4 bg-secondary rounded w-1/3" />
+            <div className="h-80 bg-muted rounded-2xl" />
+            <div className="h-8 bg-muted rounded w-1/2" />
+            <div className="h-4 bg-muted rounded w-1/3" />
           </div>
         ) : property ? (
           <div className="max-w-6xl mx-auto px-4 md:px-6 pb-16">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-              <Link to="/" className="hover:text-primary">Home</Link>
+              <Link to="/" className="hover:text-gold-ink">Home</Link>
               <span>/</span>
-              <Link to="/properties" className="hover:text-primary">Properties</Link>
+              <Link to="/properties" className="hover:text-gold-ink">Properties</Link>
               <span>/</span>
               <span className="text-foreground line-clamp-1">{property.title}</span>
             </div>
@@ -104,7 +112,7 @@ export default function PropertyDetail() {
                     {property.title}
                   </h1>
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <MapPin size={16} className="text-primary" />
+                    <MapPin size={16} className="text-gold-ink" />
                     <span>{property.location}, {property.city}</span>
                   </div>
                 </div>
@@ -113,7 +121,7 @@ export default function PropertyDetail() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="bg-card border border-border rounded-xl p-4 text-center">
                     <p className="text-xs text-muted-foreground mb-1">Price</p>
-                    <p className="font-heading font-bold text-primary">{property.price}</p>
+                    <p className="font-heading font-bold text-gold-ink">{property.price}</p>
                   </div>
                   <div className="bg-card border border-border rounded-xl p-4 text-center">
                     <p className="text-xs text-muted-foreground mb-1">Area</p>
@@ -145,7 +153,7 @@ export default function PropertyDetail() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {property.features.split(",").map((f) => (
                       <div key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <CheckCircle size={14} className="text-primary shrink-0" />
+                        <CheckCircle size={14} className="text-gold-ink shrink-0" />
                         {f.trim()}
                       </div>
                     ))}
@@ -153,11 +161,18 @@ export default function PropertyDetail() {
                 </div>
 
                 {/* Video */}
-                {property.video_url && (
+                {videoEmbedUrl && (
                   <div className="bg-card border border-border rounded-xl p-6">
                     <h2 className="font-heading text-xl font-bold text-foreground mb-4">Property Video</h2>
                     <div className="aspect-video rounded-lg overflow-hidden">
-                      <iframe src={getYouTubeEmbedUrl(property.video_url)} className="w-full h-full" allowFullScreen title={`${property.title} video`} />
+                      <iframe
+                        src={videoEmbedUrl}
+                        className="w-full h-full"
+                        allowFullScreen
+                        sandbox="allow-scripts allow-same-origin allow-presentation"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        title={`${property.title} video`}
+                      />
                     </div>
                   </div>
                 )}
@@ -167,10 +182,10 @@ export default function PropertyDetail() {
               <div className="space-y-6">
                 <div className="bg-card border border-border rounded-xl p-6 sticky top-28">
                   <h2 className="font-heading text-lg font-bold text-foreground mb-1">Interested in this property?</h2>
-                  <p className="text-muted-foreground text-sm mb-6">Speak with our advisory team for pricing, availability, and a private viewing.</p>
+                  <p className="text-muted-foreground text-sm mb-6">Speak to us about pricing, availability and a viewing.</p>
 
                   <a
-                    href={`https://wa.me/919773740037?text=Hi, I'm interested in ${encodeURIComponent(property.title)} at ${encodeURIComponent(property.location)}. Please share more details.`}
+                    href={whatsappLink(`Hi, I'm interested in ${property.title} at ${property.location}. Please share more details.`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-lg text-sm font-semibold hover:bg-[#1ebe5d] transition-colors mb-3"
@@ -179,23 +194,23 @@ export default function PropertyDetail() {
                   </a>
 
                   <a
-                    href="tel:+919773740037"
-                    className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3 rounded-lg text-sm font-semibold hover:bg-gold-dark transition-colors mb-3"
+                    href={`tel:${PHONE_E164}`}
+                    className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors mb-3"
                   >
-                    <Phone size={16} /> Call +91-9773740037
+                    <Phone size={16} /> Call {PHONE_DISPLAY}
                   </a>
 
                   <Link
                     to="/#contact"
-                    className="w-full flex items-center justify-center gap-2 border border-border text-foreground py-3 rounded-lg text-sm font-semibold hover:border-primary hover:text-primary transition-colors"
+                    className="w-full flex items-center justify-center gap-2 border border-border text-foreground py-3 rounded-lg text-sm font-semibold hover:border-gold-ink hover:text-gold-ink transition-colors"
                   >
                     Schedule Consultation
                   </Link>
 
                   <div className="mt-6 pt-6 border-t border-border space-y-3 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary" /> RERA compliant transaction</div>
-                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary" /> Legal due diligence included</div>
-                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary" /> NRI advisory available</div>
+                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-gold-ink" /> RERA compliant transaction</div>
+                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-gold-ink" /> Legal due diligence included</div>
+                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-gold-ink" /> NRI buyers supported</div>
                   </div>
                 </div>
 
@@ -203,7 +218,7 @@ export default function PropertyDetail() {
                 {property.developer && (
                   <div className="bg-card border border-border rounded-xl p-6">
                     <div className="flex items-center gap-2 mb-2">
-                      <Building2 size={16} className="text-primary" />
+                      <Building2 size={16} className="text-gold-ink" />
                       <h3 className="font-semibold text-foreground text-sm">Developer</h3>
                     </div>
                     <p className="text-muted-foreground text-sm">{property.developer}</p>
@@ -213,7 +228,7 @@ export default function PropertyDetail() {
             </div>
 
             <div className="mt-10">
-              <Link to="/properties" className="flex items-center gap-2 text-muted-foreground hover:text-primary text-sm transition-colors">
+              <Link to="/properties" className="flex items-center gap-2 text-muted-foreground hover:text-gold-ink text-sm transition-colors">
                 <ArrowLeft size={14} /> Back to All Properties
               </Link>
             </div>

@@ -1,35 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#1e293b">
+
+    <!-- Self-hosted. No third-party origin, no CSS-then-font round trip. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/playfair-latin.woff2" crossorigin>
+
     <!-- Primary SEO -->
-    <title>L2S Infra - Luxury Real Estate Advisory in India | Premium Properties Gurgaon, Mumbai, Delhi</title>
-    <meta name="description" content="India's premier luxury real estate advisory. L2S Infra curates premium residential, commercial, and farmhouse properties in Gurgaon, Mumbai, Delhi NCR, Bangalore for HNI investors and NRIs.">
-    <meta name="keywords" content="luxury real estate India, premium properties Gurgaon, DLF Arbour, Trump Tower Gurgaon, luxury property advisory India, HNI real estate, NRI property investment India, luxury apartments Golf Course Road, premium commercial real estate India">
+    <title>L2S Infra — Luxury Real Estate Agency in Gurgaon &amp; Delhi NCR</title>
+    <meta name="description" content="Luxury real estate agency in Gurgaon and Delhi NCR. L2S Infra helps buyers and sellers with premium residential, commercial and farmhouse property on Golf Course Road, Golf Course Extension, Dwarka Expressway and Sohna Road. Partnered with premium builders.">
+    <meta name="keywords" content="real estate agency Gurgaon, luxury real estate Gurgaon, property dealers Gurgaon, sell property Gurgaon, premium properties Gurgaon, Golf Course Road apartments, Golf Course Extension Road property, Dwarka Expressway property, DLF Arbour, Trump Tower Gurgaon, Delhi NCR luxury property, NRI property investment Gurgaon, commercial real estate Gurgaon">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://l2sinfra.com">
+    <link rel="canonical" href="https://www.l2sinfra.com/">
     <meta name="geo.region" content="IN-HR">
     <meta name="geo.placename" content="Gurgaon, Haryana, India">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="L2S Infra - Luxury Real Estate Advisory in India | Premium Properties">
-    <meta property="og:description" content="India's premier luxury real estate advisory. Premium residential, commercial & farmhouse properties in Gurgaon, Mumbai, Delhi NCR, Bangalore for HNI investors and NRIs.">
-    <meta property="og:url" content="https://l2sinfra.com">
-    <meta property="og:image" content="https://l2sinfra.com/og-image.jpg">
+    <meta property="og:title" content="L2S Infra — Luxury Real Estate Agency in Gurgaon &amp; Delhi NCR">
+    <meta property="og:description" content="Luxury real estate agency in Gurgaon and Delhi NCR. Buying and selling premium residential, commercial and farmhouse property, partnered with premium builders.">
+    <meta property="og:url" content="https://www.l2sinfra.com/">
+    <meta property="og:image" content="https://www.l2sinfra.com/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="L2S Infra — luxury real estate agency, Gurgaon and Delhi NCR">
     <meta property="og:site_name" content="L2S Infra">
     <meta property="og:locale" content="en_IN">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="L2S Infra - Luxury Real Estate Advisory in India">
-    <meta name="twitter:description" content="India's premier luxury real estate advisory for HNI investors and NRIs. Premium properties in Gurgaon, Mumbai, Delhi NCR, Bangalore.">
-    <meta name="twitter:image" content="https://l2sinfra.com/og-image.jpg">
+    <meta name="twitter:title" content="L2S Infra — Luxury Real Estate Agency in Gurgaon &amp; Delhi NCR">
+    <meta name="twitter:description" content="Luxury real estate agency in Gurgaon and Delhi NCR. Buying and selling premium residential, commercial and farmhouse property, partnered with premium builders.">
+    <meta name="twitter:image" content="https://www.l2sinfra.com/og-image.jpg">
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
@@ -38,13 +50,19 @@
       "@graph": [
         {
           "@type": "RealEstateAgent",
-          "@id": "https://l2sinfra.com/#organization",
+          "@id": "https://www.l2sinfra.com/#organization",
           "name": "L2S Infra",
           "alternateName": "L2S Infrastructure Pvt Ltd",
-          "description": "India's Premier Luxury Real Estate Advisory. Expert advisory services for high-net-worth individuals and NRIs seeking premium residential, commercial and farmhouse properties across Gurgaon, Mumbai, Delhi NCR, Bangalore, Pune, Hyderabad.",
-          "url": "https://l2sinfra.com",
-          "logo": "https://l2sinfra.com/favicon.ico",
-          "telephone": "+91-9773740037",
+          "description": "Luxury real estate agency in Gurgaon and Delhi NCR, helping buyers and sellers transact premium residential, commercial and farmhouse property. Partnered with premium builders.",
+          "url": "https://www.l2sinfra.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.l2sinfra.com/logo.png",
+            "width": 512,
+            "height": 512
+          },
+          "image": "https://www.l2sinfra.com/og-image.jpg",
+          "telephone": "+91-9818242500",
           "email": "connect@l2sinfra.com",
           "foundingDate": "2010",
           "address": {
@@ -57,12 +75,8 @@
           },
           "areaServed": [
             {"@type": "City", "name": "Gurgaon"},
-            {"@type": "City", "name": "Mumbai"},
             {"@type": "City", "name": "Delhi"},
-            {"@type": "City", "name": "Bangalore"},
-            {"@type": "City", "name": "Pune"},
-            {"@type": "City", "name": "Hyderabad"},
-            {"@type": "City", "name": "Goa"}
+            {"@type": "AdministrativeArea", "name": "Delhi NCR"}
           ],
           "priceRange": "₹₹₹₹",
           "openingHoursSpecification": [
@@ -77,13 +91,17 @@
         },
         {
           "@type": "WebSite",
-          "@id": "https://l2sinfra.com/#website",
-          "url": "https://l2sinfra.com",
+          "@id": "https://www.l2sinfra.com/#website",
+          "url": "https://www.l2sinfra.com/",
           "name": "L2S Infra",
-          "publisher": {"@id": "https://l2sinfra.com/#organization"},
+          "inLanguage": "en-IN",
+          "publisher": {"@id": "https://www.l2sinfra.com/#organization"},
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://l2sinfra.com/properties?q={search_term_string}",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://www.l2sinfra.com/properties?q={search_term_string}"
+            },
             "query-input": "required name=search_term_string"
           }
         }
@@ -91,7 +109,7 @@
     }
     </script>
 
-    <!-- Google Analytics GA4 — replace G-NLDSZP1JGZ with your Measurement ID -->
+    <!-- Google Analytics GA4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-NLDSZP1JGZ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];

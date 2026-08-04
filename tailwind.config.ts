@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Playfair Display', 'Georgia', 'serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
+        heading: ['Playfair Display', 'Playfair Fallback', 'Georgia', 'serif'],
+        body: ['Inter', 'Inter Fallback', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -55,7 +55,9 @@ export default {
           DEFAULT: "hsl(var(--gold))",
           light: "hsl(var(--gold-light))",
           dark: "hsl(var(--gold-dark))",
+          ink: "hsl(var(--gold-ink))",
         },
+        "surface-subtle": "hsl(var(--surface-subtle))",
         bronze: "hsl(var(--bronze))",
         navy: {
           DEFAULT: "hsl(var(--navy))",
@@ -109,5 +111,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;

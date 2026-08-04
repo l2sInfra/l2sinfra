@@ -1,21 +1,25 @@
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { useEffect } from "react";
+import { applySEO } from "@/lib/seo";
+import { ROUTE_META } from "@/lib/route-meta";
 
 export default function Terms() {
-  useEffect(() => { document.title = "Terms of Service | L2S Infra"; }, []);
+  useEffect(() => {
+    applySEO(ROUTE_META["/terms-of-service"]);
+  }, []);
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-24 pb-16">
+      <main id="main" className="min-h-screen bg-background pt-24 pb-16">
         <div className="max-w-3xl mx-auto px-4 md:px-6">
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-2">Terms of Service</h1>
           <p className="text-muted-foreground text-sm mb-8">Last updated: March 2026</p>
-          <div className="prose prose-sm prose-invert max-w-none prose-headings:font-heading prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground">
+          <div className="prose prose-sm max-w-none prose-a:text-gold-ink prose-a:underline prose-headings:font-heading prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground">
             <h2>1. Acceptance of Terms</h2>
             <p>By accessing and using the L2S Infra website (l2sinfra.com), you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our website.</p>
             <h2>2. Services</h2>
-            <p>L2S Infra provides real estate advisory services for luxury residential, commercial, and land properties across India. Information on this website is for general guidance only and does not constitute a binding offer or agreement.</p>
+            <p>L2S Infra provides real estate agency and advisory services for luxury residential, commercial and land properties in Gurgaon and Delhi NCR. Information on this website is for general guidance only and does not constitute a binding offer or agreement.</p>
             <h2>3. Property Information</h2>
             <p>While we strive to maintain accurate and up-to-date property listings, information including pricing, availability, and specifications is subject to change without notice. All transactions are subject to formal agreement and documentation.</p>
             <h2>4. No Professional Advice</h2>
