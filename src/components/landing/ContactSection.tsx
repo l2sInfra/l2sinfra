@@ -1,12 +1,13 @@
 import { m } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import { useSiteContact, whatsappLink } from "@/lib/site-contact";
 
 const budgetRanges = ["₹2 – 5 Cr", "₹5 – 10 Cr", "₹10 – 25 Cr", "₹25 – 50 Cr", "₹50 Cr+"];
-const propertyInterests = ["I want to sell my property", "Luxury Residential", "Premium Commercial", "Lands & Plots", "Farm Houses", "Investment Portfolio"];
+const propertyInterests = ["Luxury Residential", "Premium Commercial", "Lands & Plots", "Farm Houses", "Investment Portfolio"];
 const locations = [
   "Gurgaon — Golf Course Road",
   "Gurgaon — Golf Course Extension",
@@ -34,6 +35,10 @@ const empty: FormData = {
 
 export function ContactSection() {
   const contact = useSiteContact();
+  // Property pages link here with ?property=<title>, so an enquiry records the
+  // listing that prompted it instead of arriving as an anonymous form fill.
+  const [searchParams] = useSearchParams();
+  const aboutProperty = searchParams.get("property")?.slice(0, 120) || "";
   const [form, setForm] = useState<FormData>(empty);
   const [agreed, setAgreed] = useState(false);
   // Honeypot — hidden from people, filled by bots. See send-lead-email.
@@ -41,6 +46,10 @@ export function ContactSection() {
   const [loading, setLoading] = useState(false);
 
   const set = (field: keyof FormData, value: string) => setForm((prev) => ({ ...prev, [field]: value }));
+
+  useEffect(() => {
+    if (aboutProperty) setForm((prev) => ({ ...prev, property_interest: "Specific listing" }));
+  }, [aboutProperty]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,10 +62,15 @@ export function ContactSection() {
       full_name: form.full_name,
       email: form.email,
       phone: form.phone,
-      property_interest: form.property_interest,
+      property_interest: aboutProperty
+        ? `Enquiry — ${aboutProperty}`
+        : form.property_interest,
       budget_range: form.budget_range,
       preferred_location: form.preferred_location || null,
       message: form.message || null,
+      // Explicit rather than relying on the column default, so the CRM never
+      // has to infer which side of the deal an enquiry came from.
+      enquiry_type: "buy",
       status: "new",
       source: "website",
     });
@@ -82,7 +96,9 @@ export function ContactSection() {
         full_name: form.full_name,
         email: form.email,
         phone: form.phone,
-        property_interest: form.property_interest,
+        property_interest: aboutProperty
+          ? `Enquiry — ${aboutProperty}`
+          : form.property_interest,
         budget_range: form.budget_range,
         preferred_location: form.preferred_location || "",
         message: form.message || "",
@@ -130,6 +146,13 @@ export function ContactSection() {
             transition={{ duration: 0.8 }}
             className="space-y-5"
           >
+            {aboutProperty && (
+              <div className="bg-muted border border-border rounded-lg px-4 py-3 text-sm">
+                <span className="text-muted-foreground">Enquiring about </span>
+                <span className="text-foreground font-medium">{aboutProperty}</span>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="c-name" className={lbl}>Full name{req}</label>
@@ -149,8 +172,16 @@ export function ContactSection() {
                 <label htmlFor="c-interest" className={lbl}>What are you looking for?{req}</label>
                 <select id="c-interest" required value={form.property_interest} onChange={(e) => set("property_interest", e.target.value)} className={inp}>
                   <option value="">Please choose</option>
+                  {aboutProperty && <option value="Specific listing">This listing</option>}
                   {propertyInterests.map((p) => <option key={p} value={p}>{p}</option>)}
                 </select>
+                <p className="text-muted-foreground text-xs mt-2">
+                  Selling instead?{" "}
+                  <Link to="/sell" className="text-gold-ink hover:underline">
+                    Use the seller form
+                  </Link>{" "}
+                  — we won't ask you for a budget.
+                </p>
               </div>
               <div>
                 <label htmlFor="c-budget" className={lbl}>Budget range{req}</label>

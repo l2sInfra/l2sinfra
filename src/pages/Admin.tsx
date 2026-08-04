@@ -658,6 +658,7 @@ function LeadsPanel() {
               </div>
               {expanded === lead.id && (
                 <div className="px-4 pb-4 border-t border-border pt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div><span className="text-muted-foreground">Type:</span> <span className="text-foreground ml-2 font-medium">{lead.enquiry_type === "sell" ? "Seller" : "Buyer"}</span></div>
                   <div><span className="text-muted-foreground">Interest:</span> <span className="text-foreground ml-2">{lead.property_interest}</span></div>
                   <div><span className="text-muted-foreground">Budget:</span> <span className="text-foreground ml-2">{lead.enquiry_type === "sell" ? "—  (seller)" : lead.budget_range || "Not specified"}</span></div>
                   <div><span className="text-muted-foreground">Location:</span> <span className="text-foreground ml-2">{lead.preferred_location || "Not specified"}</span></div>

@@ -201,7 +201,7 @@ export default function PropertyDetail() {
                   </a>
 
                   <Link
-                    to="/#contact"
+                    to={`/?property=${encodeURIComponent(property.title)}#contact`}
                     className="w-full flex items-center justify-center gap-2 border border-border text-foreground py-3 rounded-lg text-sm font-semibold hover:border-gold-ink hover:text-gold-ink transition-colors"
                   >
                     Schedule Consultation
