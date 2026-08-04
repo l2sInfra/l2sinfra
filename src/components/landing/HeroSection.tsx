@@ -145,17 +145,20 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.9 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <a
-              href="#contact"
-              className="bg-primary text-primary-foreground px-8 py-4 rounded-lg text-sm font-semibold hover:bg-gold-light transition-colors text-center"
+            {/* Two doors, matching the two halves of the headline. The visitor
+                declares intent rather than being asked to book our calendar —
+                which is what a business working both sides of the deal needs. */}
+            <Link
+              to="/properties"
+              className="bg-primary text-primary-foreground px-8 py-4 rounded-lg text-base font-semibold hover:bg-gold-light transition-colors text-center"
             >
-              Schedule a consultation
-            </a>
+              I want to buy
+            </Link>
             <Link
               to="/sell"
-              className="border-2 border-secondary-foreground/40 text-secondary-foreground px-8 py-4 rounded-lg text-sm font-semibold hover:border-primary hover:text-primary transition-colors text-center"
+              className="border-2 border-primary text-primary px-8 py-4 rounded-lg text-base font-semibold hover:bg-primary hover:text-primary-foreground transition-colors text-center"
             >
-              See what your property is worth
+              I want to sell
             </Link>
           </m.div>
         </div>
