@@ -66,9 +66,25 @@ function applyHead(html, meta) {
   return out;
 }
 
+/**
+ * Environment variables pasted into a dashboard pick up stray characters —
+ * a trailing space, wrapping quotes, a missing scheme. Any of those makes
+ * `fetch` throw "Failed to parse URL", which is exactly how this failed on
+ * Vercel: the value was present, but 70 property and insight pages silently
+ * fell back to the SPA shell while the build still reported success.
+ *
+ * Normalising here is the right place for it — the value comes from outside
+ * the program, so the program should not assume it is clean.
+ */
+function normalizeOrigin(raw) {
+  let v = String(raw).trim().replace(/^['"]+|['"]+$/g, "").replace(/\/+$/, "");
+  if (!/^https?:\/\//i.test(v)) v = `https://${v}`;
+  return v;
+}
+
 async function fetchDynamicRoutes(routeMeta) {
-  const url = process.env.VITE_SUPABASE_URL;
-  const key = process.env.VITE_SUPABASE_ANON_KEY;
+  const url = process.env.VITE_SUPABASE_URL && normalizeOrigin(process.env.VITE_SUPABASE_URL);
+  const key = process.env.VITE_SUPABASE_ANON_KEY?.trim().replace(/^['"]+|['"]+$/g, "");
   if (!url || !key) {
     console.warn(
       "  ! VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY not set — skipping property\n" +
@@ -158,6 +174,19 @@ async function main() {
 
   await writeSitemap(routes);
   console.log(`\nPrerendered ${written} route${written === 1 ? "" : "s"}.`);
+
+  // A build that quietly ships 7 pages instead of 77 looks identical to a
+  // healthy one. Say so loudly.
+  const dynamic = routes.length - Object.keys(ROUTE_META).length;
+  if (dynamic <= 0) {
+    console.warn(
+      "\n  !! No property or insight pages were prerendered. Those URLs will\n" +
+      "     fall back to the SPA shell and will not carry their own metadata.\n" +
+      "     Check VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY in the build env.",
+    );
+  } else {
+    console.log(`  (${dynamic} of them from the database)`);
+  }
 }
 
 /**
