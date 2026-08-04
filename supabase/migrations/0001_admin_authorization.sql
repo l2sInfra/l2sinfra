@@ -1,3 +1,5 @@
+-- SUPERSEDED BY 0003. Do not run this file. It assumes it runs before 0002
+-- and fails if 0002 was applied first — see the header of 0003.
 -- ============================================================================
 -- 0001 — Authorization expresses ADMIN, not "has an account"
 -- ============================================================================
@@ -49,7 +51,7 @@ create table if not exists admin_users (
 
 insert into admin_users (user_id, email)
 select id, email from auth.users
-where email = 'REPLACE_WITH_YOUR_ADMIN_EMAIL'
+where email = 'connect@l2sinfra.com'
 on conflict (user_id) do nothing;
 
 -- Confirm this returns exactly one row before continuing.

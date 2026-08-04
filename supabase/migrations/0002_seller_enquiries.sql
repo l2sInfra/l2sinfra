@@ -1,3 +1,5 @@
+-- PARTIALLY SUPERSEDED BY 0003. The column changes here are correct and may
+-- already be applied; the policy at the end is re-created idempotently by 0003.
 -- ============================================================================
 -- 0002 — Sellers can submit an enquiry
 -- ============================================================================
