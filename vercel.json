@@ -10,7 +10,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!assets/|.*\\.(?:js|css|jpg|jpeg|png|gif|svg|ico|webp|avif|woff2?|webmanifest|xml|txt)).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],

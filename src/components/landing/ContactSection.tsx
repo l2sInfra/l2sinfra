@@ -296,7 +296,6 @@ export function ContactSection() {
                 <div>
                   <p className="font-semibold text-foreground">Business Hours</p>
                   <p className="text-muted-foreground text-sm">{contact.hours}</p>
-                  <p className="text-muted-foreground text-sm">Sunday: By Appointment</p>
                 </div>
               </div>
             </div>
