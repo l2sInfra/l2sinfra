@@ -104,10 +104,21 @@ export function Footer() {
           <p className="text-secondary-foreground/70 text-sm">
             © {new Date().getFullYear()} L2S Infra. All rights reserved.
           </p>
-          <div className="flex gap-6 text-secondary-foreground/70 text-sm">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-secondary-foreground/70 text-sm">
             <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
             <Link to="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</Link>
             <Link to="/disclaimer" className="hover:text-primary transition-colors">Disclaimer</Link>
+            <span>
+              Built by{" "}
+              <a
+                href="https://www.mikahq.com"
+                target="_blank"
+                rel="noopener"
+                className="text-secondary-foreground hover:text-primary transition-colors font-medium"
+              >
+                MIKA
+              </a>
+            </span>
           </div>
         </div>
       </div>
