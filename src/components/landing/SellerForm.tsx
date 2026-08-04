@@ -84,7 +84,10 @@ export function SellerForm() {
 
     const { error } = await supabase.from("leads").insert({
       full_name: form.full_name,
-      email: form.email,
+      // Email is optional on this form; an untouched input gives "", which is
+      // not the same as absent. Send null so the column and the row-level
+      // policy both read it as "not provided".
+      email: form.email.trim() || null,
       phone: form.phone,
       property_interest: `Selling — ${form.corridor}`,
       // Deliberately null. See migration 0002.
@@ -110,7 +113,7 @@ export function SellerForm() {
       .invoke("send-lead-email", {
         body: {
           full_name: form.full_name,
-          email: form.email,
+          email: form.email.trim() || "Not provided",
           phone: form.phone,
           property_interest: `SELLER — ${form.corridor}`,
           budget_range: "n/a (seller)",
