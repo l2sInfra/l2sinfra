@@ -38,7 +38,13 @@ export const HARERA_REG_NO = "RC/HARERA/GGM/1946/1541/2022/314";
 export const HARERA_VALID_UNTIL = "2027-12-12";
 export const DEALER_LICENCE_NO = "2682/COLLECTOR/G/PD/2016";
 
-export const OFFICE_ADDRESS = "Bani City Centre, Sector 63, Gurgaon, Haryana, India";
+/**
+ * Must match the Google Business Profile character for character. Local pack
+ * ranking depends on NAP consistency between the site, GBP and third-party
+ * citations, so a near-match is a failed match.
+ */
+export const OFFICE_ADDRESS =
+  "Banni City Center, Sector-63A, Sector 63, Gurugram, Haryana 122101, India";
 
 export const BUSINESS_HOURS = "Mon – Sat: 10:00 AM – 7:00 PM";
 

@@ -309,7 +309,7 @@ export function ContactSection() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="L2S Infra Office Location - Bani City Centre, Sector 63, Gurgaon"
+                title="L2S Infra office location — Banni City Center, Sector 63A, Gurugram"
               />
             </div>
           </m.div>

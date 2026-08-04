@@ -816,7 +816,7 @@ function SettingsPanel() {
           { key: "whatsapp_number", label: "WhatsApp Number (with country code, no +)", placeholder: "919818242500" },
           { key: "contact_phone", label: "Display Phone Number", placeholder: "+91-9818242500" },
           { key: "contact_email", label: "Contact Email", placeholder: "connect@l2sinfra.com" },
-          { key: "office_address", label: "Office Address", placeholder: "Bani City Centre, Sector 63, Gurgaon" },
+          { key: "office_address", label: "Office Address (must match the Google Business Profile exactly)", placeholder: "Banni City Center, Sector-63A, Sector 63, Gurugram, Haryana 122101, India" },
           { key: "business_hours", label: "Business Hours", placeholder: "Mon – Sat: 10:00 AM – 7:00 PM" },
           { key: "ticker_text", label: "Trust Ticker Text", placeholder: "Gurgaon & Delhi · Advising since 2010..." },
         ].map(({ key, label, placeholder }) => (
