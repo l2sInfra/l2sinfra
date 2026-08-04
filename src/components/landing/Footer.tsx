@@ -1,6 +1,6 @@
 import { MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useSiteContact } from "@/lib/site-contact";
+import { DEALER_LICENCE_NO, HARERA_REG_NO, useSiteContact } from "@/lib/site-contact";
 
 const quickLinks = [
   { label: "Services", href: "/#services" },
@@ -85,6 +85,21 @@ export function Footer() {
             </ul>
           </div>
         </div>
+        {/* Statutory disclosure. HARERA requires a registered agent to display
+            its registration number; it is also the strongest verifiable trust
+            signal available, since anyone can check it on the HARERA portal.
+            Worded as "registered agent" because the certificate is held by an
+            individual, not by the company. */}
+        <div className="border-t border-secondary-foreground/10 pt-8 pb-6">
+          <p className="text-secondary-foreground/70 text-sm">
+            HARERA Gurugram registered real estate agent ·{" "}
+            <span className="text-secondary-foreground font-medium">{HARERA_REG_NO}</span>
+          </p>
+          <p className="text-secondary-foreground/70 text-sm mt-1">
+            Haryana property dealer licence {DEALER_LICENCE_NO}
+          </p>
+        </div>
+
         <div className="border-t border-secondary-foreground/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-secondary-foreground/70 text-sm">
             © {new Date().getFullYear()} L2S Infra. All rights reserved.

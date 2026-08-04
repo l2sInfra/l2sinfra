@@ -5,7 +5,7 @@ import type { Property, PropertyType } from "@/lib/database.types";
 import { MapPin, BedDouble, Maximize, ArrowLeft, Phone, MessageCircle, CheckCircle, Building2 } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
-import { PHONE_DISPLAY, PHONE_E164, whatsappLink } from "@/lib/site-contact";
+import { HARERA_REG_NO, PHONE_DISPLAY, PHONE_E164, whatsappLink } from "@/lib/site-contact";
 import { applySEO } from "@/lib/seo";
 import { propertyMeta } from "@/lib/route-meta";
 import { useRecordState } from "@/lib/use-record-state";
@@ -208,9 +208,15 @@ export default function PropertyDetail() {
                   </Link>
 
                   <div className="mt-6 pt-6 border-t border-border space-y-3 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-gold-ink" /> RERA compliant transaction</div>
-                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-gold-ink" /> Legal due diligence included</div>
-                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-gold-ink" /> NRI buyers supported</div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle size={14} className="text-gold-ink shrink-0" />
+                      <span>
+                        HARERA registered agent ·{" "}
+                        <span className="text-foreground">{HARERA_REG_NO}</span>
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-gold-ink shrink-0" /> Title and approvals checked before you commit</div>
+                    <div className="flex items-center gap-2"><CheckCircle size={14} className="text-gold-ink shrink-0" /> NRI buyers supported</div>
                   </div>
                 </div>
 

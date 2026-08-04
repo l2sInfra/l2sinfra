@@ -22,6 +22,22 @@ export const PHONE_DISPLAY = "+91-9818242500";
 
 export const CONTACT_EMAIL = "connect@l2sinfra.com";
 
+/**
+ * HARERA Gurugram agent registration, from the certificate dated 12-Dec-2022.
+ *
+ * Two things worth knowing before changing how this is displayed:
+ *
+ *  - The registration is granted to Deepak Yadav as an INDIVIDUAL agent, not
+ *    to L2S Infrastructure Pvt Ltd. The copy says "registered agent" rather
+ *    than implying the company holds it, because it doesn't.
+ *  - Registration is valid five years from the date of issue, so it lapses on
+ *    12 Dec 2027 unless renewed. Displaying a lapsed number is worse than
+ *    displaying none.
+ */
+export const HARERA_REG_NO = "RC/HARERA/GGM/1946/1541/2022/314";
+export const HARERA_VALID_UNTIL = "2027-12-12";
+export const DEALER_LICENCE_NO = "2682/COLLECTOR/G/PD/2016";
+
 export const OFFICE_ADDRESS = "Bani City Centre, Sector 63, Gurgaon, Haryana, India";
 
 export const BUSINESS_HOURS = "Mon – Sat: 10:00 AM – 7:00 PM";
